@@ -17,6 +17,9 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-rails'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-vinegar'
+Plugin 'mileszs/ack.vim'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'wakatime/vim-wakatime'
 " }}}
 
 "Extra plugins
@@ -45,6 +48,7 @@ set wildignore+=vendor/bundle
 set wildignore+=vendor/gems
 set wildignore+=log/**
 set wildignore+=node_modules/**
+set autochdir
 
 " Minibuffer Explorer Settings
 let g:miniBufExplMapWindowNavVim = 1
@@ -82,6 +86,8 @@ map ,ga :update \| Git add %<CR>
 " Mappings for numbering
 map ,nr :set rnu!<CR>
 map ,na :set nu!<CR>
+" Ctrl-F for Ack
+map <C-F> :Ack<Space>
 
 " File type setup for files unknown to Vim {{{
 if has("autocmd")
