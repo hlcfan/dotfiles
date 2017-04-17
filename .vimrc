@@ -22,6 +22,9 @@ Plugin 'rking/ag.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'wakatime/vim-wakatime'
 Plugin 'junegunn/vim-easy-align'
+Plugin 'scrooloose/nerdtree'
+Plugin 'ervandew/supertab'
+Plugin 'tpope/vim-ragtag'
 " }}}
 
 "Extra plugins
@@ -39,6 +42,24 @@ set tabstop=2
 set shiftwidth=2
 " 让 vim 把连续数量的空格视为一个制表符
 set softtabstop=2
+" Display extra whitespace
+set list listchars=tab:»·,trail:·
+" Make it obvious where 80 characters is
+set textwidth=80
+set colorcolumn=+1
+" Numbers
+set number
+set numberwidth=5
+
+set matchpairs+=<:>
+set hlsearch
+
+" Highlight current line
+" Without activate cursor column
+au WinLeave * set nocursorline " nocursorcolumn
+au WinEnter * set cursorline " cursorcolumn
+set cursorline " cursorcolumn
+
 set number
 " Add recently accessed projects menu (project plugin)
 set viminfo^=!
@@ -86,6 +107,20 @@ map ,gdi :Git diff<CR>
 map ,gdc :Git diff --cached<CR>
 map ,ga :update \| Git add %<CR>
 
+" NERD tree
+let NERDChristmasTree=0
+let NERDTreeWinSize=35
+let NERDTreeChDirMode=2
+let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
+let NERDTreeShowBookmarks=1
+let NERDTreeWinPos="left"
+" Automatically open a NERDTree if no files where specified
+autocmd vimenter * if !argc() | NERDTree | endif
+" Close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" Open a NERDTree
+nmap <F5> :NERDTreeToggle<cr>
+
 " Mappings for numbering
 map ,nr :set rnu!<CR>
 map ,na :set nu!<CR>
@@ -102,5 +137,14 @@ if has("autocmd")
     au BufRead,BufNewFile *.god set ft=ruby
     au BufRead,BufNewFile *.json set ft=javascript
     au BufRead,BufNewFile *.jasmine_fixture set ft=html
+endif
+
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+  " Use ag in CtrlP for listing files.
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " Ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
 endif
 "}}}
