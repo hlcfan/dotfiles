@@ -6,7 +6,7 @@ syntax on
 filetype plugin indent on
 
 " {{{ Plugin List
-Plugin 'kien/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'bling/vim-airline'
 Plugin '907th/vim-auto-save'
 Plugin 'kchmck/vim-coffee-script'
@@ -17,9 +17,11 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-rails'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-vinegar'
-Plugin 'mileszs/ack.vim'
+" Plugin 'mileszs/ack.vim'
+Plugin 'rking/ag.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'wakatime/vim-wakatime'
+Plugin 'junegunn/vim-easy-align'
 " }}}
 
 "Extra plugins
@@ -61,6 +63,7 @@ let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
 let g:airline#extensions#tabline#enabled = 1
 " Change which file opens after executing :Rails command
 let g:rails_default_file='config/database.yml'
+" let g:ctrlp_working_path_mode = 0
 
 "ruby
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
@@ -86,8 +89,10 @@ map ,ga :update \| Git add %<CR>
 " Mappings for numbering
 map ,nr :set rnu!<CR>
 map ,na :set nu!<CR>
-" Ctrl-F for Ack
-map <C-F> :Ack<Space>
+" Ctrl-Shift-F for Ag
+map <C-F> :Ag<Space>
+nmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
 
 " File type setup for files unknown to Vim {{{
 if has("autocmd")
