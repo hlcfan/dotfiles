@@ -107,6 +107,7 @@ map ,gdi :Git diff<CR>
 map ,gdc :Git diff --cached<CR>
 map ,ga :update \| Git add %<CR>
 
+
 " NERD tree
 let NERDChristmasTree=0
 let NERDTreeWinSize=35
@@ -128,6 +129,9 @@ map ,na :set nu!<CR>
 map <C-F> :Ag<Space>
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
+vnoremap // y/<C-R>"<CR>
+" Clear the search buffer when hitting return
+nnoremap <CR> :nohlsearch<CR>
 
 " File type setup for files unknown to Vim {{{
 if has("autocmd")
@@ -141,6 +145,7 @@ endif
 
 if executable('ag')
   " Use Ag over Grep
+  let g:ag_working_path_mode="r"
   set grepprg=ag\ --nogroup\ --nocolor
   " Use ag in CtrlP for listing files.
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
