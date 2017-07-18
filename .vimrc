@@ -7,6 +7,7 @@ filetype plugin indent on
 
 " {{{ Plugin List
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'FelikZ/ctrlp-py-matcher'
 Plugin 'bling/vim-airline'
 Plugin '907th/vim-auto-save'
 Plugin 'kchmck/vim-coffee-script'
@@ -50,9 +51,14 @@ set colorcolumn=+1
 " Numbers
 set number
 set numberwidth=5
+" set relativenumber
+set ruler
+set laststatus=2
+set report=0
 
 set matchpairs+=<:>
 set hlsearch
+set mouse=a
 
 " Highlight current line
 " Without activate cursor column
@@ -60,7 +66,6 @@ au WinLeave * set nocursorline " nocursorcolumn
 au WinEnter * set cursorline " cursorcolumn
 set cursorline " cursorcolumn
 
-set number
 " Add recently accessed projects menu (project plugin)
 set viminfo^=!
 set wildignore+=.hg,.git,.svn
@@ -84,7 +89,8 @@ let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
 let g:airline#extensions#tabline#enabled = 1
 " Change which file opens after executing :Rails command
 let g:rails_default_file='config/database.yml'
-" let g:ctrlp_working_path_mode = 0
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_cmd = 'CtrlPMixed'
 
 "ruby
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
@@ -106,7 +112,6 @@ map ,gpu :Git push<CR>
 map ,gdi :Git diff<CR>
 map ,gdc :Git diff --cached<CR>
 map ,ga :update \| Git add %<CR>
-
 
 " NERD tree
 let NERDChristmasTree=0
@@ -150,6 +155,7 @@ if executable('ag')
   " Use ag in CtrlP for listing files.
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
   " Ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
   let g:ctrlp_use_caching = 0
 endif
 "}}}
