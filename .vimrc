@@ -89,7 +89,9 @@ let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
 let g:airline#extensions#tabline#enabled = 1
 " Change which file opens after executing :Rails command
 let g:rails_default_file='config/database.yml'
-let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_working_path_mode = ''
+" let g:ctrlp_max_files=0
+" let g:ctrlp_max_depth=40
 let g:ctrlp_cmd = 'CtrlPMixed'
 
 "ruby
@@ -158,4 +160,31 @@ if executable('ag')
   let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
   let g:ctrlp_use_caching = 0
 endif
+
+if executable('matcher')
+  let g:ctrlp_match_func = { 'match': 'GoodMatch' }
+
+  function! GoodMatch(items, str, limit, mmode, ispath, crfile, regex)
+
+    " Create a cache file if not yet exists
+    let cachefile = ctrlp#utils#cachedir().'/matcher.cache'
+    if !( filereadable(cachefile) && a:items == readfile(cachefile) )
+      call writefile(a:items, cachefile)
+    endif
+    if !filereadable(cachefile)
+      return []
+    endif
+
+    " a:mmode is currently ignored. In the future, we should probably do
+    " something about that. the matcher behaves like "full-line".
+    let cmd = 'matcher --limit '.a:limit.' --manifest '.cachefile.' '
+    if !( exists('g:ctrlp_dotfiles') && g:ctrlp_dotfiles )
+      let cmd = cmd.'--no-dotfiles '
+    endif
+    let cmd = cmd.a:str
+
+    return split(system(cmd), "\n")
+
+  endfunction
+end
 "}}}
