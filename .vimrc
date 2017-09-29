@@ -58,7 +58,7 @@ set report=0
 
 set matchpairs+=<:>
 set hlsearch
-set mouse=a
+" set mouse=a
 
 " Highlight current line
 " Without activate cursor column
