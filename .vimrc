@@ -90,8 +90,8 @@ let g:airline#extensions#tabline#enabled = 1
 " Change which file opens after executing :Rails command
 let g:rails_default_file='config/database.yml'
 let g:ctrlp_working_path_mode = ''
-" let g:ctrlp_max_files=0
-" let g:ctrlp_max_depth=40
+let g:ctrlp_max_files=0
+let g:ctrlp_max_depth=40
 let g:ctrlp_cmd = 'CtrlPMixed'
 
 "ruby
