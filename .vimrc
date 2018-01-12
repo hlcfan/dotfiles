@@ -26,6 +26,7 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'scrooloose/nerdtree'
 Plugin 'ervandew/supertab'
 Plugin 'tpope/vim-ragtag'
+Plugin 'tpope/vim-surround'
 " }}}
 
 "Extra plugins
@@ -58,7 +59,6 @@ set report=0
 
 set matchpairs+=<:>
 set hlsearch
-" set mouse=a
 
 " Highlight current line
 " Without activate cursor column
@@ -89,7 +89,7 @@ let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
 let g:airline#extensions#tabline#enabled = 1
 " Change which file opens after executing :Rails command
 let g:rails_default_file='config/database.yml'
-let g:ctrlp_working_path_mode = ''
+let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_max_files=0
 let g:ctrlp_max_depth=40
 let g:ctrlp_cmd = 'CtrlPMixed'
