@@ -9,7 +9,7 @@ filetype plugin indent on
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'FelikZ/ctrlp-py-matcher'
 Plugin 'bling/vim-airline'
-Plugin '907th/vim-auto-save'
+" Plugin '907th/vim-auto-save'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
@@ -27,6 +27,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'ervandew/supertab'
 Plugin 'tpope/vim-ragtag'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-endwise'
 " }}}
 
 "Extra plugins
@@ -84,8 +85,8 @@ let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1
 let g:rubycomplete_rails = 1
-let g:auto_save = 1  " enable AutoSave on Vim startup
-let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
+" let g:auto_save = 1  " enable AutoSave on Vim startup
+" let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
 let g:airline#extensions#tabline#enabled = 1
 " Change which file opens after executing :Rails command
 let g:rails_default_file='config/database.yml'
