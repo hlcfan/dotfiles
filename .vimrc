@@ -1,38 +1,36 @@
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-execute pathogen#infect()
-call pathogen#helptags()
 syntax on
 filetype plugin indent on
 
-" {{{ Plugin List
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'FelikZ/ctrlp-py-matcher'
-Plugin 'bling/vim-airline'
-" Plugin '907th/vim-auto-save'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'pangloss/vim-javascript'
-Plugin 'tpope/vim-rails'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-vinegar'
-" Plugin 'mileszs/ack.vim'
-Plugin 'rking/ag.vim'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'wakatime/vim-wakatime'
-Plugin 'junegunn/vim-easy-align'
-Plugin 'scrooloose/nerdtree'
-Plugin 'ervandew/supertab'
-Plugin 'tpope/vim-ragtag'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-endwise'
-" }}}
+" {{{ Plug List
+call plug#begin('~/.vim/bundle')
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'bling/vim-airline'
+" Plug '907th/vim-auto-save'
+Plug 'kchmck/vim-coffee-script'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'pangloss/vim-javascript'
+Plug 'tpope/vim-rails'
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-vinegar'
+" Plug 'mileszs/ack.vim'
+Plug 'rking/ag.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'wakatime/vim-wakatime'
+Plug 'junegunn/vim-easy-align'
+Plug 'scrooloose/nerdtree'
+Plug 'ervandew/supertab'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-endwise'
 
 "Extra plugins
 runtime! plugin/matchit.vim
 runtime! macros/matchit.vim
+call plug#end()
+" }}}
 
 set nocompatible   " Disable vi-compatibility
 set laststatus=2   " Always show the statusline
@@ -189,3 +187,4 @@ if executable('matcher')
   endfunction
 end
 "}}}
+
