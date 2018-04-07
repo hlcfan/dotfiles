@@ -39,13 +39,13 @@ call plug#end()
 set nocompatible   " Disable vi-compatibility
 set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show Unicode glyphs
-" 将制表符扩展为空格
+" Convert tabs to spaces
 set expandtab
-" 设置编辑时制表符占用空格数
+" Tab takes 2 columns
 set tabstop=2
-" 设置格式化时制表符占用空格数
+" Take 2 columns when format code
 set shiftwidth=2
-" 让 vim 把连续数量的空格视为一个制表符
+" Take 2 columns when hit tab
 set softtabstop=2
 " Display extra whitespace
 set list listchars=tab:»·,trail:·
