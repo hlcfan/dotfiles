@@ -3,9 +3,13 @@ filetype plugin indent on
 
 " {{{ Plug List
 call plug#begin('~/.vim/bundle')
+Plug 'tpope/vim-pathogen'
+Plug 'altercation/vim-colors-solarized'
+Plug 'endel/vim-github-colorscheme'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
-Plug 'bling/vim-airline'
+" Plug 'bling/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 " Plug '907th/vim-auto-save'
 Plug 'kchmck/vim-coffee-script'
 Plug 'tpope/vim-commentary'
@@ -15,7 +19,6 @@ Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-rails'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-vinegar'
-" Plug 'mileszs/ack.vim'
 Plug 'rking/ag.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'wakatime/vim-wakatime'
@@ -25,7 +28,8 @@ Plug 'ervandew/supertab'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
-
+Plug 'elixir-editors/vim-elixir'
+Plug 'itchyny/lightline.vim'
 "Extra plugins
 runtime! plugin/matchit.vim
 runtime! macros/matchit.vim
@@ -58,6 +62,27 @@ set report=0
 
 set matchpairs+=<:>
 set hlsearch
+set background=dark
+colorscheme solarized
+
+color hlcfan
+
+if ((&termencoding ==# 'utf-8' || &encoding ==# 'utf-8') && version >= 700) || has("gui_running")
+  set listchars=trail:·,precedes:«,extends:»,tab:▸-
+  set showbreak=↪
+else
+  set listchars=tab:>\ ,trail:-,extends:>,precedes:<
+  set showbreak='+++ '
+endif
+set backspace=indent,eol,start "backspace over everything!
+set guifont=Monospace\ 9
+
+" Use 256 colors all the time
+set t_Co=256
+set showmatch "show matching pairs
+
+" Don't show mode, as lightline integrated it
+set noshowmode
 
 " Highlight current line
 " Without activate cursor column
@@ -85,13 +110,47 @@ let g:miniBufExplModSelTarget = 1
 let g:rubycomplete_rails = 1
 " let g:auto_save = 1  " enable AutoSave on Vim startup
 " let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
-let g:airline#extensions#tabline#enabled = 1
 " Change which file opens after executing :Rails command
+
 let g:rails_default_file='config/database.yml'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_max_files=0
 let g:ctrlp_max_depth=40
 let g:ctrlp_cmd = 'CtrlPMixed'
+
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
+" Set high visibility for diff mode
+" let g:Powerline_symbols = 'unicode'
+" let g:airline_powerline_fonts = 1
+" let g:airline#extensions#syntastic#enabled = 1
+" let g:airline_theme = "dark"
+" if !exists('g:airline_symbols')
+"   let g:airline_symbols = {}
+" endif
+" let g:airline_symbols.branch = '⎇ '
+" let g:airline_symbols.paste = 'ρ'
+" let g:airline_mode_map = {
+"             \ '__' : '-',
+"             \ 'n'  : 'N',
+"             \ 'i'  : 'I',
+"             \ 'R'  : 'R',
+"             \ 'c'  : 'C',
+"             \ 'v'  : 'V',
+"             \ 'V'  : 'V',
+"             \ '' : 'V',
+"             \ 's'  : 'S',
+"             \ 'S'  : 'S',
+"             \ '' : 'S',
+"             \ }
 
 "ruby
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
@@ -131,6 +190,7 @@ nmap <F5> :NERDTreeToggle<cr>
 " Mappings for numbering
 map ,nr :set rnu!<CR>
 map ,na :set nu!<CR>
+
 " Ctrl-Shift-F for Ag
 map <C-F> :Ag<Space>
 nmap ga <Plug>(EasyAlign)
@@ -138,6 +198,15 @@ xmap ga <Plug>(EasyAlign)
 vnoremap // y/<C-R>"<CR>
 " Clear the search buffer when hitting return
 nnoremap <CR> :nohlsearch<CR>
+
+" Make <leader>' switch between ' and "
+nnoremap ,' ""yls<C-r>={'"': "'", "'": '"'}[@"]<CR><Esc>
+
+" Hashrocket with <C-l>
+imap <C-l> <space>=><space>
+
+noremap H ^
+noremap L $
 
 " File type setup for files unknown to Vim {{{
 if has("autocmd")
