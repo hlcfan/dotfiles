@@ -3,7 +3,7 @@ filetype plugin indent on
 
 " {{{ Plug List
 call plug#begin('~/.vim/bundle')
-Plug 'tpope/vim-pathogen'
+" Plug 'tpope/vim-pathogen'
 Plug 'altercation/vim-colors-solarized'
 Plug 'endel/vim-github-colorscheme'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -59,6 +59,11 @@ set numberwidth=5
 set ruler
 set laststatus=2
 set report=0
+
+set directory^=~/.vim/tmp//
+if !isdirectory(expand(&directory))
+    call mkdir(expand(&directory), "p")
+endif
 
 set matchpairs+=<:>
 set hlsearch
