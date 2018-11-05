@@ -30,6 +30,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'elixir-editors/vim-elixir'
 Plug 'itchyny/lightline.vim'
+Plug 'henrik/vim-reveal-in-finder'
+Plug 'osyo-manga/vim-anzu'
 "Extra plugins
 runtime! plugin/matchit.vim
 runtime! macros/matchit.vim
@@ -226,6 +228,19 @@ imap <C-l> <space>=><space>
 
 noremap H ^
 noremap L $
+
+" mapping
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
+
+" clear status
+nmap <Esc><Esc> <Plug>(anzu-clear-search-status)
+
+
+" statusline
+set statusline=%{anzu#search_status()}
 
 " File type setup for files unknown to Vim {{{
 if has("autocmd")
