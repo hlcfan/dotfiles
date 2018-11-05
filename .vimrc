@@ -57,14 +57,22 @@ set number
 set numberwidth=5
 " set relativenumber
 set ruler
-set laststatus=2
 set report=0
 
-set directory^=~/.vim/tmp//
-if !isdirectory(expand(&directory))
-    call mkdir(expand(&directory), "p")
+" swap files
+set backup
+set noswapfile
+set undodir=~/.vim/tmp/undo
+set backupdir=~/.vim/tmp/backup
+set directory=~/.vim/tmp/backup
+
+if !isdirectory(expand(&undodir))
+    call mkdir(expand(&undodir), "p")
 endif
 
+if !isdirectory(expand(&backupdir))
+    call mkdir(expand(&backupdir), "p")
+endif
 set matchpairs+=<:>
 set hlsearch
 set background=dark
@@ -103,6 +111,7 @@ set wildignore+=*.sw?
 set wildignore+=*.DS_Store?
 set wildignore+=vendor/bundle
 set wildignore+=vendor/gems
+set wildignore+=vendor/ruby
 set wildignore+=log/**
 set wildignore+=node_modules/**
 set autochdir
@@ -116,6 +125,11 @@ let g:rubycomplete_rails = 1
 " let g:auto_save = 1  " enable AutoSave on Vim startup
 " let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
 " Change which file opens after executing :Rails command
+
+let g:AutoPairsShortcutFastWrap   = '´' " <m-m>
+let g:AutoPairsShortcutToggle     = 'π' " <m-p>
+let g:AutoPairsShortcutJump       = '∆' " <m-j>
+let g:AutoPairsShortcutBackInsert = '∫' " <m-b>
 
 let g:rails_default_file='config/database.yml'
 let g:ctrlp_working_path_mode = 'ra'
