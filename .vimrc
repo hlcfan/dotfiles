@@ -8,30 +8,30 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'endel/vim-github-colorscheme'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
-" Plug 'bling/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
 " Plug '907th/vim-auto-save'
 Plug 'kchmck/vim-coffee-script'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'pangloss/vim-javascript'
+" Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-rails'
-Plug 'vim-ruby/vim-ruby'
+" Plug 'vim-ruby/vim-ruby'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-vinegar'
 Plug 'rking/ag.vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'wakatime/vim-wakatime'
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdtree'
 Plug 'ervandew/supertab'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
-Plug 'elixir-editors/vim-elixir'
+" Plug 'elixir-editors/vim-elixir'
 Plug 'itchyny/lightline.vim'
 Plug 'henrik/vim-reveal-in-finder'
 Plug 'osyo-manga/vim-anzu'
+Plug 'thoughtbot/vim-rspec'
 "Extra plugins
 runtime! plugin/matchit.vim
 runtime! macros/matchit.vim
@@ -118,6 +118,8 @@ set wildignore+=log/**
 set wildignore+=node_modules/**
 set autochdir
 
+let g:polyglot_disabled = ['go']
+
 " Minibuffer Explorer Settings
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
@@ -138,6 +140,9 @@ let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_max_files=0
 let g:ctrlp_max_depth=40
 let g:ctrlp_cmd = 'CtrlPMixed'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  'vendor/ruby',
+  \ }
 
 let g:lightline = {
       \ 'colorscheme': 'solarized',
@@ -194,6 +199,13 @@ map ,gdi :Git diff<CR>
 map ,gdc :Git diff --cached<CR>
 map ,ga :update \| Git add %<CR>
 
+" RSpec.vim mappings
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
+" let g:rspec_command = "!rspec --drb {spec}"
+let mapleader = '\'
 " NERD tree
 let NERDChristmasTree=0
 let NERDTreeWinSize=35
@@ -202,7 +214,7 @@ let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
 let NERDTreeShowBookmarks=1
 let NERDTreeWinPos="left"
 " Automatically open a NERDTree if no files where specified
-autocmd vimenter * if !argc() | NERDTree | endif
+" autocmd vimenter * if !argc() | NERDTree | endif
 " Close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 " Open a NERDTree
