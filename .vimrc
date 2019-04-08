@@ -5,6 +5,7 @@ filetype plugin indent on
 call plug#begin('~/.vim/bundle')
 " Plug 'tpope/vim-pathogen'
 Plug 'altercation/vim-colors-solarized'
+" Plug 'tssm/fairyfloss.vim'
 Plug 'endel/vim-github-colorscheme'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
@@ -38,6 +39,7 @@ runtime! macros/matchit.vim
 call plug#end()
 " }}}
 
+set termguicolors
 set nocompatible   " Disable vi-compatibility
 set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show Unicode glyphs
@@ -77,10 +79,12 @@ if !isdirectory(expand(&backupdir))
 endif
 set matchpairs+=<:>
 set hlsearch
-set background=dark
-colorscheme solarized
 
-color hlcfan
+" colorscheme fairyfloss
+let g:solarized_termcolors=256
+set background=light
+colorscheme solarized
+color solarized
 
 if ((&termencoding ==# 'utf-8' || &encoding ==# 'utf-8') && version >= 700) || has("gui_running")
   set listchars=trail:·,precedes:«,extends:»,tab:▸-
@@ -198,6 +202,8 @@ map ,gpu :Git push<CR>
 map ,gdi :Git diff<CR>
 map ,gdc :Git diff --cached<CR>
 map ,ga :update \| Git add %<CR>
+
+let g:rspec_command = "bundle exec rspec {spec}"
 
 " RSpec.vim mappings
 map <Leader>t :call RunCurrentSpecFile()<CR>
