@@ -1,37 +1,37 @@
 [user]
-	email = hlcfan.yan@gmail.com
-	name = Alex S
-	signingkey = D13535EA5681B563
+  email = hlcfan.yan@gmail.com
+  name = Alex S
+  signingkey = D13535EA5681B563
 [alias]
-	co = checkout
-	st = status
-	ci = commit
-	br = branch
+  co = checkout
+  st = status
+  ci = commit
+  br = branch
   d = diff
   last = diff HEAD^
 [core]
-	excludesfile = /Users/alexshi/.gitignore_global
+  excludesfile = /Users/alexshi/.gitignore_global
   editor = vim
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
 [push]
-	default = current
+  default = current
 [help]
-	autocorrect=1
+  autocorrect=1
 [filter "media"]
-	required = true
-	clean = git media clean %f
-	smudge = git media smudge %f
+  required = true
+  clean = git media clean %f
+  smudge = git media smudge %f
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
 [credential]
-	helper = osxkeychain
+  helper = osxkeychain
 [commit]
-	gpgsign = true
+  gpgsign = true
