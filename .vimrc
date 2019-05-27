@@ -7,9 +7,6 @@ call plug#begin('~/.vim/bundle')
 Plug 'altercation/vim-colors-solarized'
 " Plug 'tssm/fairyfloss.vim'
 Plug 'endel/vim-github-colorscheme'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'FelikZ/ctrlp-py-matcher'
-" Plug '907th/vim-auto-save'
 Plug 'kchmck/vim-coffee-script'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
@@ -20,7 +17,6 @@ Plug 'tpope/vim-rails'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-vinegar'
-Plug 'rking/ag.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdtree'
@@ -33,6 +29,9 @@ Plug 'itchyny/lightline.vim'
 Plug 'henrik/vim-reveal-in-finder'
 Plug 'osyo-manga/vim-anzu'
 Plug 'thoughtbot/vim-rspec'
+Plug 'mileszs/ack.vim'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 "Extra plugins
 runtime! plugin/matchit.vim
 runtime! macros/matchit.vim
@@ -120,9 +119,21 @@ set wildignore+=vendor/gems
 set wildignore+=vendor/ruby
 set wildignore+=log/**
 set wildignore+=node_modules/**
-set autochdir
 
 let g:polyglot_disabled = ['go']
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_auto_type_info = 1
+let g:go_auto_sameids = 0
+let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'test']
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_deadline = "5s"
+let g:go_fmt_command = "goimports"
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 
 " Minibuffer Explorer Settings
 let g:miniBufExplMapWindowNavVim = 1
@@ -140,24 +151,18 @@ let g:AutoPairsShortcutJump       = '∆' " <m-j>
 let g:AutoPairsShortcutBackInsert = '∫' " <m-b>
 
 let g:rails_default_file='config/database.yml'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_max_files=0
-let g:ctrlp_max_depth=40
-let g:ctrlp_cmd = 'CtrlPMixed'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  'vendor/ruby',
-  \ }
 
 let g:lightline = {
       \ 'colorscheme': 'solarized',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ]
       \ },
       \ 'component_function': {
       \   'gitbranch': 'fugitive#head'
       \ },
       \ }
+
 " Set high visibility for diff mode
 " let g:Powerline_symbols = 'unicode'
 " let g:airline_powerline_fonts = 1
@@ -188,6 +193,11 @@ autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 autocmd Filetype gitcommit setlocal spell textwidth=72
+
+"go
+autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+
 "improve autocomplete menu color
 highlight Pmenu ctermbg=238 gui=bold
 
@@ -215,7 +225,6 @@ let mapleader = '\'
 " NERD tree
 let NERDChristmasTree=0
 let NERDTreeWinSize=35
-let NERDTreeChDirMode=2
 let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
 let NERDTreeShowBookmarks=1
 let NERDTreeWinPos="left"
@@ -231,7 +240,7 @@ map ,nr :set rnu!<CR>
 map ,na :set nu!<CR>
 
 " Ctrl-Shift-F for Ag
-map <C-F> :Ag<Space>
+map <C-F> :Ack<Space>
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 vnoremap // y/<C-R>"<CR>
@@ -256,6 +265,9 @@ nmap # <Plug>(anzu-sharp-with-echo)
 " clear status
 nmap <Esc><Esc> <Plug>(anzu-clear-search-status)
 
+" Set up fzf
+map ,f :Files<CR>
+map ,gf :GFiles<CR>
 
 " statusline
 set statusline=%{anzu#search_status()}
@@ -271,41 +283,8 @@ if has("autocmd")
 endif
 
 if executable('ag')
-  " Use Ag over Grep
-  let g:ag_working_path_mode="r"
-  set grepprg=ag\ --nogroup\ --nocolor
-  " Use ag in CtrlP for listing files.
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  " Ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-  let g:ctrlp_use_caching = 0
+  let g:ackprg = 'ag --vimgrep'
 endif
 
-if executable('matcher')
-  let g:ctrlp_match_func = { 'match': 'GoodMatch' }
-
-  function! GoodMatch(items, str, limit, mmode, ispath, crfile, regex)
-
-    " Create a cache file if not yet exists
-    let cachefile = ctrlp#utils#cachedir().'/matcher.cache'
-    if !( filereadable(cachefile) && a:items == readfile(cachefile) )
-      call writefile(a:items, cachefile)
-    endif
-    if !filereadable(cachefile)
-      return []
-    endif
-
-    " a:mmode is currently ignored. In the future, we should probably do
-    " something about that. the matcher behaves like "full-line".
-    let cmd = 'matcher --limit '.a:limit.' --manifest '.cachefile.' '
-    if !( exists('g:ctrlp_dotfiles') && g:ctrlp_dotfiles )
-      let cmd = cmd.'--no-dotfiles '
-    endif
-    let cmd = cmd.a:str
-
-    return split(system(cmd), "\n")
-
-  endfunction
-end
 "}}}
 
