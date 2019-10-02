@@ -6,7 +6,7 @@ call plug#begin('~/.vim/bundle')
 " Plug 'tpope/vim-pathogen'
 Plug 'altercation/vim-colors-solarized'
 " Plug 'tssm/fairyfloss.vim'
-Plug 'endel/vim-github-colorscheme'
+" Plug 'endel/vim-github-colorscheme'
 Plug 'kchmck/vim-coffee-script'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
@@ -14,7 +14,7 @@ Plug 'airblade/vim-gitgutter'
 " Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-rails'
 " Plug 'vim-ruby/vim-ruby'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go', { 'tag': 'v1.19', 'do': ':GoUpdateBinaries' }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-vinegar'
 Plug 'jiangmiao/auto-pairs'
@@ -84,6 +84,10 @@ let g:solarized_termcolors=256
 set background=light
 colorscheme solarized
 color solarized
+hi DiffAdd      gui=none    guifg=NONE          guibg=#bada9f
+hi DiffChange   gui=none    guifg=NONE          guibg=#e5d5ac
+hi DiffDelete   gui=bold    guifg=#ff8080       guibg=#ffb0b0
+hi DiffText     gui=none    guifg=NONE          guibg=#8cbee2
 
 if ((&termencoding ==# 'utf-8' || &encoding ==# 'utf-8') && version >= 700) || has("gui_running")
   set listchars=trail:·,precedes:«,extends:»,tab:▸-
@@ -120,29 +124,32 @@ set wildignore+=vendor/ruby
 set wildignore+=log/**
 set wildignore+=node_modules/**
 
+let mapleader = '\'
+
 let g:polyglot_disabled = ['go']
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_operators = 1
-let g:go_auto_type_info = 1
+let g:go_auto_type_info = 0
 let g:go_auto_sameids = 0
-let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'test']
+let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_deadline = "5s"
 let g:go_fmt_command = "goimports"
-let g:go_def_mode='gopls'
-let g:go_info_mode='gopls'
+let g:go_def_mode='godef'
+let g:go_info_mode='godef'
+" let go_debug=['shell-commands']
 
 " Minibuffer Explorer Settings
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1
+
 let g:rubycomplete_rails = 1
-" let g:auto_save = 1  " enable AutoSave on Vim startup
-" let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
+let g:rails_default_file='config/database.yml'
 " Change which file opens after executing :Rails command
 
 let g:AutoPairsShortcutFastWrap   = '´' " <m-m>
@@ -150,7 +157,6 @@ let g:AutoPairsShortcutToggle     = 'π' " <m-p>
 let g:AutoPairsShortcutJump       = '∆' " <m-j>
 let g:AutoPairsShortcutBackInsert = '∫' " <m-b>
 
-let g:rails_default_file='config/database.yml'
 
 let g:lightline = {
       \ 'colorscheme': 'solarized',
@@ -163,30 +169,6 @@ let g:lightline = {
       \ },
       \ }
 
-" Set high visibility for diff mode
-" let g:Powerline_symbols = 'unicode'
-" let g:airline_powerline_fonts = 1
-" let g:airline#extensions#syntastic#enabled = 1
-" let g:airline_theme = "dark"
-" if !exists('g:airline_symbols')
-"   let g:airline_symbols = {}
-" endif
-" let g:airline_symbols.branch = '⎇ '
-" let g:airline_symbols.paste = 'ρ'
-" let g:airline_mode_map = {
-"             \ '__' : '-',
-"             \ 'n'  : 'N',
-"             \ 'i'  : 'I',
-"             \ 'R'  : 'R',
-"             \ 'c'  : 'C',
-"             \ 'v'  : 'V',
-"             \ 'V'  : 'V',
-"             \ '' : 'V',
-"             \ 's'  : 'S',
-"             \ 'S'  : 'S',
-"             \ '' : 'S',
-"             \ }
-
 "ruby
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
@@ -197,6 +179,7 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 "go
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 autocmd FileType go nmap <leader>b  <Plug>(go-build)
+autocmd FileType go nmap <Leader>i <Plug>(go-info)
 
 "improve autocomplete menu color
 highlight Pmenu ctermbg=238 gui=bold
@@ -221,13 +204,15 @@ map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 " let g:rspec_command = "!rspec --drb {spec}"
-let mapleader = '\'
+
 " NERD tree
 let NERDChristmasTree=0
 let NERDTreeWinSize=35
 let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
 let NERDTreeShowBookmarks=1
 let NERDTreeWinPos="left"
+let NERDTreeShowHidden=1
+
 " Automatically open a NERDTree if no files where specified
 " autocmd vimenter * if !argc() | NERDTree | endif
 " Close vim if the only window left open is a NERDTree
@@ -284,6 +269,7 @@ endif
 
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
+  let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 endif
 
 "}}}

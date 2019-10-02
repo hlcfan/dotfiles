@@ -9,6 +9,7 @@
   br = branch
   d = diff
   last = diff HEAD^
+  pullr = pull --rebase --stat
 [core]
   excludesfile = /Users/alexshi/.gitignore_global
   editor = vim
@@ -34,4 +35,4 @@
 [credential]
   helper = osxkeychain
 [commit]
-  gpgsign = true
+  gpgsign = false
