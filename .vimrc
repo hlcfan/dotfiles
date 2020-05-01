@@ -30,7 +30,7 @@ Plug 'henrik/vim-reveal-in-finder'
 Plug 'osyo-manga/vim-anzu'
 Plug 'thoughtbot/vim-rspec'
 Plug 'mileszs/ack.vim'
-Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 "Extra plugins
 runtime! plugin/matchit.vim
