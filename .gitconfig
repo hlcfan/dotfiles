@@ -34,5 +34,7 @@
   required = true
 [credential]
   helper = osxkeychain
+  ; helper = store --file ~/.git-credentials
+  ; helper = cache --timeout 30000
 [commit]
   gpgsign = false
