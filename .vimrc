@@ -30,6 +30,7 @@ Plug 'henrik/vim-reveal-in-finder'
 Plug 'osyo-manga/vim-anzu'
 Plug 'thoughtbot/vim-rspec'
 Plug 'mileszs/ack.vim'
+" Plug '/usr/bin/fzf'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 "Extra plugins
@@ -269,7 +270,7 @@ endif
 
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
-  let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+  let $FZF_DEFAULT_COMMAND = 'ag -g "" --ignore {".beam"}'
 endif
 
 "}}}
