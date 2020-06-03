@@ -232,6 +232,8 @@ xmap ga <Plug>(EasyAlign)
 vnoremap // y/<C-R>"<CR>
 " Clear the search buffer when hitting return
 nnoremap <CR> :nohlsearch<CR>
+nnoremap ˜ :tabnew<CR><Esc>
+nnoremap ∑ :tabclose<CR>
 
 " Make <leader>' switch between ' and "
 nnoremap ,' ""yls<C-r>={'"': "'", "'": '"'}[@"]<CR><Esc>
