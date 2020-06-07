@@ -15,7 +15,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-rails'
 " Plug 'vim-ruby/vim-ruby'
 Plug 'fatih/vim-go', { 'tag': 'v1.19', 'do': ':GoUpdateBinaries' }
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-vinegar'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-easy-align'
@@ -33,6 +33,8 @@ Plug 'mileszs/ack.vim'
 " Plug '/usr/bin/fzf'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'elixir-editors/vim-elixir'
+Plug 'slashmili/alchemist.vim'
 "Extra plugins
 runtime! plugin/matchit.vim
 runtime! macros/matchit.vim
@@ -234,6 +236,16 @@ vnoremap // y/<C-R>"<CR>
 nnoremap <CR> :nohlsearch<CR>
 nnoremap ˜ :tabnew<CR><Esc>
 nnoremap ∑ :tabclose<CR>
+
+if has("unix")
+  if has("mac")
+    nnoremap ˜ :tabnew<CR><Esc>
+    nnoremap ∑ :tabclose<CR>
+  else
+    nnoremap <C-n> :tabnew<CR><Esc>
+    nnoremap <C-w> :tabclose<CR>
+  endif
+endif
 
 " Make <leader>' switch between ' and "
 nnoremap ,' ""yls<C-r>={'"': "'", "'": '"'}[@"]<CR><Esc>
