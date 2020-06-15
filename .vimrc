@@ -14,7 +14,7 @@ Plug 'airblade/vim-gitgutter'
 " Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-rails'
 " Plug 'vim-ruby/vim-ruby'
-Plug 'fatih/vim-go', { 'tag': 'v1.19', 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go', { 'tag': 'v1.22', 'do': ':GoUpdateBinaries' }
 " Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-vinegar'
 Plug 'jiangmiao/auto-pairs'
@@ -73,11 +73,11 @@ set backupdir=~/.vim/tmp/backup
 set directory=~/.vim/tmp/backup
 
 if !isdirectory(expand(&undodir))
-    call mkdir(expand(&undodir), "p")
+  call mkdir(expand(&undodir), "p")
 endif
 
 if !isdirectory(expand(&backupdir))
-    call mkdir(expand(&backupdir), "p")
+  call mkdir(expand(&backupdir), "p")
 endif
 set matchpairs+=<:>
 set hlsearch
@@ -130,19 +130,21 @@ set wildignore+=node_modules/**
 let mapleader = '\'
 
 let g:polyglot_disabled = ['go']
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_operators = 1
+" let g:go_highlight_types = 1
+" let g:go_highlight_fields = 1
+" let g:go_highlight_functions = 1
+" let g:go_highlight_function_calls = 1
+" let g:go_highlight_operators = 1
 let g:go_auto_type_info = 0
 let g:go_auto_sameids = 0
-let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
-let g:go_metalinter_autosave = 1
+" let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
+" let g:go_metalinter_autosave = 1
 let g:go_metalinter_deadline = "5s"
 let g:go_fmt_command = "goimports"
-let g:go_def_mode='godef'
-let g:go_info_mode='godef'
+" let g:go_def_mode='gopls'
+" let g:go_info_mode='gopls'
+let g:go_rename_command = 'gopls'
+" let g:go_list_autoclose = 0
 " let go_debug=['shell-commands']
 
 " Minibuffer Explorer Settings
