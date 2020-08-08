@@ -11,7 +11,8 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-" Plug 'pangloss/vim-javascript'
+Plug 'pangloss/vim-javascript'
+Plug 'maxmellon/vim-jsx-pretty'
 Plug 'tpope/vim-rails'
 " Plug 'vim-ruby/vim-ruby'
 Plug 'fatih/vim-go', { 'tag': 'v1.22', 'do': ':GoUpdateBinaries' }
@@ -64,6 +65,8 @@ set numberwidth=5
 " set relativenumber
 set ruler
 set report=0
+set smarttab
+set cindent
 
 " swap files
 set backup
@@ -147,6 +150,8 @@ let g:go_rename_command = 'gopls'
 " let g:go_list_autoclose = 0
 " let go_debug=['shell-commands']
 
+let g:javascript_plugin_jsdoc = 1
+
 " Minibuffer Explorer Settings
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
@@ -185,6 +190,9 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 autocmd FileType go nmap <leader>b  <Plug>(go-build)
 autocmd FileType go nmap <Leader>i <Plug>(go-info)
+
+"javascript
+autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
 
 "improve autocomplete menu color
 highlight Pmenu ctermbg=238 gui=bold
@@ -236,8 +244,6 @@ xmap ga <Plug>(EasyAlign)
 vnoremap // y/<C-R>"<CR>
 " Clear the search buffer when hitting return
 nnoremap <CR> :nohlsearch<CR>
-nnoremap ˜ :tabnew<CR><Esc>
-nnoremap ∑ :tabclose<CR>
 
 if has("unix")
   if has("mac")
@@ -245,7 +251,7 @@ if has("unix")
     nnoremap ∑ :tabclose<CR>
   else
     nnoremap <C-n> :tabnew<CR><Esc>
-    nnoremap <C-w> :tabclose<CR>
+    nnoremap <C-b> :tabclose<CR>
   endif
 endif
 
