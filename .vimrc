@@ -4,7 +4,8 @@ filetype plugin indent on
 " {{{ Plug List
 call plug#begin('~/.vim/bundle')
 " Plug 'tpope/vim-pathogen'
-Plug 'altercation/vim-colors-solarized'
+" Plug 'altercation/vim-colors-solarized'
+Plug 'morhetz/gruvbox'
 " Plug 'tssm/fairyfloss.vim'
 " Plug 'endel/vim-github-colorscheme'
 Plug 'kchmck/vim-coffee-script'
@@ -85,11 +86,12 @@ endif
 set matchpairs+=<:>
 set hlsearch
 
-" colorscheme fairyfloss
-let g:solarized_termcolors=256
-set background=light
-colorscheme solarized
-color solarized
+" let g:solarized_termcolors=256
+set background=dark
+" colorscheme gruvbox
+" color solarized
+
+" Git diff color sets
 hi DiffAdd      gui=none    guifg=NONE          guibg=#bada9f
 hi DiffChange   gui=none    guifg=NONE          guibg=#e5d5ac
 hi DiffDelete   gui=bold    guifg=#ff8080       guibg=#ffb0b0
@@ -141,7 +143,8 @@ let g:polyglot_disabled = ['go']
 let g:go_auto_type_info = 0
 let g:go_auto_sameids = 0
 " let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
-" let g:go_metalinter_autosave = 1
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_autosave = 1
 let g:go_metalinter_deadline = "5s"
 let g:go_fmt_command = "goimports"
 " let g:go_def_mode='gopls'
@@ -149,6 +152,7 @@ let g:go_fmt_command = "goimports"
 let g:go_rename_command = 'gopls'
 " let g:go_list_autoclose = 0
 " let go_debug=['shell-commands']
+let g:go_jump_to_error = 0
 
 let g:javascript_plugin_jsdoc = 1
 
@@ -169,7 +173,7 @@ let g:AutoPairsShortcutBackInsert = '∫' " <m-b>
 
 
 let g:lightline = {
-      \ 'colorscheme': 'solarized',
+      \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ]
