@@ -19,13 +19,11 @@ Plug 'tpope/vim-rails'
 Plug 'fatih/vim-go', { 'tag': 'v1.22', 'do': ':GoUpdateBinaries' }
 " Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-vinegar'
-Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdtree'
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-endwise'
 " Plug 'elixir-editors/vim-elixir'
 Plug 'itchyny/lightline.vim'
 Plug 'henrik/vim-reveal-in-finder'
@@ -37,6 +35,9 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'slashmili/alchemist.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'tpope/vim-endwise'
+Plug 'jiangmiao/auto-pairs'
 "Extra plugins
 runtime! plugin/matchit.vim
 runtime! macros/matchit.vim
@@ -75,6 +76,58 @@ set noswapfile
 set undodir=~/.vim/tmp/undo
 set backupdir=~/.vim/tmp/backup
 set directory=~/.vim/tmp/backup
+set maxmempattern=5000
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 if !isdirectory(expand(&undodir))
   call mkdir(expand(&undodir), "p")
@@ -88,8 +141,8 @@ set hlsearch
 
 " let g:solarized_termcolors=256
 set background=dark
-" colorscheme gruvbox
-" color solarized
+colorscheme gruvbox
+color gruvbox
 
 " Git diff color sets
 hi DiffAdd      gui=none    guifg=NONE          guibg=#bada9f
@@ -143,16 +196,23 @@ let g:polyglot_disabled = ['go']
 let g:go_auto_type_info = 0
 let g:go_auto_sameids = 0
 " let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck']
-let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
-let g:go_metalinter_autosave = 1
-let g:go_metalinter_deadline = "5s"
+
+"" let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+
+" let g:go_metalinter_autosave = 1
+
+"" let g:go_metalinter_deadline = "5s"
 let g:go_fmt_command = "goimports"
+
 " let g:go_def_mode='gopls'
 " let g:go_info_mode='gopls'
+"
 let g:go_rename_command = 'gopls'
+
 " let g:go_list_autoclose = 0
 " let go_debug=['shell-commands']
-let g:go_jump_to_error = 0
+
+"" let g:go_jump_to_error = 0
 
 let g:javascript_plugin_jsdoc = 1
 
@@ -170,6 +230,7 @@ let g:AutoPairsShortcutFastWrap   = '´' " <m-m>
 let g:AutoPairsShortcutToggle     = 'π' " <m-p>
 let g:AutoPairsShortcutJump       = '∆' " <m-j>
 let g:AutoPairsShortcutBackInsert = '∫' " <m-b>
+let g:AutoPairsMapCR=0
 
 
 let g:lightline = {
@@ -199,7 +260,8 @@ autocmd FileType go nmap <Leader>i <Plug>(go-info)
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
 
 "improve autocomplete menu color
-highlight Pmenu ctermbg=238 gui=bold
+" highlight Pmenu ctermbg=gray gui=bold
+" highlight PmenuSel ctermbg=238 gui=bold
 
 " alt+n or alt+p to navigate between entries in QuickFix
 "map   :cp 
@@ -280,6 +342,7 @@ nmap <Esc><Esc> <Plug>(anzu-clear-search-status)
 " Set up fzf
 map ,f :Files<CR>
 map ,gf :GFiles<CR>
+set rtp+=/usr/local/opt/fzf
 
 " statusline
 set statusline=%{anzu#search_status()}
