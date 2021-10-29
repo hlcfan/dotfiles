@@ -164,7 +164,7 @@ let mapleader = '\'
 " NERD tree
 let NERDChristmasTree=0
 let NERDTreeWinSize=35
-let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
+let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$', 'node_modules', '.git', '_build']
 let NERDTreeShowBookmarks=1
 let NERDTreeWinPos="left"
 let NERDTreeShowHidden=1

@@ -1,11 +1,6 @@
-# Adam's Starship Config
-#
-# Docs: https://starship.rs/config
-# font: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
-# icon reference: https://www.nerdfonts.com/cheat-sheet (use copy icon)
-
 # Don't print a new line at the start of the prompt
 add_newline = false
+command_timeout = 100
 
 [character]
 success_symbol = "[](bold green)"
@@ -31,10 +26,10 @@ show_always = true
 
 [directory]
 read_only = "  "
-format = "[ $path]($style)[$read_only]($read_only_style)"
+format = "[ $path]($style) [$read_only]($read_only_style)"
 style = "bold cyan"
 truncation_length = 1
-home_symbol = "\\e[2D  " # go back 2 characters and overwrite the folder symbol
+home_symbol = "" # go back 2 characters and overwrite the folder symbol
 
 [git_branch]
 # symbol = " "
@@ -49,7 +44,8 @@ style = "bold yellow"
 
 [elixir]
 symbol = " "
-format = ' [$symbol($version )]($style)[ ($otp_version)](bold red)'
+# format = '[$symbol($version )]($style)[ ($otp_version)](bold red)'
+format = 'via [$symbol($version \(OTP $otp_version\) )]($style)'
 
 [erlang]
 symbol = " "
@@ -83,8 +79,11 @@ symbol = " "
 [dart]
 symbol = " "
 
-[docker]
-symbol = " "
+# [docker]
+# symbol = " "
+
+[docker_context]
+format = "via [🐋 $context](blue bold)"
 
 [elm]
 symbol = " "
@@ -92,8 +91,8 @@ symbol = " "
 [golang]
 symbol = " "
 
-[haskell]
-symbol = " "
+# [haskell]
+# symbol = " "
 
 [hg_branch]
 symbol = " "
