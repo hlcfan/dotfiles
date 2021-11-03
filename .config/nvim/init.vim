@@ -9,11 +9,14 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/vim-easy-align'
 Plug 'osyo-manga/vim-anzu'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'tpope/vim-surround'
 
 " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
 Plug 'fatih/vim-go', { 'tag': '*' }
 Plug 'elixir-editors/vim-elixir'
 Plug 'slashmili/alchemist.vim'
+Plug 'yuezk/vim-js'
+Plug 'leafOfTree/vim-vue-plugin'
 Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
 
@@ -84,7 +87,7 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
@@ -168,6 +171,8 @@ let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$', 'node_modules', '.git', '_build']
 let NERDTreeShowBookmarks=1
 let NERDTreeWinPos="left"
 let NERDTreeShowHidden=1
+
+" let g:fzf_preview_window = ['right:50%', 'ctrl-/']
 
 " Automatically open a NERDTree if no files where specified
 " autocmd vimenter * if !argc() | NERDTree | endif
