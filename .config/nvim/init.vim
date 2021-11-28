@@ -12,13 +12,15 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tpope/vim-surround'
 
 " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-Plug 'fatih/vim-go', { 'tag': '*' }
+Plug 'fatih/vim-go', { 'tag': 'v1.25' }
 Plug 'elixir-editors/vim-elixir'
 Plug 'slashmili/alchemist.vim'
 Plug 'yuezk/vim-js'
 Plug 'leafOfTree/vim-vue-plugin'
 Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
+
+Plug 'mileszs/ack.vim'
 
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -106,6 +108,18 @@ endfunction
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
+"ruby
+autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd Filetype gitcommit setlocal spell textwidth=72
+
+"go
+autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+autocmd FileType go nmap <Leader>i <Plug>(go-info)
+
 if !isdirectory(expand(&undodir))
   call mkdir(expand(&undodir), "p")
 endif
@@ -172,6 +186,9 @@ let NERDTreeShowBookmarks=1
 let NERDTreeWinPos="left"
 let NERDTreeShowHidden=1
 
+let g:go_auto_sameids = 1
+let g:go_auto_type_info = 1
+
 " let g:fzf_preview_window = ['right:50%', 'ctrl-/']
 
 " Automatically open a NERDTree if no files where specified
@@ -180,6 +197,7 @@ let NERDTreeShowHidden=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 " Open a NERDTree
 nmap <F5> :NERDTreeToggle<cr>
+map <C-F> :Ack<Space>
 
 let g:AutoPairsShortcutFastWrap   = '´' " <m-m>
 let g:AutoPairsShortcutToggle     = 'π' " <m-p>
