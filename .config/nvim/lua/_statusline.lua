@@ -116,6 +116,7 @@ lualine.setup({
       components.diagnostics,
     },
     lualine_y = {
+      "progress",
       components.treesitter,
     },
     lualine_z = {},
