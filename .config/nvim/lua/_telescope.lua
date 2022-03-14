@@ -39,3 +39,9 @@ require('telescope').load_extension('fzf')
 trouble.setup({
   icons = false,
 })
+
+-- require('cmp').setup {
+--   sources = {
+--     { name = 'copilot' }
+--   }
+-- }

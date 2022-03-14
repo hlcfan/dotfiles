@@ -103,7 +103,7 @@ lualine.setup({
   },
   sections = {
     lualine_a = {
-      
+
     },
     lualine_b = {
       components.filename,
@@ -116,9 +116,11 @@ lualine.setup({
       components.diagnostics,
     },
     lualine_y = {
+      "progress",
       components.treesitter,
     },
-    lualine_z = {},
+    lualine_z = {
+    },
   },
   inactive_sections = {
     lualine_a = {},

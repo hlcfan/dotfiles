@@ -10,15 +10,15 @@ treesitter.setup({
     enable = true,
     additional_vim_regex_highlighting = false,
   },
-  indent = {
-    enable = false
-  },
+  -- indent = {
+  --   enable = false
+  -- },
   textobjects = {
     move = {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
       goto_next_start = {
-        ["]]"] = "@function.outer",
+        ["]m"] = "@function.outer",
         ["]]"] = "@block.outer",
       },
       goto_next_end = {
