@@ -14,3 +14,9 @@
 - `i` installs server
 - `u` updates server
 - `?` toggles commands
+
+## Dependencies
+
+- Ag
+- Rg
+- Fzf
