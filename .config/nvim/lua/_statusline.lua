@@ -103,10 +103,14 @@ lualine.setup({
   },
   sections = {
     lualine_a = {
-
+      {
+        'filename',
+        file_status = true,
+        path = 1,
+      }
     },
     lualine_b = {
-      components.filename,
+      components.location,
     },
     lualine_c = {
       'branch'
@@ -132,13 +136,13 @@ lualine.setup({
     lualine_y = {},
     lualine_z = {},
   },
-  -- tabline = {
-  --   lualine_a = {},
-  --   lualine_b = { components.buffers },
-  --   lualine_c = {},
-  --   lualine_x = {},
-  --   lualine_y = { components.tabs },
-  --   lualine_z = {},
-  -- },
+  tabline = {
+    lualine_a = {},
+    lualine_b = { components.buffers },
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = { components.tabs },
+    lualine_z = {},
+  },
   extensions = { "nvim-tree" },
 })
