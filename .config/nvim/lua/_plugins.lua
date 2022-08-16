@@ -47,6 +47,7 @@ return packer.startup(function()
     "editorconfig/editorconfig-vim",
     "lukas-reineke/indent-blankline.nvim"
   })
+  use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
   -- A vim theme repo
   use {"morhetz/gruvbox"}
   use {
