@@ -12,6 +12,10 @@ vim.cmd("set notermguicolors")
 -- vim.cmd([[colorscheme whimsical-vim]])
 -- vim.cmd([[color whimsical-vim]])
 
+vim.cmd([[hi DiffAdd      ctermfg=NONE          ctermbg=LightGray]])
+vim.cmd([[hi DiffChange      ctermfg=NONE          ctermbg=LightGray]])
+vim.cmd([[hi DiffText      ctermfg=NONE          ctermbg=LightGray]])
+
 -- important to import after colorscheme
 require("_statusline")
 require("_gitsigns")

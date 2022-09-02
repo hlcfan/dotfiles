@@ -1,5 +1,8 @@
 /.vim/bundle/
 .vim/.netrwhist
-/.config/configstore/
-/.config/gcloud/
-/.config/iterm2/
+/.config/configstore
+/.config/gcloud
+/.config/iterm2
+/.config/gochromecast
+/.config/gtk-2.0
+
