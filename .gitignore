@@ -1,2 +1,5 @@
 /.vim/bundle/
-/.vim/.netrwhist
+.vim/.netrwhist
+/.config/configstore/
+/.config/gcloud/
+/.config/iterm2/

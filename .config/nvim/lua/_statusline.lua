@@ -95,7 +95,7 @@ end
 -- define how the statusline and tabline appear
 lualine.setup({
   options = {
-    theme = 'gruvbox',
+    theme = 'auto',
     icons_enabled = false,
     component_separators = { left = "", right = "" },
     section_separators = { left = "", right = "" },

@@ -9,8 +9,8 @@ require("_terminal")
 require("_autopairs")
 
 vim.cmd("set notermguicolors")
-vim.cmd([[colorscheme gruvbox]])
-vim.cmd([[color gruvbox]])
+-- vim.cmd([[colorscheme whimsical-vim]])
+-- vim.cmd([[color whimsical-vim]])
 
 -- important to import after colorscheme
 require("_statusline")
