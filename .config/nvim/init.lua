@@ -9,6 +9,7 @@ require("_terminal")
 require("_autopairs")
 
 vim.cmd("set notermguicolors")
+vim.cmd('colorscheme base16-rebecca')
 -- vim.cmd([[colorscheme whimsical-vim]])
 -- vim.cmd([[color whimsical-vim]])
 
