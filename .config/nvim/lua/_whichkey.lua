@@ -71,6 +71,9 @@ local which_key = {
       n = { ":bn<cr>", "Next" },
       p = { ":bp<cr>", "Previous" },
     },
+    f = {
+      f = { ":%! fm<cr>", "Format JSON/XML" },
+    },
     g = {
       name = "Git",
       d = { ":tabe % <CR> :Gitsigns diffthis<CR>", "Diff" },
