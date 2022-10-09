@@ -71,9 +71,6 @@ local which_key = {
       n = { ":bn<cr>", "Next" },
       p = { ":bp<cr>", "Previous" },
     },
-    f = {
-      f = { ":%! fm<cr>", "Format JSON/XML" },
-    },
     g = {
       name = "Git",
       d = { ":tabe % <CR> :Gitsigns diffthis<CR>", "Diff" },
@@ -152,6 +149,7 @@ utils.map("n", "<C-w>c", "<C-w>c<C-w>p")
 -- utils.map("n", "<C-l>", ":wincmd l<CR>")
 utils.map("n", "<CR>", ":nohlsearch<CR>")
 utils.map("n", "<F5>", ":NvimTreeToggle<CR>")
+utils.map("n", "<F2>", ":%! fm<CR>")
 utils.map("n", "<C-f>", ":Telescope live_grep<CR>")
 utils.map("t", "<Esc>", "<C-\\><C-n>")
 

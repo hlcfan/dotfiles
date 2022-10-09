@@ -63,7 +63,7 @@ cmp.setup({
       -- vim.fn["UltiSnips#Anon"](args.body)
     end,
   },
-  mapping = {
+  mapping = cmp.mapping.preset.insert({
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
@@ -71,15 +71,17 @@ cmp.setup({
     ["<CR>"] = cmp.mapping.confirm({ select = false }),
     ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "s" }),
     ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "s" }),
-  },
-  sources = {
+  }),
+  sources = cmp.config.sources({
     { name = "nvim_lsp" },
     { name = "luasnip" },
     -- { name = "ultisnips" },
     -- { name = "vsnip" },
+  },
+  {
     { name = "buffer" },
     { name = "path" },
-  },
+  }),
 })
 
 -- function to attach completion when setting up lsp
@@ -119,7 +121,7 @@ end)
 
 -- diagnostics
 vim.diagnostic.config({
-  virtual_text = false,
+  virtual_text = true,
   underline = true,
   float = {
     source = "always",
