@@ -6,7 +6,7 @@ end
 local sources = {
   require("null-ls").builtins.formatting.stylua,
   require("null-ls").builtins.diagnostics.eslint,
-  require("null-ls").builtins.completion.spell,
+  -- require("null-ls").builtins.completion.spell,
   -- null_ls.builtins.formatting.stylua,
   -- null_ls.builtins.formatting.black,
   -- null_ls.builtins.formatting.prettier,

@@ -38,6 +38,7 @@ return packer.startup(function()
     -- A plugin for setting Neovim LSP with JSON files
     "tamago324/nlsp-settings.nvim",
     "wbthomason/packer.nvim",
+    "onsails/lspkind.nvim",
     -- or nvim-lspconfig that allows you to seamlessly manage LSP servers locally
     "williamboman/nvim-lsp-installer",
     -- "rafamadriz/friendly-snippets",

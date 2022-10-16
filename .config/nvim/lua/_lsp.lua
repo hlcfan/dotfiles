@@ -33,6 +33,13 @@ if not cmp_nvim_lsp_ok then
   return
 end
 
+local ok, lspkind = pcall(require, "lspkind")
+if not ok then
+  return
+end
+
+lspkind.init()
+
 local _default_opts = win.default_opts
 
 nlspsettings.setup()
@@ -54,6 +61,14 @@ lsp_status.config({
   update_interval = 200,
 })
 
+local source_mapping = {
+  buffer = "[Buffer]",
+  nvim_lsp = "[LSP]",
+  nvim_lua = "[Lua]",
+  cmp_tabnine = "[TabNine]",
+  path = "[Path]",
+}
+
 -- completion setup
 cmp.setup({
   snippet = {
@@ -74,14 +89,35 @@ cmp.setup({
   }),
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
+    { name = 'cmp_tabnine' },
     { name = "luasnip" },
-    -- { name = "ultisnips" },
-    -- { name = "vsnip" },
-  },
-  {
     { name = "buffer" },
     { name = "path" },
+    -- { name = "ultisnips" },
+    -- { name = "vsnip" },
   }),
+  formatting = {
+    format = function(entry, vim_item)
+      -- if you have lspkind installed, you can use it like
+      -- in the following line:
+      vim_item.kind = lspkind.symbolic(vim_item.kind, {mode = "symbol"})
+      vim_item.menu = source_mapping[entry.source.name]
+      if entry.source.name == "cmp_tabnine" then
+        local detail = (entry.completion_item.data or {}).detail
+        vim_item.kind = ""
+        if detail and detail:find('.*%%.*') then
+          vim_item.kind = vim_item.kind .. ' ' .. detail
+        end
+
+        if (entry.completion_item.data or {}).multiline then
+          vim_item.kind = vim_item.kind .. ' ' .. '[ML]'
+        end
+      end
+      local maxwidth = 80
+      vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
+      return vim_item
+    end,
+  },
 })
 
 -- function to attach completion when setting up lsp
@@ -110,6 +146,7 @@ lsp_installer.settings({
     },
   },
 })
+
 lsp_installer.on_server_ready(function(server)
   local opts = {
     on_attach = on_attach,
@@ -119,33 +156,3 @@ lsp_installer.on_server_ready(function(server)
   server:setup(opts)
 end)
 
--- diagnostics
-vim.diagnostic.config({
-  virtual_text = false,
-  underline = true,
-  float = {
-    source = "always",
-  },
-  severity_sort = true,
-  --[[ virtual_text = {
-      prefix = "»",
-      spacing = 4,
-    }, ]]
-  signs = true,
-  update_in_insert = false,
-})
-
-vim.api.nvim_create_autocmd("CursorHold", {
-  buffer = bufnr,
-  callback = function()
-    local opts = {
-      focusable = false,
-      close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-      border = 'rounded',
-      source = 'always',
-      prefix = ' ',
-      scope = 'cursor',
-    }
-    vim.diagnostic.open_float(nil, opts)
-  end
-})
