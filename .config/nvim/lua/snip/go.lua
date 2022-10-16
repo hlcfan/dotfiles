@@ -1,6 +1,9 @@
 require("luasnip.session.snippet_collection").clear_snippets "go"
 
-local ls = require "luasnip"
+local ls_ok, ls = pcall(require, "luasnip")
+if not ls_ok then
+  return
+end
 
 local snippet_from_nodes = ls.sn
 

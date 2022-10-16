@@ -8,6 +8,8 @@ require("_null-ls")
 require("_terminal")
 require("_autopairs")
 require("diagnostic")
+require("snip")
+require("snip/go")
 
 vim.cmd("set notermguicolors")
 vim.cmd('colorscheme base16-rebecca')
