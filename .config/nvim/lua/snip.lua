@@ -3,10 +3,7 @@
 local ls_ok, ls = pcall(require, "luasnip")
 
 if not ls_ok then
-  print("Too bad!")
   return
-else
-  print("OK!")
 end
 
 vim.keymap.set({ "i", "s" }, "<c-k>", function()
