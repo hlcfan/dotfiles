@@ -43,6 +43,7 @@ return packer.startup(function()
     "williamboman/nvim-lsp-installer",
     -- "rafamadriz/friendly-snippets",
     "tpope/vim-surround",
+    "tpope/vim-rails",
     "windwp/nvim-autopairs",
     "b3nj5m1n/kommentary",
     "editorconfig/editorconfig-vim",

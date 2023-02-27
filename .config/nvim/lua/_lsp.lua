@@ -69,6 +69,11 @@ local source_mapping = {
   path = "[Path]",
 }
 
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
 -- completion setup
 cmp.setup({
   snippet = {
@@ -84,9 +89,21 @@ cmp.setup({
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.close(),
     ["<CR>"] = cmp.mapping.confirm({ select = false }),
-    ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "s" }),
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+      end
+    end, { "i", "s" }),
     ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "s" }),
   }),
+  window = {
+    -- completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
     { name = 'cmp_tabnine' },
@@ -120,6 +137,43 @@ cmp.setup({
   },
 })
 
+cmp.setup.cmdline('/', {
+  view = {
+    entries = {name = 'wildmenu', separator = '|' }
+  },
+})
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()) --nvim-cmp
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+local nvim_lsp = require('lspconfig')
+
+-- setup languages
+-- GoLang
+nvim_lsp['gopls'].setup{
+  cmd = {'gopls'},
+  on_attach = function(client, bufnr)
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  end,
+  capabilities = capabilities,
+  settings = {
+    gopls = {
+      experimentalPostfixCompletions = true,
+      analyses = {
+        unusedparams = true,
+        shadow = true,
+      },
+      staticcheck = true,
+    },
+  },
+  init_options = {
+    usePlaceholders = true,
+  }
+}
+
 -- function to attach completion when setting up lsp
 local on_attach = function(client)
   lsp_status.register_progress()
@@ -135,6 +189,8 @@ local on_attach = function(client)
   utils.bufmap("n", "K", "lua vim.lsp.buf.hover()")
   utils.bufmap("n", "gl", "lua vim.diagnostic.open_float()")
 end
+
+nvim_lsp.ruby_ls.setup({})
 
 -- Provide settings first!
 lsp_installer.settings({

@@ -17,6 +17,6 @@ EOF
 
 augroup GO_LSP
 	autocmd!
-	autocmd BufWritePre *.go :silent! lua vim.lsp.buf.formatting()
+	autocmd BufWritePre *.go :silent! lua vim.lsp.buf.format({ async = true })
 	autocmd BufWritePre *.go :silent! lua org_imports(3000)
 augroup END
