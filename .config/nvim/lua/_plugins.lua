@@ -54,9 +54,9 @@ return packer.startup(function()
   -- use {"morhetz/gruvbox"}
   use {'RRethy/nvim-base16'}
   use {
-    'kyazdani42/nvim-tree.lua',
+    'nvim-tree/nvim-tree.lua',
     requires = {
-      'kyazdani42/nvim-web-devicons', -- optional, for file icon
+      'nvim-tree/nvim-web-devicons', -- optional, for file icon
     },
     config = function() require'nvim-tree'.setup {} end
   }
@@ -105,4 +105,7 @@ return packer.startup(function()
   if packer_bootstrap then
     require("packer").sync()
   end
+
+  require("nvim-tree").setup()
 end)
+

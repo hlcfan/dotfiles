@@ -55,3 +55,7 @@ opt.undofile = true -- enable persistent undo
 opt.updatetime = 300 -- faster completion
 opt.wrap = true -- display lines as one long line
 opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program) it is not allowed to be edited
+--
+-- disable netrw at the very start of your init.lua (strongly advised)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
