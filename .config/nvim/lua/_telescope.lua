@@ -10,18 +10,67 @@ end
 
 telescope.setup({
   defaults = {
-    border = true,
-    layout_strategy = "bottom_pane",
+    prompt_prefix = '🔍 ',
+    layout_strategy = 'flex',
+    buffer_previewer_maker = new_maker,
+    -- path_display = { "smart" },
+    path_display = { shorten = { len = 3, exclude = { 1, -1, -2 } } },
+    preview = {
+      timeout = 100,
+      filesize_limit = 2,
+      filesize_hook = function(filepath, bufnr, opts)
+        local path = require('plenary.path'):new(filepath)
+        -- opts exposes winid
+        local height = vim.api.nvim_win_get_height(opts.winid) * 3 / 2
+        local lines = vim.split(path:head(height), '[\r]?\n')
+        vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+        vim.api.nvim_buf_set_option(bufnr, 'ft', opts.ft)
+      end,
+      timeout_hook = function(filepath, bufnr, opts)
+        local path = require('plenary.path'):new(filepath)
+        -- opts exposes winid
+        local height = vim.api.nvim_win_get_height(opts.winid) * 3 / 2
+        local lines = vim.split(path:head(height), '[\r]?\n')
+        vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+        vim.api.nvim_buf_set_option(bufnr, 'ft', opts.ft)
+      end,
+    },
     layout_config = {
-      height = 0.30,
-      width = 1.00,
+      prompt_position = 'top',
+      width = 0.9,
+      horizontal = {
+        -- width_padding = 0.1,
+        -- height_padding = 0.1,
+        -- preview_cutoff = 60,
+        -- width = width_for_nopreview,
+        preview_width = horizontal_preview_width,
+      },
+      vertical = {
+        -- width_padding = 0.05,
+        -- height_padding = 1,
+        width = 0.75,
+        height = 0.85,
+        preview_height = 0.4,
+        mirror = true,
+      },
+      flex = {
+        -- change to horizontal after 120 cols
+        flip_columns = 160,
+      },
     },
     -- path_display = { "shorten" },
     sorting_strategy = "ascending",
     file_ignore_patterns = {
       "node_modules",
       "^_build"
-    }
+    },
+    border = true,
+    borderchars = {
+      { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+      prompt = { '─', '│', ' ', '│', '╭', '╮', '│', '│' },
+      results = { '─', '│', '─', '│', '├', '┬', '┴', '╰' },
+      preview = { '─', '│', '─', '│', '╭', '┤', '╯', '╰' },
+    },
   },
   extensions = {
     fzf = {
@@ -39,7 +88,6 @@ require('telescope').load_extension('fzf')
 trouble.setup({
   icons = false,
 })
-
 
 -- require('cmp').setup {
 --   sources = {
