@@ -82,7 +82,7 @@ local components = {
       if next(vim.treesitter.highlighter.active[b]) then
         return ""
       end
-      return ""
+      return {}
     end,
   },
 }
@@ -121,7 +121,7 @@ lualine.setup({
     },
     lualine_y = {
       "progress",
-      -- components.treesitter,
+      components.treesitter,
     },
     lualine_z = {
     },
