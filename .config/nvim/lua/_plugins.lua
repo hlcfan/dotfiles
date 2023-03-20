@@ -100,6 +100,16 @@ return packer.startup(function()
       })
     end,
   })
+  use({
+    'glepnir/dashboard-nvim',
+    event = 'VimEnter',
+    config = function()
+      require('dashboard').setup {
+        theme = 'hyper' --  theme is doom and hyper default is hyper
+      }
+    end,
+    requires = {'nvim-tree/nvim-web-devicons'}
+  })
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if packer_bootstrap then

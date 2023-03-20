@@ -121,7 +121,7 @@ lualine.setup({
     },
     lualine_y = {
       "progress",
-      components.treesitter,
+      -- components.treesitter,
     },
     lualine_z = {
     },
