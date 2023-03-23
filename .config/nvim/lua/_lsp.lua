@@ -38,6 +38,11 @@ if not ok then
   return
 end
 
+local ok, lua_snip = pcall(require, "luasnip")
+if not ok then
+  return
+end
+
 lspkind.init()
 
 local _default_opts = win.default_opts
@@ -62,6 +67,7 @@ lsp_status.config({
 })
 
 local source_mapping = {
+  luasnip = "[Snip]",
   buffer = "[Buffer]",
   nvim_lsp = "[LSP]",
   nvim_lua = "[Lua]",
@@ -79,19 +85,22 @@ cmp.setup({
   snippet = {
     expand = function(args)
       -- vim.fn["vsnip#anonymous"](args.body)
-      require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
+      lua_snip.lsp_expand(args.body) -- For `luasnip` users.
       -- vim.fn["UltiSnips#Anon"](args.body)
     end,
   },
+  preselect = cmp.PreselectMode.None,
   mapping = cmp.mapping.preset.insert({
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.close(),
-    ["<CR>"] = cmp.mapping.confirm({ select = false }),
+    ["<CR>"] = cmp.mapping.confirm({ select = true }),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
+      elseif lua_snip.expand_or_jumpable() then
+        lua_snip.expand_or_jump()
       elseif has_words_before() then
         cmp.complete()
       else
@@ -105,9 +114,9 @@ cmp.setup({
     documentation = cmp.config.window.bordered(),
   },
   sources = cmp.config.sources({
+    { name = "luasnip" },
     { name = "nvim_lsp" },
     { name = 'cmp_tabnine' },
-    { name = "luasnip" },
     { name = "buffer" },
     { name = "path" },
     -- { name = "ultisnips" },
