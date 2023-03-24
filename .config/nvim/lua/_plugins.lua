@@ -110,6 +110,7 @@ return packer.startup(function()
     end,
     requires = {'nvim-tree/nvim-web-devicons'}
   })
+  use "rafamadriz/friendly-snippets"
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if packer_bootstrap then
@@ -117,5 +118,7 @@ return packer.startup(function()
   end
 
   require("nvim-tree").setup()
+
+  require("luasnip/loaders/from_vscode").lazy_load()
 end)
 
