@@ -1,95 +1,88 @@
-local fn = vim.fn
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
     "git",
     "clone",
-    "--depth",
-    "1",
-    "https://github.com/wbthomason/packer.nvim",
-    install_path,
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
   })
 end
 
-local packer_ok, packer = pcall(require, "packer")
-if not packer_ok then
-  return
-end
-return packer.startup(function()
-  use({
-    -- Snippet Engine
-    "L3MON4D3/LuaSnip",
-    -- A pretty diagnostics, references, telescope results, quickfix and location list
-    "folke/trouble.nvim",
-    "neovim/nvim-lspconfig",
-    -- CMP
-    "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
-    "hrsh7th/cmp-cmdline",
-    "hrsh7th/nvim-cmp",
-    -- "hrsh7th/cmp-copilot",
-    "jose-elias-alvarez/null-ls.nvim",
-    "nvim-lua/lsp-status.nvim",
-    "nvim-treesitter/nvim-treesitter",
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    -- CMP
-    "saadparwaiz1/cmp_luasnip",
-    -- A plugin for setting Neovim LSP with JSON files
-    "tamago324/nlsp-settings.nvim",
-    "wbthomason/packer.nvim",
-    "onsails/lspkind.nvim",
-    -- or nvim-lspconfig that allows you to seamlessly manage LSP servers locally
-    "williamboman/nvim-lsp-installer",
-    -- "rafamadriz/friendly-snippets",
-    "tpope/vim-surround",
-    "tpope/vim-rails",
-    "windwp/nvim-autopairs",
-    "b3nj5m1n/kommentary",
-    "editorconfig/editorconfig-vim",
-    "lukas-reineke/indent-blankline.nvim"
-  })
-  use {'tzachar/cmp-tabnine', run='./install.sh', requires = 'hrsh7th/nvim-cmp'}
-  -- A vim theme repo
-  -- use {"morhetz/gruvbox"}
-  use {'RRethy/nvim-base16'}
-  use {
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({
+  "nvim-lua/plenary.nvim",
+  -- Snippet Engine
+  "L3MON4D3/LuaSnip",
+  -- A pretty diagnostics, references, telescope results, quickfix and location list
+  "folke/trouble.nvim",
+  "neovim/nvim-lspconfig",
+  -- CMP
+  "hrsh7th/cmp-nvim-lsp",
+  "hrsh7th/cmp-buffer",
+  "hrsh7th/cmp-path",
+  "hrsh7th/cmp-cmdline",
+  "hrsh7th/nvim-cmp",
+  -- "hrsh7th/cmp-copilot",
+  "jose-elias-alvarez/null-ls.nvim",
+  "nvim-lua/lsp-status.nvim",
+  "nvim-treesitter/nvim-treesitter",
+  "nvim-treesitter/nvim-treesitter-textobjects",
+  -- CMP
+  "saadparwaiz1/cmp_luasnip",
+  -- A plugin for setting Neovim LSP with JSON files
+  "tamago324/nlsp-settings.nvim",
+  -- "wbthomason/packer.nvim",
+  "onsails/lspkind.nvim",
+  -- or nvim-lspconfig that allows you to seamlessly manage LSP servers locally
+  "williamboman/nvim-lsp-installer",
+  -- "rafamadriz/friendly-snippets",
+  "tpope/vim-surround",
+  "tpope/vim-rails",
+  "windwp/nvim-autopairs",
+  "b3nj5m1n/kommentary",
+  "editorconfig/editorconfig-vim",
+  "lukas-reineke/indent-blankline.nvim",
+  {
+    'tzachar/cmp-tabnine',
+    build = './install.sh',
+    dependencies = 'hrsh7th/nvim-cmp',
+  },
+  "RRethy/nvim-base16",
+  {
     'nvim-tree/nvim-tree.lua',
-    requires = {
+    dependencies = {
       'nvim-tree/nvim-web-devicons', -- optional, for file icon
     },
     config = function() require'nvim-tree'.setup {} end
-  }
-  use({
+  },
+  {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+  {
     "nvim-telescope/telescope.nvim",
-    requires = {
+    dependencies = {
       "nvim-lua/plenary.nvim",
-      { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     },
-  })
-  use({
+  },
+  {
     "nvim-lualine/lualine.nvim",
-    requires = { "kyazdani42/nvim-web-devicons", opt = true },
-  })
-  use({
+    dependencies = { "nvim-tree/nvim-web-devicons", opt = true },
+  },
+  {
     "folke/which-key.nvim",
     config = function()
       require("which-key").setup({})
     end,
-  })
-  -- use({
-  --   "terrortylor/nvim-comment",
-  --   config = function()
-  --     require("nvim_comment").setup({})
-  --   end,
-  -- })
-  use({
+  },
+  {
     "lewis6991/gitsigns.nvim",
-    requires = {
+    dependencies = {
       'nvim-lua/plenary.nvim'
     },
-  })
-  use({
+  },
+  {
     "ethanholz/nvim-lastplace",
     event = "BufRead",
     config = function()
@@ -99,8 +92,8 @@ return packer.startup(function()
         lastplace_open_folds = true,
       })
     end,
-  })
-  use({
+  },
+  {
     'glepnir/dashboard-nvim',
     event = 'VimEnter',
     config = function()
@@ -108,17 +101,11 @@ return packer.startup(function()
         theme = 'hyper' --  theme is doom and hyper default is hyper
       }
     end,
-    requires = {'nvim-tree/nvim-web-devicons'}
-  })
-  use "rafamadriz/friendly-snippets"
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
-  if packer_bootstrap then
-    require("packer").sync()
-  end
+    dependencies = {'nvim-tree/nvim-web-devicons'}
+  },
+  "rafamadriz/friendly-snippets"
+})
 
-  require("nvim-tree").setup()
+require("nvim-tree").setup()
 
-  require("luasnip/loaders/from_vscode").lazy_load()
-end)
-
+require("luasnip/loaders/from_vscode").lazy_load()
