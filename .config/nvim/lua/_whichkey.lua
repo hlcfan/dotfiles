@@ -108,7 +108,7 @@ local which_key = {
       t = { ":Telescope live_grep <cr>", "Text" },
       n = { ":Telescope live_grep search_dirs={os.getenv('NOTES')} <cr>", "Notes" },
       p = {
-        ":lua require('telescope.builtin.internal').colorscheme({enable_preview = true})<cr>",
+        ":lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
         "Colorscheme with Preview",
       },
     },
