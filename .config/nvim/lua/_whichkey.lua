@@ -75,15 +75,7 @@ local which_key = {
       name = "Git",
       d = { ":tabe % <CR> :Gitsigns diffthis<CR>", "Diff" },
       b = { ":Gitsigns blame_line<CR>", "Blame" },
-    },
-    p = {
-      name = "Packer",
-      c = { ":PackerCompile<cr>", "Compile" },
-      i = { ":PackerInstall<cr>", "Install" },
-      r = { ":lua require('lvim.utils').reload_lv_config()<cr>", "Reload" },
-      s = { ":PackerSync<cr>", "Sync" },
-      S = { ":PackerStatus<cr>", "Status" },
-      u = { ":PackerUpdate<cr>", "Update" },
+      v = { ":DiffviewOpen<CR>", "Diff View" },
     },
     l = {
       name = "LSP",

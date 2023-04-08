@@ -51,7 +51,8 @@ require("lazy").setup({
     dependencies = {
       'nvim-tree/nvim-web-devicons', -- optional, for file icon
     },
-    config = function() require'nvim-tree'.setup {} end
+    config = function() require'nvim-tree'.setup {} end,
+    lazy = true
   },
   {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
   {
@@ -98,9 +99,10 @@ require("lazy").setup({
         theme = 'hyper' --  theme is doom and hyper default is hyper
       }
     end,
-    dependencies = {'nvim-tree/nvim-web-devicons'}
+    dependencies = {"nvim-tree/nvim-web-devicons"}
   },
-  { "rafamadriz/friendly-snippets", lazy = true }
+  { "rafamadriz/friendly-snippets", lazy = true },
+  { "sindrets/diffview.nvim", dependencies = "nvim-lua/plenary.nvim" }
 })
 
 require("nvim-tree").setup()
