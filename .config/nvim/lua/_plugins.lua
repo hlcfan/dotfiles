@@ -13,9 +13,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  "nvim-lua/plenary.nvim",
-  -- Snippet Engine
-  "L3MON4D3/LuaSnip",
+  { "L3MON4D3/LuaSnip", lazy = true },
   -- A pretty diagnostics, references, telescope results, quickfix and location list
   "folke/trouble.nvim",
   "neovim/nvim-lspconfig",
@@ -25,20 +23,17 @@ require("lazy").setup({
   "hrsh7th/cmp-path",
   "hrsh7th/cmp-cmdline",
   "hrsh7th/nvim-cmp",
+  "saadparwaiz1/cmp_luasnip",
   -- "hrsh7th/cmp-copilot",
   "jose-elias-alvarez/null-ls.nvim",
   "nvim-lua/lsp-status.nvim",
   "nvim-treesitter/nvim-treesitter",
   "nvim-treesitter/nvim-treesitter-textobjects",
-  -- CMP
-  "saadparwaiz1/cmp_luasnip",
   -- A plugin for setting Neovim LSP with JSON files
   "tamago324/nlsp-settings.nvim",
-  -- "wbthomason/packer.nvim",
   "onsails/lspkind.nvim",
   -- or nvim-lspconfig that allows you to seamlessly manage LSP servers locally
   "williamboman/nvim-lsp-installer",
-  -- "rafamadriz/friendly-snippets",
   "tpope/vim-surround",
   "tpope/vim-rails",
   "windwp/nvim-autopairs",
@@ -72,6 +67,7 @@ require("lazy").setup({
   },
   {
     "folke/which-key.nvim",
+    lazy = true,
     config = function()
       require("which-key").setup({})
     end,
@@ -81,6 +77,7 @@ require("lazy").setup({
     dependencies = {
       'nvim-lua/plenary.nvim'
     },
+    lazy = true
   },
   {
     "ethanholz/nvim-lastplace",
@@ -103,7 +100,7 @@ require("lazy").setup({
     end,
     dependencies = {'nvim-tree/nvim-web-devicons'}
   },
-  "rafamadriz/friendly-snippets"
+  { "rafamadriz/friendly-snippets", lazy = true }
 })
 
 require("nvim-tree").setup()
