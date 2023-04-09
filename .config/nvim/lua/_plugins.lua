@@ -46,6 +46,7 @@ require("lazy").setup({
     dependencies = 'hrsh7th/nvim-cmp',
   },
   "RRethy/nvim-base16",
+  "folke/tokyonight.nvim",
   {
     'nvim-tree/nvim-tree.lua',
     dependencies = {
@@ -102,9 +103,12 @@ require("lazy").setup({
     dependencies = {"nvim-tree/nvim-web-devicons"}
   },
   { "rafamadriz/friendly-snippets", lazy = true },
-  { "sindrets/diffview.nvim", dependencies = "nvim-lua/plenary.nvim" }
+  { "sindrets/diffview.nvim", dependencies = "nvim-lua/plenary.nvim" },
+  { "ggandor/leap.nvim" }
 })
 
 require("nvim-tree").setup()
 
 require("luasnip/loaders/from_vscode").lazy_load()
+
+require('leap').add_default_mappings()
