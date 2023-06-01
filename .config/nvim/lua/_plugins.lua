@@ -111,4 +111,4 @@ require("nvim-tree").setup()
 
 require("luasnip/loaders/from_vscode").lazy_load()
 
-require('leap').add_default_mappings()
+-- require('leap').add_default_mappings()
