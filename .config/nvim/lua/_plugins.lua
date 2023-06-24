@@ -96,15 +96,75 @@ require("lazy").setup({
     'glepnir/dashboard-nvim',
     event = 'VimEnter',
     config = function()
-      require('dashboard').setup {
-        theme = 'hyper' --  theme is doom and hyper default is hyper
-      }
+      require('dashboard').setup({
+        theme = 'hyper', --  theme is doom and hyper default is hyper
+        config = {
+          week_header = {
+           enable = true,
+          },
+        --   shortcut = {
+        --     { desc = '󰊳 Update', group = '@property', action = 'Lazy update', key = 'u' },
+        --     {
+        --       icon = ' ',
+        --       icon_hl = '@variable',
+        --       desc = 'Files',
+        --       group = 'Label',
+        --       action = 'Telescope find_files',
+        --       key = 'f',
+        --     },
+        --     {
+        --       desc = ' Apps',
+        --       group = 'DiagnosticHint',
+        --       action = 'Telescope app',
+        --       key = 'a',
+        --     },
+        --     {
+        --       desc = ' dotfiles',
+        --       group = 'Number',
+        --       action = 'Telescope dotfiles',
+        --       key = 'd',
+        --     },
+        --   },
+        },
+      })
     end,
     dependencies = {"nvim-tree/nvim-web-devicons"}
   },
   { "rafamadriz/friendly-snippets", lazy = true },
   { "sindrets/diffview.nvim", dependencies = "nvim-lua/plenary.nvim" },
-  { "ggandor/leap.nvim" }
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    ---@type Flash.Config
+    opts = {},
+    keys = {
+      {
+        "s",
+        mode = { "n", "x", "o" },
+        function()
+          -- default options: exact mode, multi window, all directions, with a backdrop
+          require("flash").jump()
+        end,
+        desc = "Flash",
+      },
+      {
+        "S",
+        mode = { "n", "o", "x" },
+        function()
+          require("flash").treesitter()
+        end,
+        desc = "Flash Treesitter",
+      },
+      {
+        "r",
+        mode = "o",
+        function()
+          require("flash").remote()
+        end,
+        desc = "Remote Flash",
+      },
+    },
+  }
 })
 
 require("nvim-tree").setup()
