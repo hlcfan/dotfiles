@@ -5,4 +5,5 @@
 /.config/iterm2
 /.config/gochromecast
 /.config/gtk-2.0
+/.config/zed
 packer_compiled.lua
