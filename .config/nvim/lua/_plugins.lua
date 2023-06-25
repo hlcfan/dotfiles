@@ -16,6 +16,14 @@ require("lazy").setup({
   { "L3MON4D3/LuaSnip", lazy = true },
   -- A pretty diagnostics, references, telescope results, quickfix and location list
   "folke/trouble.nvim",
+  {
+    "williamboman/mason.nvim",
+    -- build = ':MasonUpdate',
+    build = function()
+      vim.cmd.MasonUpdate()
+    end,
+  },
+  {"williamboman/mason-lspconfig.nvim"},
   "neovim/nvim-lspconfig",
   -- CMP
   "hrsh7th/cmp-nvim-lsp",
@@ -29,11 +37,8 @@ require("lazy").setup({
   "nvim-lua/lsp-status.nvim",
   "nvim-treesitter/nvim-treesitter",
   "nvim-treesitter/nvim-treesitter-textobjects",
-  -- A plugin for setting Neovim LSP with JSON files
   "tamago324/nlsp-settings.nvim",
   "onsails/lspkind.nvim",
-  -- or nvim-lspconfig that allows you to seamlessly manage LSP servers locally
-  "williamboman/nvim-lsp-installer",
   "tpope/vim-surround",
   "tpope/vim-rails",
   "windwp/nvim-autopairs",
@@ -69,10 +74,12 @@ require("lazy").setup({
   },
   {
     "folke/which-key.nvim",
-    lazy = true,
-    config = function()
-      require("which-key").setup({})
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
     end,
+    lazy = true,
   },
   {
     "lewis6991/gitsigns.nvim",
@@ -135,8 +142,9 @@ require("lazy").setup({
   {
     "folke/flash.nvim",
     event = "VeryLazy",
+    lazy = true,
     ---@type Flash.Config
-    opts = {},
+    -- opts = {},
     keys = {
       {
         "s",

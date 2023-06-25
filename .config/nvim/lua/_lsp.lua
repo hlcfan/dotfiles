@@ -18,11 +18,6 @@ if not win_ok then
   return
 end
 
-local lsp_installer_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
-if not lsp_installer_ok then
-  return
-end
-
 local nlspsettings_ok, nlspsettings = pcall(require, "nlspsettings")
 if not nlspsettings_ok then
   return
@@ -152,39 +147,8 @@ cmp.setup.cmdline('/', {
   },
 })
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()) --nvim-cmp
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-local nvim_lsp = require('lspconfig')
-
--- setup languages
--- GoLang
-nvim_lsp['gopls'].setup{
-  cmd = {'gopls'},
-  on_attach = function(client, bufnr)
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-  end,
-  capabilities = capabilities,
-  settings = {
-    gopls = {
-      experimentalPostfixCompletions = true,
-      analyses = {
-        unusedparams = true,
-        shadow = true,
-      },
-      staticcheck = true,
-    },
-  },
-  init_options = {
-    usePlaceholders = true,
-  }
-}
-
 -- function to attach completion when setting up lsp
-local on_attach = function(client)
+local on_attach = function(client, bufnr)
   lsp_status.register_progress()
   lsp_status.on_attach(client)
   utils.bufmap("n", "ga", "lua vim.lsp.buf.code_action()")
@@ -199,25 +163,48 @@ local on_attach = function(client)
   utils.bufmap("n", "gl", "lua vim.diagnostic.open_float()")
 end
 
-nvim_lsp.ruby_ls.setup({})
+require("mason").setup()
+require("mason-lspconfig").setup()
 
--- Provide settings first!
-lsp_installer.settings({
-  ui = {
-    icons = {
-      server_installed = "✓",
-      server_pending = "➜",
-      server_uninstalled = "✗",
+-- lspconfig.elixirls.setup {
+--   on_attach = on_attach
+-- }
+
+local lspconfig = require('lspconfig')
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()) --nvim-cmp
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+require("mason-lspconfig").setup_handlers({
+  function (server_name)
+    lspconfig[server_name].setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      flags = { debounce_text_changes = 150 },
+    }
+  end,
+  -- Go
+  lspconfig['gopls'].setup{
+    cmd = {'gopls'},
+    on_attach = function(client, bufnr)
+      local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+      local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+      buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+    end,
+    capabilities = capabilities,
+    settings = {
+      gopls = {
+        experimentalPostfixCompletions = true,
+        analyses = {
+          unusedparams = true,
+          shadow = true,
+        },
+        staticcheck = true,
+      },
     },
-  },
-})
-
-lsp_installer.on_server_ready(function(server)
-  local opts = {
-    on_attach = on_attach,
-    -- capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities()),
-    flags = { debounce_text_changes = 150 },
+    init_options = {
+      usePlaceholders = true,
+    }
   }
-  server:setup(opts)
-end)
+})
 
