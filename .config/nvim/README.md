@@ -20,3 +20,8 @@
 - Ag
 - Rg
 - Fzf
+
+## Fonts
+
+ComicCode: https://ifonts.xyz/comic-code-complete-font-family.html
+Font Patcher: https://github.com/ryanoasis/nerd-fonts/#font-patcher
