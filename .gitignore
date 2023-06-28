@@ -6,4 +6,5 @@
 /.config/gochromecast
 /.config/gtk-2.0
 /.config/zed
+/.config/wireshark
 packer_compiled.lua

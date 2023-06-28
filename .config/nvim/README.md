@@ -20,3 +20,7 @@
 - Ag
 - Rg
 - Fzf
+
+## Fonts
+
+Font Patcher: https://github.com/ryanoasis/nerd-fonts/#font-patcher

@@ -76,6 +76,9 @@ telescope.setup({
       "%.otf",
       "%.ttf",
       ".git/",
+      ".githooks/",
+      ".artifacts",
+      ".circleci/",
       "%.webp",
       ".dart_tool/",
       ".github/",
@@ -109,6 +112,15 @@ telescope.setup({
     --   results = { '─', '│', '─', '│', '├', '┬', '┴', '╰' },
     --   preview = { '─', '│', '─', '│', '╭', '┤', '╯', '╰' },
     -- },
+    vimgrep_arguments = {
+      "rg",
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
+    }
   },
   extensions = {
     fzf = {
