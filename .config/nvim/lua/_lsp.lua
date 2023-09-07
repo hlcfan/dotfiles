@@ -166,10 +166,6 @@ end
 require("mason").setup()
 require("mason-lspconfig").setup()
 
--- lspconfig.elixirls.setup {
---   on_attach = on_attach
--- }
-
 local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()) --nvim-cmp
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -182,6 +178,7 @@ require("mason-lspconfig").setup_handlers({
       flags = { debounce_text_changes = 150 },
     }
   end,
+
   -- Go
   lspconfig['gopls'].setup{
     cmd = {'gopls'},
@@ -205,6 +202,14 @@ require("mason-lspconfig").setup_handlers({
     init_options = {
       usePlaceholders = true,
     }
-  }
+  },
+
+  -- lspconfig["elixirls"].setup {
+  --   cmd = { "/Users/hlcfan/elixir-ls/language_server.sh" },
+  --   on_attach = on_attach,
+  --   capabilities = capabilities,
+  --   flags = { debounce_text_changes = 150 },
+  -- },
+  -- require'lspconfig'.elixirls.setup{}
 })
 
