@@ -100,42 +100,9 @@ require("lazy").setup({
     end,
   },
   {
-    'glepnir/dashboard-nvim',
-    event = 'VimEnter',
-    config = function()
-      require('dashboard').setup({
-        theme = 'hyper', --  theme is doom and hyper default is hyper
-        config = {
-          week_header = {
-           enable = true,
-          },
-        --   shortcut = {
-        --     { desc = '󰊳 Update', group = '@property', action = 'Lazy update', key = 'u' },
-        --     {
-        --       icon = ' ',
-        --       icon_hl = '@variable',
-        --       desc = 'Files',
-        --       group = 'Label',
-        --       action = 'Telescope find_files',
-        --       key = 'f',
-        --     },
-        --     {
-        --       desc = ' Apps',
-        --       group = 'DiagnosticHint',
-        --       action = 'Telescope app',
-        --       key = 'a',
-        --     },
-        --     {
-        --       desc = ' dotfiles',
-        --       group = 'Number',
-        --       action = 'Telescope dotfiles',
-        --       key = 'd',
-        --     },
-        --   },
-        },
-      })
-    end,
-    dependencies = {"nvim-tree/nvim-web-devicons"}
+    'goolord/alpha-nvim',
+    event = "VimEnter",
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
   { "rafamadriz/friendly-snippets", lazy = true },
   { "sindrets/diffview.nvim", dependencies = "nvim-lua/plenary.nvim" },
@@ -180,3 +147,4 @@ require("nvim-tree").setup()
 require("luasnip/loaders/from_vscode").lazy_load()
 
 -- require('leap').add_default_mappings()
+require'alpha'.setup(require'alpha.themes.startify'.config)
