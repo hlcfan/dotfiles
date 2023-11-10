@@ -11,7 +11,7 @@ end
 telescope.setup({
   defaults = {
     prompt_prefix = '🔍 ',
-    layout_strategy = 'flex',
+    layout_strategy = 'horizontal',
     buffer_previewer_maker = new_maker,
     -- path_display = { "smart" },
     path_display = { shorten = { len = 3, exclude = { 1, -1, -2 } } },
