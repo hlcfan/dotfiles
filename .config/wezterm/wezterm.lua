@@ -4,6 +4,7 @@ local font = require("font")
 local tab = require("tab")
 -- local mappings = require("mappings")
 local window = require("window")
+local password = require("password")
 
 local config = {}
 
@@ -16,7 +17,7 @@ window.update_config(config)
 color_scheme.update_config(config)
 font.update_config(config)
 -- mappings.update_config(config)
---
+password.update_config(config)
 
 if wezterm.target_triple:find("windows") then
   config.default_prog = { "pwsh" }
@@ -39,5 +40,6 @@ end
 config.default_cursor_style = "BlinkingBar"
 config.force_reverse_video_cursor = true
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
+
 
 return config
