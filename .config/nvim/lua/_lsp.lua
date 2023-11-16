@@ -38,7 +38,11 @@ if not ok then
   return
 end
 
-lspkind.init()
+lspkind.init({
+  symbol_map = {
+    Copilot = "",
+  },
+})
 
 local _default_opts = win.default_opts
 
@@ -68,11 +72,18 @@ local source_mapping = {
   nvim_lua = "[Lua]",
   cmp_tabnine = "[TabNine]",
   path = "[Path]",
+  Copilot = "[Copilot]",
 }
 
+-- local has_words_before = function()
+--   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+--   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+-- end
+
 local has_words_before = function()
+  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line-1, 0, line-1, col, {})[1]:match("^%s*$") == nil
 end
 
 -- completion setup
@@ -92,7 +103,9 @@ cmp.setup({
     ["<C-e>"] = cmp.mapping.close(),
     ["<CR>"] = cmp.mapping.confirm({ select = true }),
     ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
+      if cmp.visible() and has_words_before() then
+        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+      elseif cmp.visible() then
         cmp.select_next_item()
       -- elseif lua_snip.expand_or_jumpable() then
       --   lua_snip.expand_or_jump()
@@ -109,6 +122,7 @@ cmp.setup({
     documentation = cmp.config.window.bordered(),
   },
   sources = cmp.config.sources({
+    { name = 'copilot' },
     { name = "luasnip" },
     { name = "nvim_lsp" },
     { name = 'cmp_tabnine' },
@@ -213,3 +227,7 @@ require("mason-lspconfig").setup_handlers({
   -- require'lspconfig'.elixirls.setup{}
 })
 
+require("copilot").setup({
+  suggestion = { enabled = false },
+  panel = { enabled = false },
+})
