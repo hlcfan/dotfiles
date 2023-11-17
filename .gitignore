@@ -7,5 +7,6 @@
 /.config/gtk-2.0
 /.config/zed
 /.config/wireshark
+/.config/github-copilot
 packer_compiled.lua
 .DS_Store
