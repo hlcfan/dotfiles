@@ -5,6 +5,7 @@ local tab = require("tab")
 -- local mappings = require("mappings")
 local window = require("window")
 local password = require("password")
+local mapping = require("mapping")
 
 local config = {}
 
@@ -18,6 +19,7 @@ color_scheme.update_config(config)
 font.update_config(config)
 -- mappings.update_config(config)
 password.update_config(config)
+mapping.update_config(config)
 
 if wezterm.target_triple:find("windows") then
   config.default_prog = { "pwsh" }
