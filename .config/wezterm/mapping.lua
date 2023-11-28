@@ -40,6 +40,11 @@ function M.update_config(config)
         action.SendKey { key = "L", mods = "CTRL" },
       })
     },
+    {
+      key = '.',
+      mods = "CMD",
+      action = action.EmitEvent 'trigger-password-input'
+    }
   }
 
   config.key_tables = {

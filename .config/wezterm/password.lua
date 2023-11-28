@@ -13,13 +13,7 @@ function M.update_config(config)
     pane:send_text(stdout)
   end)
 
-  config.keys = {
-    {
-      key = '.',
-      mods = "CMD",
-      action = act.EmitEvent 'trigger-password-input'
-    }
-  }
+  -- Key mapping is handled in mapping.lua
 end
 
 return M
