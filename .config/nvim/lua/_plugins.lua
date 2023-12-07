@@ -15,7 +15,21 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   { "L3MON4D3/LuaSnip", lazy = true },
   -- A pretty diagnostics, references, telescope results, quickfix and location list
-  "folke/trouble.nvim",
+  {
+    "folke/trouble.nvim",
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      signs = {
+        -- icons / text used for a diagnostic
+        error = "",
+        warning = "",
+        hint = "",
+        information = "",
+        other = "",
+      },
+      use_diagnostic_signs=true,
+    }
+  },
   {
     "williamboman/mason.nvim",
     -- build = ':MasonUpdate',
@@ -114,7 +128,7 @@ require("lazy").setup({
     -- opts = {},
     keys = {
       {
-        "f",
+        "s",
         mode = { "n", "x", "o" },
         function()
           -- default options: exact mode, multi window, all directions, with a backdrop
