@@ -122,7 +122,7 @@ cmp.setup({
     documentation = cmp.config.window.bordered(),
   },
   sources = cmp.config.sources({
-    { name = 'copilot' },
+    -- { name = 'copilot' },
     { name = "luasnip" },
     { name = "nvim_lsp" },
     { name = 'cmp_tabnine' },
@@ -155,11 +155,11 @@ cmp.setup({
   },
 })
 
-cmp.setup.cmdline('/', {
-  view = {
-    entries = {name = 'wildmenu', separator = '|' }
-  },
-})
+-- cmp.setup.cmdline('/', {
+--   view = {
+--     entries = {name = 'wildmenu', separator = '|' }
+--   },
+-- })
 
 -- function to attach completion when setting up lsp
 local on_attach = function(client, bufnr)
@@ -227,7 +227,7 @@ require("mason-lspconfig").setup_handlers({
   -- require'lspconfig'.elixirls.setup{}
 })
 
-require("copilot").setup({
-  suggestion = { enabled = false },
-  panel = { enabled = false },
-})
+-- require("copilot").setup({
+--   suggestion = { enabled = false },
+--   panel = { enabled = false },
+-- })

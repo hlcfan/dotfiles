@@ -114,7 +114,7 @@ require("lazy").setup({
     -- opts = {},
     keys = {
       {
-        "f",
+        "s",
         mode = { "n", "x", "o" },
         function()
           -- default options: exact mode, multi window, all directions, with a backdrop
@@ -140,20 +140,20 @@ require("lazy").setup({
       -- },
     },
   },
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({})
-    end,
-  },
-  {
-    "zbirenbaum/copilot-cmp",
-    config = function ()
-      require("copilot_cmp").setup()
-    end
-  }
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   cmd = "Copilot",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("copilot").setup({})
+  --   end,
+  -- },
+  -- {
+  --   "zbirenbaum/copilot-cmp",
+  --   config = function ()
+  --     require("copilot_cmp").setup()
+  --   end
+  -- }
 })
 
 require("nvim-tree").setup()
