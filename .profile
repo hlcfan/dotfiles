@@ -9,6 +9,7 @@ export EDITOR="vi"
 export CLICOLOR=1
 export TERM=xterm-256color
 export HOMEBREW_NO_AUTO_UPDATE=1
+export TERM=wezterm
 
 export PATH="$HOME/.rbenv/bin:/Users/hlcfan/nvim/bin:/Users/hlcfan/bin:/Users/hlcfan/go/bin:$PATH"
 export erl_aflags="-kernel shell_history enabled"
