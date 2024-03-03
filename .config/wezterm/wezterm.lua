@@ -24,19 +24,20 @@ mapping.update_config(config)
 if wezterm.target_triple:find("windows") then
   config.default_prog = { "pwsh" }
   config.window_decorations = "RESIZE|TITLE"
-  wezterm.on("gui-startup", function(cmd)
-    local screen = wezterm.gui.screens().active
-    local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
-    local gui = window:gui_window()
-    local width = 0.7 * screen.width
-    local height = 0.7 * screen.height
-    gui:set_inner_size(width, height)
-    gui:set_position((screen.width - width) / 2, (screen.height - height) / 2)
-  end)
 else
   config.term = "wezterm"
   config.window_decorations = "RESIZE"
 end
+
+wezterm.on("gui-startup", function(cmd)
+  local screen = wezterm.gui.screens().active
+  local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
+  local gui = window:gui_window()
+  local width = 0.7 * screen.width
+  local height = 0.7 * screen.height
+  gui:set_inner_size(width, height)
+  gui:set_position((screen.width - width) / 2, (screen.height - height) / 2)
+end)
 
 -- Cursor
 config.default_cursor_style = "BlinkingBar"
