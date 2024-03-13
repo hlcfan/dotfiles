@@ -37,7 +37,6 @@ function M.update_config(config)
       mods = "CMD|SHIFT",
       action = action.Multiple({
         action.ClearScrollback "ScrollbackAndViewport",
-        action.SendKey { key = "L", mods = "CTRL" },
       })
     },
     {
