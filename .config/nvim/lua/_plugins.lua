@@ -13,7 +13,12 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  { "L3MON4D3/LuaSnip", lazy = true },
+  {
+    "L3MON4D3/LuaSnip",
+    version = "v2.*",
+    lazy = true,
+    build = "make install_jsregexp"
+  },
   -- A pretty diagnostics, references, telescope results, quickfix and location list
   {
     "folke/trouble.nvim",
