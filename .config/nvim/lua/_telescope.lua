@@ -148,9 +148,7 @@ telescope.setup({
 
 require('telescope').load_extension('fzf')
 
-trouble.setup({
-  icons = false,
-})
+trouble.setup()
 
 -- require('cmp').setup {
 --   sources = {
