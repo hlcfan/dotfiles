@@ -8,5 +8,7 @@
 /.config/zed
 /.config/wireshark
 /.config/github-copilot
+/.config/emacs
+/.config/doom
 packer_compiled.lua
 .DS_Store

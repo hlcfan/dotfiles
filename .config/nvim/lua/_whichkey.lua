@@ -76,6 +76,10 @@ local which_key = {
     ["c"] = { ":BufferClose!<CR>", "Close Buffer" },
     ["f"] = { ":Telescope find_files <CR>", "Find File" },
     ["h"] = { ":nohlsearch<CR>", "No Highlight" },
+    -- a = {
+    --   name = "AI",
+    --   a = { ":AvanteAsk<cr>", "AvanteAsk" },
+    -- },
     b = {
       name = "Buffers",
       l = { ":Telescope buffers<CR>", "List Buffers" },
@@ -142,6 +146,22 @@ local which_key = {
   },
 }
 
+function SplitLineByDelimiter(delimiter)
+    local line = vim.api.nvim_get_current_line()  -- Get current line
+
+    -- Split the line, keeping the delimiter in the parts
+    local parts = {}
+    for part in string.gmatch(line, "([^" .. delimiter .. "]+)" .. delimiter .. "?") do
+        table.insert(parts, part .. delimiter)
+    end
+
+    -- Remove the trailing delimiter from the last part
+    parts[#parts] = string.gsub(parts[#parts], delimiter .. "$", "")
+
+    -- Replace current line with the split parts joined by new lines
+    vim.api.nvim_buf_set_lines(0, vim.fn.line('.') - 1, vim.fn.line('.'), false, parts)
+end
+
 utils.map("", "H", "^")
 utils.map("", "L", "$")
 utils.map("n", "<C-n>", ":tabnew<CR><Esc>")
@@ -158,6 +178,7 @@ utils.map("n", "<F5>", ":Neotree toggle<CR>")
 utils.map("n", "<F2>", ":%! fm<CR>")
 utils.map("n", "<C-f>", ":Telescope live_grep<CR>")
 utils.map("t", "<Esc>", "<C-\\><C-n>")
+utils.map("n", "<leader>r", [[:lua SplitLineByDelimiter(vim.fn.input('Delimiter: '))<CR>]])
 
 local wk = require("which-key")
 wk.setup(which_key.setup)
