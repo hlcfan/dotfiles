@@ -165,7 +165,7 @@ end
 utils.map("", "H", "^")
 utils.map("", "L", "$")
 utils.map("n", "<C-n>", ":tabnew<CR><Esc>")
-utils.map("", "<C-m>", ":tabclose<CR><Esc>")
+utils.map("n", "<C-m>", ":tabclose!<CR><Esc>")
 utils.map("n", "<C-w>c", "<C-w>c<C-w>p")
 -- utils.map("n", "<tab>", ":tabnext<CR>")
 -- utils.map("n", "<S-tab>", ":tabprevious<CR>")
