@@ -15,7 +15,7 @@ show_notifications = false
 format = "[ 鬒$duration]($style)"
 
 [username]
-format = "[𣏕$user]($style) "
+format = "[🥃 $user]($style) "
 disabled = false
 show_always = true
 

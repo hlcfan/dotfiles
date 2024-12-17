@@ -10,5 +10,6 @@
 /.config/github-copilot
 /.config/emacs
 /.config/doom
+/.config/raycast
 packer_compiled.lua
 .DS_Store

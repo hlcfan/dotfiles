@@ -218,6 +218,15 @@ require("mason-lspconfig").setup_handlers({
     }
   },
 
+  lspconfig.eslint.setup({
+    on_attach = function(client, bufnr)
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        buffer = bufnr,
+        command = "EslintFixAll",
+      })
+    end,
+  })
+
   -- lspconfig["elixirls"].setup {
   --   cmd = { "/Users/hlcfan/elixir-ls/language_server.sh" },
   --   on_attach = on_attach,

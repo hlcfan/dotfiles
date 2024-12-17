@@ -221,10 +221,14 @@ require("lazy").setup({
         ft = { "markdown", "Avante" },
       },
     },
-  }
+  },
+  'mfussenegger/nvim-dap',
+  'leoluz/nvim-dap-go'
 })
 
 require("luasnip/loaders/from_vscode").lazy_load()
 
 -- require('leap').add_default_mappings()
 require'alpha'.setup(require'alpha.themes.startify'.config)
+
+require('dap-go').setup()
