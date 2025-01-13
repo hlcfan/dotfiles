@@ -120,6 +120,42 @@ require("lazy").setup({
       vim.o.timeoutlen = 300
     end,
     lazy = true,
+    opts = {
+      plugins = {
+        marks = true,
+        registers = true,
+        presets = {
+          operators = false,
+          motions = false,
+          text_objects = false,
+          windows = true,
+          nav = true,
+          z = true,
+          g = true,
+        },
+        spelling = { enabled = true, suggestions = 20 },
+      },
+      icons = {
+        breadcrumb = "»",
+        separator = "➜",
+        group = "+",
+      },
+      layout = {
+        height = { min = 4, max = 25 },
+        width = { min = 20, max = 50 },
+        spacing = 3,
+      },
+      show_help = true,
+    },
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show({ global = false })
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
   },
   {
     "lewis6991/gitsigns.nvim",
