@@ -70,7 +70,7 @@ local source_mapping = {
   buffer = "[Buffer]",
   nvim_lsp = "[LSP]",
   nvim_lua = "[Lua]",
-  cmp_tabnine = "[TabNine]",
+  -- cmp_tabnine = "[TabNine]",
   path = "[Path]",
   Copilot = "[Copilot]",
 }
@@ -125,7 +125,7 @@ cmp.setup({
     -- { name = 'copilot' },
     { name = "luasnip" },
     { name = "nvim_lsp" },
-    { name = 'cmp_tabnine' },
+    -- { name = 'cmp_tabnine' },
     { name = "buffer" },
     { name = "path" },
     -- { name = "ultisnips" },

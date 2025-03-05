@@ -83,22 +83,23 @@ require("lazy").setup({
   "b3nj5m1n/kommentary",
   "editorconfig/editorconfig-vim",
   "lukas-reineke/indent-blankline.nvim",
-  {
-    'tzachar/cmp-tabnine',
-    build = './install.sh',
-    dependencies = 'hrsh7th/nvim-cmp',
-  },
+  -- {
+  --   'tzachar/cmp-tabnine',
+  --   build = './install.sh',
+  --   dependencies = 'hrsh7th/nvim-cmp',
+  -- },
   "RRethy/nvim-base16",
   "folke/tokyonight.nvim",
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
+    "nvim-tree/nvim-tree.lua",
+    version = "*",
+    lazy = false,
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
-      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-    }
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+      require("nvim-tree").setup {}
+    end,
   },
   {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
   {
@@ -221,7 +222,17 @@ require("lazy").setup({
     event = "VeryLazy",
     lazy = false,
     opts = {
-      -- add any opts here
+      -- provider = "openai",
+      provider = "claude",
+      openai = {
+        -- endpoint = "https://api.deepseek.com/v1",
+        -- model = "deepseek-chat", -- your desired model (or use gpt-4o, etc.)
+        endpoint = "https://api.anthropic.com",
+        model = "claude-3-5-sonnet-20241022",
+        timeout = 30000, -- timeout in milliseconds
+        temperature = 0, -- adjust if needed
+        max_tokens = 4096,
+      },
     },
     build = ":AvanteBuild", -- This is optional, recommended tho. Also note that this will block the startup for a bit since we are compiling bindings in Rust.
     dependencies = {
@@ -229,6 +240,10 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
       --- The below dependencies are optional,
+      "echasnovski/mini.pick", -- for file_selector provider mini.pick
+      "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+      "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+      "ibhagwan/fzf-lua", -- for file_selector provider fzf
       "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
       "zbirenbaum/copilot.lua", -- for providers='copilot'
       -- {
@@ -248,14 +263,6 @@ require("lazy").setup({
       --     },
       --   },
       -- },
-      {
-        -- Make sure to setup it properly if you have lazy=true
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
-      },
     },
   },
   'mfussenegger/nvim-dap',
