@@ -98,7 +98,11 @@ require("lazy").setup({
       "nvim-tree/nvim-web-devicons",
     },
     config = function()
-      require("nvim-tree").setup {}
+      require("nvim-tree").setup {
+        filters = {
+          dotfiles = true,
+        },
+      }
     end,
   },
   {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
@@ -222,13 +226,13 @@ require("lazy").setup({
     event = "VeryLazy",
     lazy = false,
     opts = {
-      -- provider = "openai",
-      provider = "claude",
+      provider = "openai",
+      -- provider = "claude",
       openai = {
-        -- endpoint = "https://api.deepseek.com/v1",
-        -- model = "deepseek-chat", -- your desired model (or use gpt-4o, etc.)
-        endpoint = "https://api.anthropic.com",
-        model = "claude-3-5-sonnet-20241022",
+        endpoint = "https://api.deepseek.com/v1",
+        model = "deepseek-chat", -- your desired model (or use gpt-4o, etc.)
+        -- endpoint = "https://api.anthropic.com",
+        -- model = "claude-3-5-sonnet-20241022",
         timeout = 30000, -- timeout in milliseconds
         temperature = 0, -- adjust if needed
         max_tokens = 4096,
