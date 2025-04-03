@@ -71,7 +71,7 @@ require("lazy").setup({
   "hrsh7th/cmp-cmdline",
   "hrsh7th/nvim-cmp",
   "saadparwaiz1/cmp_luasnip",
-  "jose-elias-alvarez/null-ls.nvim",
+  "nvimtools/none-ls.nvim",
   "nvim-lua/lsp-status.nvim",
   "nvim-treesitter/nvim-treesitter",
   "nvim-treesitter/nvim-treesitter-textobjects",
@@ -270,7 +270,19 @@ require("lazy").setup({
     },
   },
   'mfussenegger/nvim-dap',
-  'leoluz/nvim-dap-go'
+  'leoluz/nvim-dap-go',
+  {
+    'rmagatti/auto-session',
+    lazy = false,
+
+    ---enables autocomplete for opts
+    ---@module "auto-session"
+    ---@type AutoSession.Config
+    opts = {
+      suppressed_dirs = { '~/', '~/Downloads', '/' },
+      -- log_level = 'debug',
+    }
+  }
 })
 
 require("luasnip/loaders/from_vscode").lazy_load()

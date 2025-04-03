@@ -21,6 +21,7 @@
 # # separated by equals signs.
 font-family = ComicCode Nerd Font
 font-size = 18
+font-feature = -calt, -liga, -dlig
 theme = tokyonight_moon
 maximize = true
 
@@ -37,6 +38,8 @@ cursor-style = block
 cursor-opacity = 1
 cursor-color = #fbcfe8
 cursor-text = #18181b
+
+keybind = global:ctrl+grave_accent=toggle_quick_terminal
 # window-padding-x = 2
 #
 # # Spacing around the equals sign does not matter.

@@ -89,6 +89,7 @@ wk.add({
   { "<leader>Ti", ":TSConfigInfo<cr>", desc = "Info", nowait = true, remap = false },
   { "<leader>b", group = "Buffers", nowait = true, remap = false },
   { "<leader>bb", ":b#<cr>", desc = "Previous", nowait = true, remap = false },
+  { "<leader>bc", ":cclose<cr>", desc = "Close quickfix", nowait = true, remap = false },
   { "<leader>bd", ":bd<cr>", desc = "Delete", nowait = true, remap = false },
   { "<leader>bf", ":Telescope buffers <cr>", desc = "Find", nowait = true, remap = false },
   { "<leader>bl", ":Telescope buffers<CR>", desc = "List Buffers", nowait = true, remap = false },
