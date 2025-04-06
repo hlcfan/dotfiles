@@ -3,6 +3,8 @@ if not utils_ok then
   return
 end
 
+local dap, dapui = require('dap'), require('dapui')
+
 local which_key = {
   setup = {
     -- win = {
@@ -77,11 +79,15 @@ utils.map("n", "<C-w>c", "<C-w>c<C-w>p")
 -- utils.map("n", "<C-k>", ":wincmd k<CR>")
 -- utils.map("n", "<C-l>", ":wincmd l<CR>")
 utils.map("n", "<CR>", ":nohlsearch<CR>")
-utils.map("n", "<F5>", ":NvimTreeToggle<CR>")
+utils.map("n", "<F4>", ":NvimTreeToggle<CR>")
 utils.map("n", "<F2>", ":%! fm<CR>")
 utils.map("n", "<C-f>", ":Telescope live_grep<CR>")
 utils.map("t", "<Esc>", "<C-\\><C-n>")
 utils.map("n", "<leader>r", [[:lua SplitLineByDelimiter(vim.fn.input('Delimiter: '))<CR>]])
+vim.keymap.set('n', '<F5>', function() require('dap').continue() end)
+vim.keymap.set('n', '<F10>', function() require('dap').step_over() end)
+vim.keymap.set('n', '<F11>', function() require('dap').step_into() end)
+vim.keymap.set('n', '<F12>', function() require('dap').step_out() end)
 
 local wk = require("which-key")
 wk.add({
@@ -131,6 +137,10 @@ wk.add({
   { "<leader>tr", "<cmd>TroubleToggle lsp_references<cr>", desc = "references", nowait = true, remap = false },
   { "<leader>tt", "<cmd>TroubleToggle<cr>", desc = "trouble", nowait = true, remap = false },
   { "<leader>tw", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "workspace", nowait = true, remap = false },
+  { "<Leader>wo", ":lua require('dapui').open()<cr>", desc = "Open DAPUI", nowait = true, remap = false},
+  { "<Leader>wb", ":lua require('dapui').close()<cr>", desc = "Close DAPUI", nowait = true, remap = false},
+  { "<Leader>wt", ":lua require('dap').toggle_breakpoint()<cr>", desc = "Toggle breakpoint", nowait = true, remap = false},
+  { "<Leader>wc", ":lua require('dap').continue()<cr>", desc = "Continue", nowait = true, remap = false},
 })
 
 -- local opts = which_key.opts

@@ -272,6 +272,12 @@ require("lazy").setup({
   'mfussenegger/nvim-dap',
   'leoluz/nvim-dap-go',
   {
+    "rcarriga/nvim-dap-ui",
+    dependencies = {
+      "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"
+    }
+  },
+  {
     'rmagatti/auto-session',
     lazy = false,
 
@@ -290,4 +296,16 @@ require("luasnip/loaders/from_vscode").lazy_load()
 -- require('leap').add_default_mappings()
 require'alpha'.setup(require'alpha.themes.startify'.config)
 
-require('dap-go').setup()
+require('dap-go').setup({
+  dap_configurations = {
+		{
+			type = "go",
+			name = "Debug main.go",
+			request = "launch",
+			program = "${workspaceFolder}/main.go"
+		},
+	},
+  -- delve = {
+  --   port = "38697",
+  -- },
+})
