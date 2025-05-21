@@ -57,12 +57,24 @@ require("lazy").setup({
   },
   {
     "williamboman/mason.nvim",
-    -- build = ':MasonUpdate',
-    build = function()
-      vim.cmd.MasonUpdate()
-    end,
+    opts = {}
   },
-  {"williamboman/mason-lspconfig.nvim"},
+  {
+    "mason-org/mason-lspconfig.nvim",
+    opts = {
+      ui = {
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗"
+        }
+      }
+    },
+    dependencies = {
+      { "mason-org/mason.nvim", opts = {} },
+      "neovim/nvim-lspconfig",
+    },
+  },
   "neovim/nvim-lspconfig",
   -- CMP
   "hrsh7th/cmp-nvim-lsp",
@@ -72,7 +84,6 @@ require("lazy").setup({
   "hrsh7th/nvim-cmp",
   "saadparwaiz1/cmp_luasnip",
   "nvimtools/none-ls.nvim",
-  "nvim-lua/lsp-status.nvim",
   "nvim-treesitter/nvim-treesitter",
   "nvim-treesitter/nvim-treesitter-textobjects",
   "tamago324/nlsp-settings.nvim",

@@ -5,15 +5,6 @@ if not utils_ok then
   return
 end
 
-local lsp_status_ok, lsp_status = pcall(require, "lsp-status")
-if not lsp_status_ok then
-  return
-end
-
-local function lsp_progress()
-  return lsp_status.status()
-end
-
 local colors = {
   background = utils.extract_highlight_colors("StatusLine", "bg", 18),
   foreground = utils.extract_highlight_colors("StatusLine", "fg", 7),
@@ -116,7 +107,6 @@ lualine.setup({
       'branch'
     },
     lualine_x = {
-      lsp_progress,
       components.diagnostics,
     },
     lualine_y = {

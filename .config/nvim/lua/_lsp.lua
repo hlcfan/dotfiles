@@ -8,11 +8,6 @@ if not cmp_ok then
   return
 end
 
-local lsp_status_ok, lsp_status = pcall(require, "lsp-status")
-if not lsp_status_ok then
-  return
-end
-
 local win_ok, win = pcall(require, "lspconfig.ui.windows")
 if not win_ok then
   return
@@ -54,16 +49,6 @@ win.default_opts = function(options)
   opts.border = "rounded"
   return opts
 end
-
--- statusline progress setup
-lsp_status.config({
-  current_function = false,
-  show_filename = false,
-  diagnostics = false,
-  status_symbol = "",
-  select_symbol = nil,
-  update_interval = 200,
-})
 
 local source_mapping = {
   luasnip = "[Snip]",
@@ -163,8 +148,6 @@ cmp.setup({
 
 -- function to attach completion when setting up lsp
 local on_attach = function(client, bufnr)
-  lsp_status.register_progress()
-  lsp_status.on_attach(client)
   utils.bufmap("n", "ga", "lua vim.lsp.buf.code_action()")
   utils.bufmap("n", "gD", "lua vim.lsp.buf.declaration()")
   utils.bufmap("n", "gd", "lua vim.lsp.buf.definition()")
@@ -177,14 +160,11 @@ local on_attach = function(client, bufnr)
   utils.bufmap("n", "gl", "lua vim.diagnostic.open_float()")
 end
 
-require("mason").setup()
-require("mason-lspconfig").setup()
-
 local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()) --nvim-cmp
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-require("mason-lspconfig").setup_handlers({
+require("mason-lspconfig").setup({
   function (server_name)
     lspconfig[server_name].setup {
       on_attach = on_attach,
