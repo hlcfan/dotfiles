@@ -86,6 +86,7 @@ require("lazy").setup({
   "nvimtools/none-ls.nvim",
   "nvim-treesitter/nvim-treesitter",
   "nvim-treesitter/nvim-treesitter-textobjects",
+  "nvim-treesitter/nvim-treesitter-context",
   "tamago324/nlsp-settings.nvim",
   "onsails/lspkind.nvim",
   "tpope/vim-surround",
