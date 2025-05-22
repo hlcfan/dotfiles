@@ -158,6 +158,13 @@ local on_attach = function(client, bufnr)
   utils.bufmap("n", "gR", "lua vim.lsp.buf.rename()")
   utils.bufmap("n", "K", "lua vim.lsp.buf.hover()")
   utils.bufmap("n", "gl", "lua vim.diagnostic.open_float()")
+
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  if client.server_capabilities.inlayHintProvider then vim.lsp.inlay_hint.enable(true) end
 end
 
 local lspconfig = require('lspconfig')
@@ -170,18 +177,8 @@ vim.lsp.config("*", {
     flags = { debounce_text_changes = 150 },
 })
 
-  -- Go
-lspconfig.gopls.setup{
-  -- cmd = {'gopls'},
-  on_attach = function(client, bufnr)
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-    if client.server_capabilities.inlayHintProvider then vim.lsp.inlay_hint.enable(true) end
-  end,
-  capabilities = capabilities,
+-- Go
+vim.lsp.config('gopls', {
   settings = {
     gopls = {
       experimentalPostfixCompletions = true,
@@ -200,7 +197,7 @@ lspconfig.gopls.setup{
   init_options = {
     usePlaceholders = true,
   }
-}
+})
 
 lspconfig.eslint.setup({
   on_attach = function(client, bufnr)
