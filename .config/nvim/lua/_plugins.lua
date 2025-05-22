@@ -300,7 +300,8 @@ require("lazy").setup({
       suppressed_dirs = { '~/', '~/Downloads', '/' },
       -- log_level = 'debug',
     }
-  }
+  },
+  'subnut/nvim-ghost.nvim'
 })
 
 require("luasnip/loaders/from_vscode").lazy_load()
@@ -317,7 +318,4 @@ require('dap-go').setup({
 			program = "${workspaceFolder}/main.go"
 		},
 	},
-  -- delve = {
-  --   port = "38697",
-  -- },
 })
