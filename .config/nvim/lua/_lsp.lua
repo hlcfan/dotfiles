@@ -164,57 +164,60 @@ local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()) --nvim-cmp
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-require("mason-lspconfig").setup({
-  function (server_name)
-    lspconfig[server_name].setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
-      flags = { debounce_text_changes = 150 },
-    }
-  end,
+vim.lsp.config("*", {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    flags = { debounce_text_changes = 150 },
+})
 
   -- Go
-  lspconfig['gopls'].setup{
-    cmd = {'gopls'},
-    on_attach = function(client, bufnr)
-      local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-      local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+lspconfig.gopls.setup{
+  -- cmd = {'gopls'},
+  on_attach = function(client, bufnr)
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-      buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-    end,
-    capabilities = capabilities,
-    settings = {
-      gopls = {
-        experimentalPostfixCompletions = true,
-        analyses = {
-          unusedparams = true,
-          shadow = true,
-        },
-        staticcheck = true,
+    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+    if client.server_capabilities.inlayHintProvider then vim.lsp.inlay_hint.enable(true) end
+  end,
+  capabilities = capabilities,
+  settings = {
+    gopls = {
+      experimentalPostfixCompletions = true,
+      analyses = {
+        unusedparams = true,
+        shadow = true,
+      },
+      staticcheck = true,
+      ["ui.inlayhint.hints"] = {
+        compositeLiteralFields = true,
+        constantValues = true,
+        parameterNames = true,
       },
     },
-    init_options = {
-      usePlaceholders = true,
-    }
   },
+  init_options = {
+    usePlaceholders = true,
+  }
+}
 
-  lspconfig.eslint.setup({
-    on_attach = function(client, bufnr)
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        buffer = bufnr,
-        command = "EslintFixAll",
-      })
-    end,
-  })
-
-  -- lspconfig["elixirls"].setup {
-  --   cmd = { "/Users/hlcfan/elixir-ls/language_server.sh" },
-  --   on_attach = on_attach,
-  --   capabilities = capabilities,
-  --   flags = { debounce_text_changes = 150 },
-  -- },
-  -- require'lspconfig'.elixirls.setup{}
+lspconfig.eslint.setup({
+  on_attach = function(client, bufnr)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      command = "EslintFixAll",
+    })
+  end,
 })
+
+-- lspconfig["elixirls"].setup {
+--   cmd = { "/Users/hlcfan/elixir-ls/language_server.sh" },
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   flags = { debounce_text_changes = 150 },
+-- },
+-- require'lspconfig'.elixirls.setup{}
 
 -- require("copilot").setup({
 --   suggestion = { enabled = false },

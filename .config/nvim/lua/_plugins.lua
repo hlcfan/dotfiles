@@ -56,7 +56,7 @@ require("lazy").setup({
     },
   },
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {}
   },
   {
