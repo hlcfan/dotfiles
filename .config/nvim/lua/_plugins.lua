@@ -19,6 +19,7 @@ require("lazy").setup({
     lazy = true,
     build = "make install_jsregexp"
   },
+  "neovim/nvim-lspconfig",
   {
     "folke/trouble.nvim",
     cmd = "Trouble",
@@ -75,7 +76,6 @@ require("lazy").setup({
       "neovim/nvim-lspconfig",
     },
   },
-  "neovim/nvim-lspconfig",
   -- CMP
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-buffer",
@@ -236,22 +236,25 @@ require("lazy").setup({
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
-    lazy = false,
+    version = false, -- Never set this value to "*"! Never!
     opts = {
-      provider = "openai",
-      -- provider = "claude",
-      openai = {
-        endpoint = "https://api.deepseek.com/v1",
-        model = "deepseek-chat", -- your desired model (or use gpt-4o, etc.)
-        -- endpoint = "https://api.anthropic.com",
-        -- model = "claude-3-5-sonnet-20241022",
-        timeout = 30000, -- timeout in milliseconds
-        temperature = 0, -- adjust if needed
-        max_tokens = 4096,
+      disabled_tools = { "python" },
+      provider = "claude",
+      claude = {
+        endpoint = "https://api.anthropic.com",
+        model = "claude-3-7-sonnet-20250219", -- "claude-sonnet-4-20250514", -- your desired model (or use gpt-4o, etc.)
+        -- timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
+        temperature = 0,
+        -- max_tokens = 4096,
+        -- max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
+        --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
       },
     },
-    build = ":AvanteBuild", -- This is optional, recommended tho. Also note that this will block the startup for a bit since we are compiling bindings in Rust.
+    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+    build = "make",
+    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
     dependencies = {
+      "nvim-treesitter/nvim-treesitter",
       "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
@@ -279,7 +282,76 @@ require("lazy").setup({
       --     },
       --   },
       -- },
+      {
+        "OXY2DEV/markview.nvim",
+        lazy = false,
+        opts = {
+          preview = {
+            filetypes = { "markdown", "Avante" },
+            ignore_buftypes = {},
+          },
+        },
+      },
+      -- {
+      --   -- Make sure to set this up properly if you have lazy=true
+      --   'MeanderingProgrammer/render-markdown.nvim',
+      --   opts = {
+      --     file_types = { "markdown", "Avante" },
+      --   },
+      --   ft = { "markdown", "Avante" },
+      -- },
     },
+  },
+  -- {
+  --   "ravitemer/mcphub.nvim",
+  --   dependencies = {
+  --       "nvim-lua/plenary.nvim",
+  --   },
+  --   build = "npm install -g mcp-hub@latest",
+  --   config = function()
+  --     require("mcphub").setup()
+  --   end
+  -- },
+  -- {
+  --   "olimorris/codecompanion.nvim",
+  --   dependencies = {
+  --     "ravitemer/mcphub.nvim",
+  --     -- "ravitemer/codecompanion-history.nvim"
+  --   },
+  --   opts = {
+  --     strategies = {
+  --       chat = {
+  --         adapter = "anthropic",
+  --       },
+  --       inline = {
+  --         adapter = "anthropic",
+  --       },
+  --     },
+  --   },
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-treesitter/nvim-treesitter",
+  --   },
+  -- },
+  -- {
+  --   "OXY2DEV/markview.nvim",
+  --   lazy = false,
+  --   opts = {
+  --     preview = {
+  --       filetypes = { "markdown", "codecompanion" },
+  --       ignore_buftypes = {},
+  --     },
+  --   },
+  -- },
+  {
+    "echasnovski/mini.diff",
+    config = function()
+      local diff = require("mini.diff")
+      diff.setup({
+        -- Disabled by default
+        source = diff.gen_source.none(),
+      })
+    end,
   },
   'mfussenegger/nvim-dap',
   'leoluz/nvim-dap-go',
@@ -319,3 +391,55 @@ require('dap-go').setup({
 		},
 	},
 })
+
+-- require("codecompanion").setup({
+--   strategies = {
+--     chat = {
+--       adapter = "anthropic",
+--     },
+--     inline = {
+--       adapter = "anthropic",
+--     },
+--   },
+--   extensions = {
+--     mcphub = {
+--       callback = "mcphub.extensions.codecompanion",
+--       opts = {
+--         make_vars = true,
+--         make_slash_commands = true,
+--         show_result_in_chat = true
+--       }
+--     },
+--     -- history = {
+--     --   enabled = true,
+--     --   opts = {
+--     --     -- Keymap to open history from chat buffer (default: gh)
+--     --     keymap = "gh",
+--     --     -- Keymap to save the current chat manually (when auto_save is disabled)
+--     --     save_chat_keymap = "sc",
+--     --     -- Save all chats by default (disable to save only manually using 'sc')
+--     --     auto_save = true,
+--     --     -- Number of days after which chats are automatically deleted (0 to disable)
+--     --     expiration_days = 0,
+--     --     -- Picker interface ("telescope" or "snacks" or "fzf-lua" or "default")
+--     --     picker = "telescope",
+--     --     ---Automatically generate titles for new chats
+--     --     auto_generate_title = true,
+--     --     title_generation_opts = {
+--     --       ---Adapter for generating titles (defaults to active chat's adapter)
+--     --       adapter = nil, -- e.g "copilot"
+--     --       ---Model for generating titles (defaults to active chat's model)
+--     --       model = nil, -- e.g "gpt-4o"
+--     --     },
+--     --     ---On exiting and entering neovim, loads the last chat on opening chat
+--     --     continue_last_chat = false,
+--     --     ---When chat is cleared with `gx` delete the chat from history
+--     --     delete_on_clearing_chat = false,
+--     --     ---Directory path to save the chats
+--     --     dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
+--     --     ---Enable detailed logging for history extension
+--     --     enable_logging = false,
+--     --   }
+--     -- }
+--   }
+-- })
