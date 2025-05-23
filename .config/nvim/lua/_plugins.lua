@@ -233,53 +233,107 @@ require("lazy").setup({
       -- },
     },
   },
+  -- {
+  --   "yetone/avante.nvim",
+  --   event = "VeryLazy",
+  --   lazy = false,
+  --   opts = {
+  --     provider = "openai",
+  --     -- provider = "claude",
+  --     openai = {
+  --       endpoint = "https://api.deepseek.com/v1",
+  --       model = "deepseek-chat", -- your desired model (or use gpt-4o, etc.)
+  --       -- endpoint = "https://api.anthropic.com",
+  --       -- model = "claude-3-5-sonnet-20241022",
+  --       timeout = 30000, -- timeout in milliseconds
+  --       temperature = 0, -- adjust if needed
+  --       max_tokens = 4096,
+  --     },
+  --   },
+  --   build = ":AvanteBuild", -- This is optional, recommended tho. Also note that this will block the startup for a bit since we are compiling bindings in Rust.
+  --   dependencies = {
+  --     "stevearc/dressing.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "MunifTanjim/nui.nvim",
+  --     --- The below dependencies are optional,
+  --     "echasnovski/mini.pick", -- for file_selector provider mini.pick
+  --     "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+  --     "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+  --     "ibhagwan/fzf-lua", -- for file_selector provider fzf
+  --     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+  --     "zbirenbaum/copilot.lua", -- for providers='copilot'
+  --     -- {
+  --     --   -- support for image pasting
+  --     --   "HakonHarnes/img-clip.nvim",
+  --     --   event = "VeryLazy",
+  --     --   opts = {
+  --     --     -- recommended settings
+  --     --     default = {
+  --     --       embed_image_as_base64 = false,
+  --     --       prompt_for_file_name = false,
+  --     --       drag_and_drop = {
+  --     --         insert_mode = true,
+  --     --       },
+  --     --       -- required for Windows users
+  --     --       use_absolute_path = true,
+  --     --     },
+  --     --   },
+  --     -- },
+  --   },
+  -- },
   {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    lazy = false,
+    "ravitemer/mcphub.nvim",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+    },
+    build = "npm install -g mcp-hub@latest",
+    config = function()
+      require("mcphub").setup()
+    end
+  },
+  {
+    "olimorris/codecompanion.nvim",
+    dependencies = {
+      "ravitemer/mcphub.nvim"
+    },
     opts = {
-      provider = "openai",
-      -- provider = "claude",
-      openai = {
-        endpoint = "https://api.deepseek.com/v1",
-        model = "deepseek-chat", -- your desired model (or use gpt-4o, etc.)
-        -- endpoint = "https://api.anthropic.com",
-        -- model = "claude-3-5-sonnet-20241022",
-        timeout = 30000, -- timeout in milliseconds
-        temperature = 0, -- adjust if needed
-        max_tokens = 4096,
+      strategies = {
+        chat = {
+          adapter = "anthropic",
+        },
+        inline = {
+          adapter = "anthropic",
+        },
       },
     },
-    build = ":AvanteBuild", -- This is optional, recommended tho. Also note that this will block the startup for a bit since we are compiling bindings in Rust.
     dependencies = {
-      "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      --- The below dependencies are optional,
-      "echasnovski/mini.pick", -- for file_selector provider mini.pick
-      "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-      "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
-      "ibhagwan/fzf-lua", -- for file_selector provider fzf
-      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua", -- for providers='copilot'
-      -- {
-      --   -- support for image pasting
-      --   "HakonHarnes/img-clip.nvim",
-      --   event = "VeryLazy",
-      --   opts = {
-      --     -- recommended settings
-      --     default = {
-      --       embed_image_as_base64 = false,
-      --       prompt_for_file_name = false,
-      --       drag_and_drop = {
-      --         insert_mode = true,
-      --       },
-      --       -- required for Windows users
-      --       use_absolute_path = true,
-      --     },
-      --   },
-      -- },
+      "nvim-treesitter/nvim-treesitter",
     },
+  },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown", "codecompanion" }
+  },
+  {
+    "OXY2DEV/markview.nvim",
+    lazy = false,
+    opts = {
+      preview = {
+        filetypes = { "markdown", "codecompanion" },
+        ignore_buftypes = {},
+      },
+    },
+  },
+  {
+    "echasnovski/mini.diff",
+    config = function()
+      local diff = require("mini.diff")
+      diff.setup({
+        -- Disabled by default
+        source = diff.gen_source.none(),
+      })
+    end,
   },
   'mfussenegger/nvim-dap',
   'leoluz/nvim-dap-go',
@@ -318,4 +372,17 @@ require('dap-go').setup({
 			program = "${workspaceFolder}/main.go"
 		},
 	},
+})
+
+require("codecompanion").setup({
+  extensions = {
+    mcphub = {
+      callback = "mcphub.extensions.codecompanion",
+      opts = {
+        make_vars = true,
+        make_slash_commands = true,
+        show_result_in_chat = true
+      }
+    }
+  }
 })

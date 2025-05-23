@@ -147,7 +147,7 @@ cmp.setup({
 -- })
 
 -- function to attach completion when setting up lsp
-local on_attach = function(client, bufnr)
+local base_on_attach = function(client, bufnr)
   utils.bufmap("n", "ga", "lua vim.lsp.buf.code_action()")
   utils.bufmap("n", "gD", "lua vim.lsp.buf.declaration()")
   utils.bufmap("n", "gd", "lua vim.lsp.buf.definition()")
@@ -158,13 +158,6 @@ local on_attach = function(client, bufnr)
   utils.bufmap("n", "gR", "lua vim.lsp.buf.rename()")
   utils.bufmap("n", "K", "lua vim.lsp.buf.hover()")
   utils.bufmap("n", "gl", "lua vim.diagnostic.open_float()")
-
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  if client.server_capabilities.inlayHintProvider then vim.lsp.inlay_hint.enable(true) end
 end
 
 local lspconfig = require('lspconfig')
@@ -172,13 +165,24 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protoc
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 vim.lsp.config("*", {
-    on_attach = on_attach,
+    on_attach = base_on_attach,
     capabilities = capabilities,
     flags = { debounce_text_changes = 150 },
 })
 
 -- Go
+-- local base_on_attach = vim.lsp.config.gopls.on_attach
 vim.lsp.config('gopls', {
+  on_attach = function(client, bufnr)
+    base_on_attach(client, bufnr)
+
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+    if client.server_capabilities.inlayHintProvider then vim.lsp.inlay_hint.enable(true) end
+  end,
   settings = {
     gopls = {
       experimentalPostfixCompletions = true,
@@ -199,7 +203,7 @@ vim.lsp.config('gopls', {
   }
 })
 
-lspconfig.eslint.setup({
+vim.lsp.config("eslint", {
   on_attach = function(client, bufnr)
     vim.api.nvim_create_autocmd("BufWritePre", {
       buffer = bufnr,
