@@ -181,7 +181,7 @@ vim.lsp.config('gopls', {
 
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    if client.server_capabilities.inlayHintProvider then vim.lsp.inlay_hint.enable(true) end
+    -- if client.server_capabilities.inlayHintProvider then vim.lsp.inlay_hint.enable(true) end
   end,
   settings = {
     gopls = {
@@ -192,11 +192,11 @@ vim.lsp.config('gopls', {
       },
       staticcheck = true,
       gofumpt = true,
-      ["ui.inlayhint.hints"] = {
-        compositeLiteralFields = true,
-        constantValues = true,
-        parameterNames = true,
-      },
+      -- ["ui.inlayhint.hints"] = {
+      --   compositeLiteralFields = true,
+      --   constantValues = true,
+      --   parameterNames = true,
+      -- },
     },
   },
   init_options = {

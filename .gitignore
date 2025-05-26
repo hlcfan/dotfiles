@@ -11,5 +11,7 @@
 /.config/emacs
 /.config/doom
 /.config/raycast
+/.config/goose
+/.config/mcphub
 packer_compiled.lua
 .DS_Store

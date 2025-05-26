@@ -9,7 +9,7 @@ if not ok then
 end
 
 treesitter.setup({
-  -- ensure_installed = "maintained",
+  ensure_installed = { "go", "lua", "rust", "zig", "query", "markdown", "markdown_inline", "elixir", "heex", "javascript", "html", "json", "tsx", "typescript", "yaml", "xml" },
   sync_install = false,
   highlight = {
     enable = true,
@@ -18,28 +18,15 @@ treesitter.setup({
   -- indent = {
   --   enable = false
   -- },
-  -- textobjects = {
-  --   move = {
-  --     enable = true,
-  --     set_jumps = true, -- whether to set jumps in the jumplist
-  --     goto_next_start = {
-  --       ["]m"] = "@function.outer",
-  --       ["]]"] = "@block.outer",
-  --     },
-  --     goto_next_end = {
-  --       ["]M"] = "@function.outer",
-  --       ["]["] = "@class.outer",
-  --     },
-  --     goto_previous_start = {
-  --       ["[m"] = "@function.outer",
-  --       ["[["] = "@block.outer",
-  --     },
-  --     goto_previous_end = {
-  --       ["[M"] = "@function.outer",
-  --       ["[]"] = "@class.outer",
-  --     },
-  --   },
-  -- },
+  textobjects = {
+    move = {
+      enable = true,
+      goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer", ["]a"] = "@parameter.inner" },
+      goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
+      goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer", ["[a"] = "@parameter.inner" },
+      goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[A"] = "@parameter.inner" },
+    },
+  },
 })
 
 treesitter_context.setup({
