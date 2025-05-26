@@ -191,6 +191,7 @@ vim.lsp.config('gopls', {
         shadow = true,
       },
       staticcheck = true,
+      gofumpt = true,
       ["ui.inlayhint.hints"] = {
         compositeLiteralFields = true,
         constantValues = true,
@@ -205,19 +206,21 @@ vim.lsp.config('gopls', {
 
 vim.lsp.config("eslint", {
   on_attach = function(client, bufnr)
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      buffer = bufnr,
-      command = "EslintFixAll",
-    })
+    base_on_attach(client, bufnr)
+
+    -- vim.api.nvim_create_autocmd("BufWritePre", {
+    --   buffer = bufnr,
+    --   command = "EslintFixAll",
+    -- })
   end,
 })
 
--- lspconfig["elixirls"].setup {
---   cmd = { "/Users/hlcfan/elixir-ls/language_server.sh" },
---   on_attach = on_attach,
---   capabilities = capabilities,
---   flags = { debounce_text_changes = 150 },
--- },
+vim.lsp.config("elixirls", {
+  cmd = { "/Users/hlcfan/elixir-ls/language_server.sh" },
+  on_attach = base_on_attach,
+  capabilities = capabilities,
+  flags = { debounce_text_changes = 150 },
+})
 -- require'lspconfig'.elixirls.setup{}
 
 -- require("copilot").setup({

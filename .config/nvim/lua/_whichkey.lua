@@ -80,6 +80,7 @@ utils.map("n", "<C-w>c", "<C-w>c<C-w>p")
 -- utils.map("n", "<C-l>", ":wincmd l<CR>")
 utils.map("n", "<CR>", ":nohlsearch<CR>")
 utils.map("n", "<F4>", ":NvimTreeToggle<CR>")
+utils.map("n", "<F3>", ":NvimTreeFindFile<CR>")
 utils.map("n", "<F2>", ":%! fm<CR>")
 utils.map("n", "<C-f>", ":Telescope live_grep<CR>")
 utils.map("t", "<Esc>", "<C-\\><C-n>")
@@ -91,13 +92,13 @@ vim.keymap.set('n', '<F12>', function() require('dap').step_out() end)
 
 local wk = require("which-key")
 wk.add({
-  {
-    mode = { "n", "v" },
-    { "<leader>a", group = "CodeCompanion", nowait = true, remap = false },
-    { "<leader>aa", ":CodeCompanionChat Toggle<cr>", desc = "Toggle CodeCompanion", nowait = true, remap = false },
-    { "<leader>al", ":CodeCompanion ", desc = "Inline CodeCompanion", nowait = true, remap = false },
-  },
-  { "<leader>ap", ":CodeCompanionActions<cr>", desc = "CodeCompanion Action Palette", nowait = true, remap = false },
+  -- {
+  --   mode = { "n", "v" },
+  --   { "<leader>a", group = "CodeCompanion", nowait = true, remap = false },
+  --   { "<leader>aa", ":CodeCompanionChat Toggle<cr>", desc = "Toggle CodeCompanion", nowait = true, remap = false },
+  --   { "<leader>al", ":CodeCompanion ", desc = "Inline CodeCompanion", nowait = true, remap = false },
+  --   { "<leader>ap", ":CodeCompanionActions<cr>", desc = "CodeCompanion Action Palette", nowait = true, remap = false },
+  -- },
   { "<leader>T", group = "Treesitter", nowait = true, remap = false },
   { "<leader>Ti", ":TSConfigInfo<cr>", desc = "Info", nowait = true, remap = false },
   { "<leader>b", group = "Buffers", nowait = true, remap = false },
