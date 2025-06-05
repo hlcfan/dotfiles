@@ -221,7 +221,32 @@ vim.lsp.config("elixirls", {
   capabilities = capabilities,
   flags = { debounce_text_changes = 150 },
 })
--- require'lspconfig'.elixirls.setup{}
+
+vim.lsp.config("rust_analyzer", {
+  on_attach = function(client, bufnr)
+    base_on_attach(client, bufnr)
+
+    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  end,
+  settings = {
+    ["rust-analyzer"] = {
+      imports = {
+        granularity = {
+          group = "module",
+        },
+        prefix = "self",
+      },
+      cargo = {
+        buildScripts = {
+          enable = true,
+        },
+      },
+      procMacro = {
+        enable = true
+      },
+    }
+  }
+})
 
 -- require("copilot").setup({
 --   suggestion = { enabled = false },
