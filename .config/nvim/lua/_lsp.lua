@@ -50,102 +50,6 @@ win.default_opts = function(options)
   return opts
 end
 
-local source_mapping = {
-  luasnip = "[Snip]",
-  buffer = "[Buffer]",
-  nvim_lsp = "[LSP]",
-  nvim_lua = "[Lua]",
-  -- cmp_tabnine = "[TabNine]",
-  path = "[Path]",
-  Copilot = "[Copilot]",
-}
-
--- local has_words_before = function()
---   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
---   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
--- end
-
-local has_words_before = function()
-  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_text(0, line-1, 0, line-1, col, {})[1]:match("^%s*$") == nil
-end
-
--- completion setup
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      -- vim.fn["vsnip#anonymous"](args.body)
-      lua_snip.lsp_expand(args.body) -- For `luasnip` users.
-      -- vim.fn["UltiSnips#Anon"](args.body)
-    end,
-  },
-  preselect = cmp.PreselectMode.None,
-  mapping = cmp.mapping.preset.insert({
-    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-Space>"] = cmp.mapping.complete(),
-    ["<C-e>"] = cmp.mapping.close(),
-    ["<CR>"] = cmp.mapping.confirm({ select = true }),
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() and has_words_before() then
-        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-      elseif cmp.visible() then
-        cmp.select_next_item()
-      -- elseif lua_snip.expand_or_jumpable() then
-      --   lua_snip.expand_or_jump()
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-      end
-    end, { "i", "s" }),
-    ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "s" }),
-  }),
-  window = {
-    -- completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
-  },
-  sources = cmp.config.sources({
-    -- { name = 'copilot' },
-    { name = "luasnip" },
-    { name = "nvim_lsp" },
-    -- { name = 'cmp_tabnine' },
-    { name = "buffer" },
-    { name = "path" },
-    -- { name = "ultisnips" },
-    -- { name = "vsnip" },
-  }),
-  formatting = {
-    format = function(entry, vim_item)
-      -- if you have lspkind installed, you can use it like
-      -- in the following line:
-      vim_item.kind = lspkind.symbolic(vim_item.kind, {mode = "symbol"})
-      vim_item.menu = source_mapping[entry.source.name]
-      if entry.source.name == "cmp_tabnine" then
-        local detail = (entry.completion_item.data or {}).detail
-        vim_item.kind = ""
-        if detail and detail:find('.*%%.*') then
-          vim_item.kind = vim_item.kind .. ' ' .. detail
-        end
-
-        if (entry.completion_item.data or {}).multiline then
-          vim_item.kind = vim_item.kind .. ' ' .. '[ML]'
-        end
-      end
-      local maxwidth = 80
-      vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
-      return vim_item
-    end,
-  },
-})
-
--- cmp.setup.cmdline('/', {
---   view = {
---     entries = {name = 'wildmenu', separator = '|' }
---   },
--- })
-
 -- function to attach completion when setting up lsp
 local base_on_attach = function(client, bufnr)
   utils.bufmap("n", "ga", "lua vim.lsp.buf.code_action()")
@@ -161,8 +65,19 @@ local base_on_attach = function(client, bufnr)
 end
 
 local lspconfig = require('lspconfig')
-local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()) --nvim-cmp
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()) --nvim-cmp
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+local capabilities = {
+  textDocument = {
+    foldingRange = {
+      dynamicRegistration = false,
+      lineFoldingOnly = true
+    }
+  }
+}
+
+capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
 vim.lsp.config("*", {
     on_attach = base_on_attach,
