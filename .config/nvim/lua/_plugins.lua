@@ -425,7 +425,17 @@ require("lazy").setup({
       -- log_level = 'debug',
     }
   },
-  'subnut/nvim-ghost.nvim'
+  'subnut/nvim-ghost.nvim',
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",         -- required
+      "sindrets/diffview.nvim",        -- optional - Diff integration
+
+      -- Only one of these is needed.
+      "nvim-telescope/telescope.nvim", -- optional
+    },
+  }
 })
 
 require("luasnip/loaders/from_vscode").lazy_load()
