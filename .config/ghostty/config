@@ -20,9 +20,9 @@
 # # The config file consists of simple key-value pairs,
 # # separated by equals signs.
 font-family = ComicCode Nerd Font
-font-size = 18
+font-size = 16
 font-feature = -calt, -liga, -dlig
-theme = tokyonight_moon
+theme = catppuccin-mocha
 maximize = true
 
 window-width=130
