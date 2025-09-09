@@ -19,43 +19,162 @@ require("lazy").setup({
     lazy = true,
     build = "make install_jsregexp"
   },
-  -- "neovim/nvim-lspconfig",
+    -- better diagnostics list and others
   {
     "folke/trouble.nvim",
-    cmd = "Trouble",
+    cmd = { "Trouble" },
+    opts = {
+      modes = {
+        lsp = {
+          win = { position = "right" },
+        },
+      },
+    },
     keys = {
+      { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
+      { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
+      { "<leader>cs", "<cmd>Trouble symbols toggle<cr>", desc = "Symbols (Trouble)" },
+      { "<leader>cS", "<cmd>Trouble lsp toggle<cr>", desc = "LSP references/definitions/... (Trouble)" },
+      { "<leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location List (Trouble)" },
+      { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List (Trouble)" },
       {
-        "<leader>xx",
-        "<cmd>Trouble diagnostics toggle<cr>",
-        desc = "Diagnostics (Trouble)",
+        "[q",
+        function()
+          if require("trouble").is_open() then
+            require("trouble").prev({ skip_groups = true, jump = true })
+          else
+            local ok, err = pcall(vim.cmd.cprev)
+            if not ok then
+              vim.notify(err, vim.log.levels.ERROR)
+            end
+          end
+        end,
+        desc = "Previous Trouble/Quickfix Item",
       },
       {
-        "<leader>xX",
-        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-        desc = "Buffer Diagnostics (Trouble)",
-      },
-      {
-        "<leader>cs",
-        "<cmd>Trouble symbols toggle focus=false<cr>",
-        desc = "Symbols (Trouble)",
-      },
-      {
-        "<leader>cl",
-        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-        desc = "LSP Definitions / references / ... (Trouble)",
-      },
-      {
-        "<leader>xL",
-        "<cmd>Trouble loclist toggle<cr>",
-        desc = "Location List (Trouble)",
-      },
-      {
-        "<leader>xQ",
-        "<cmd>Trouble qflist toggle<cr>",
-        desc = "Quickfix List (Trouble)",
+        "]q",
+        function()
+          if require("trouble").is_open() then
+            require("trouble").next({ skip_groups = true, jump = true })
+          else
+            local ok, err = pcall(vim.cmd.cnext)
+            if not ok then
+              vim.notify(err, vim.log.levels.ERROR)
+            end
+          end
+        end,
+        desc = "Next Trouble/Quickfix Item",
       },
     },
   },
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   opts = function()
+  --     ---@class PluginLspOpts
+  --     local ret = {
+  --       -- options for vim.diagnostic.config()
+  --       ---@type vim.diagnostic.Opts
+  --       diagnostics = {
+  --         underline = true,
+  --         update_in_insert = false,
+  --         virtual_text = {
+  --           spacing = 4,
+  --           source = "if_many",
+  --           prefix = "●",
+  --           -- this will set set the prefix to a function that returns the diagnostics icon based on the severity
+  --           -- this only works on a recent 0.10.0 build. Will be set to "●" when not supported
+  --           -- prefix = "icons",
+  --         },
+  --         severity_sort = true,
+  --         signs = {
+  --           text = {
+  --             [vim.diagnostic.severity.ERROR] = LazyVim.config.icons.diagnostics.Error,
+  --             [vim.diagnostic.severity.WARN] = LazyVim.config.icons.diagnostics.Warn,
+  --             [vim.diagnostic.severity.HINT] = LazyVim.config.icons.diagnostics.Hint,
+  --             [vim.diagnostic.severity.INFO] = LazyVim.config.icons.diagnostics.Info,
+  --           },
+  --         },
+  --       },
+  --       -- Enable this to enable the builtin LSP inlay hints on Neovim >= 0.10.0
+  --       -- Be aware that you also will need to properly configure your LSP server to
+  --       -- provide the inlay hints.
+  --       inlay_hints = {
+  --         enabled = true,
+  --         exclude = { "vue" }, -- filetypes for which you don't want to enable inlay hints
+  --       },
+  --       -- Enable this to enable the builtin LSP code lenses on Neovim >= 0.10.0
+  --       -- Be aware that you also will need to properly configure your LSP server to
+  --       -- provide the code lenses.
+  --       codelens = {
+  --         enabled = false,
+  --       },
+  --       -- add any global capabilities here
+  --       capabilities = {
+  --         workspace = {
+  --           fileOperations = {
+  --             didRename = true,
+  --             willRename = true,
+  --           },
+  --         },
+  --       },
+  --       -- options for vim.lsp.buf.format
+  --       -- `bufnr` and `filter` is handled by the LazyVim formatter,
+  --       -- but can be also overridden when specified
+  --       format = {
+  --         formatting_options = nil,
+  --         timeout_ms = nil,
+  --       },
+  --       -- LSP Server Settings
+  --       ---@type lspconfig.options
+  --       servers = {
+  --         lua_ls = {
+  --           -- mason = false, -- set to false if you don't want this server to be installed with mason
+  --           -- Use this to add any additional keymaps
+  --           -- for specific lsp servers
+  --           -- ---@type LazyKeysSpec[]
+  --           -- keys = {},
+  --           settings = {
+  --             Lua = {
+  --               workspace = {
+  --                 checkThirdParty = false,
+  --               },
+  --               codeLens = {
+  --                 enable = true,
+  --               },
+  --               completion = {
+  --                 callSnippet = "Replace",
+  --               },
+  --               doc = {
+  --                 privateName = { "^_" },
+  --               },
+  --               hint = {
+  --                 enable = true,
+  --                 setType = false,
+  --                 paramType = true,
+  --                 paramName = "Disable",
+  --                 semicolon = "Disable",
+  --                 arrayIndex = "Disable",
+  --               },
+  --             },
+  --           },
+  --         },
+  --       },
+  --       -- you can do any additional lsp server setup here
+  --       -- return true if you don't want this server to be setup with lspconfig
+  --       ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
+  --       setup = {
+  --         -- example to setup with typescript.nvim
+  --         -- tsserver = function(_, opts)
+  --           --   require("typescript").setup({ server = opts })
+  --           --   return true
+  --           -- end,
+  --           -- Specify * to use this function as a fallback for any server
+  --           -- ["*"] = function(server, opts) end,
+  --         },
+  --       }
+  --       return ret
+  --     end
+  -- },
   {
     "mason-org/mason.nvim",
     opts = {}
@@ -77,15 +196,45 @@ require("lazy").setup({
     },
   },
   -- CMP
-  "hrsh7th/cmp-nvim-lsp",
-  "hrsh7th/cmp-buffer",
-  "hrsh7th/cmp-path",
-  "hrsh7th/cmp-cmdline",
-  "saadparwaiz1/cmp_luasnip",
+  -- "hrsh7th/cmp-nvim-lsp",
+  -- "hrsh7th/cmp-buffer",
+  -- "hrsh7th/cmp-path",
+  -- "hrsh7th/cmp-cmdline",
+  -- "saadparwaiz1/cmp_luasnip",
   "nvimtools/none-ls.nvim",
   "nvim-treesitter/nvim-treesitter",
-  "nvim-treesitter/nvim-treesitter-textobjects",
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    -- event = "VeryLazy",
+    -- enabled = true,
+    -- config = function()
+    --   -- When in diff mode, we want to use the default
+    --   -- vim text objects c & C instead of the treesitter ones.
+    --   local move = require("nvim-treesitter.textobjects.move") ---@type table<string,fun(...)>
+    --   local configs = require("nvim-treesitter.configs")
+    --   for name, fn in pairs(move) do
+    --     if name:find("goto") == 1 then
+    --       move[name] = function(q, ...)
+    --         if vim.wo.diff then
+    --           local config = configs.get_module("textobjects.move")[name] ---@type table<string,string>
+    --           for key, query in pairs(config or {}) do
+    --             if q == query and key:find("[%]%[][cC]") then
+    --               vim.cmd("normal! " .. key)
+    --               return
+    --             end
+    --           end
+    --         end
+    --         return fn(q, ...)
+    --       end
+    --     end
+    --   end
+    -- end,
+  },
   "nvim-treesitter/nvim-treesitter-context",
+  {
+    "windwp/nvim-ts-autotag",
+    opts = {},
+  },
   "tamago324/nlsp-settings.nvim",
   "onsails/lspkind.nvim",
   "tpope/vim-surround",
@@ -111,14 +260,14 @@ require("lazy").setup({
       }
     end,
   },
-  {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-    },
-  },
+  -- {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+  -- {
+  --   "nvim-telescope/telescope.nvim",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+  --   },
+  -- },
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons", opt = true },
@@ -248,6 +397,28 @@ require("lazy").setup({
     end,
   },
   {
+    'MagicDuck/grug-far.nvim',
+    -- opts = { headerMaxWidth = 80 },
+    cmd = "GrugFar",
+    keys = {
+      {
+        "<leader>sr",
+        function()
+          local grug = require("grug-far")
+          local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
+          grug.open({
+            transient = true,
+            prefills = {
+              filesFilter = ext and ext ~= "" and "*." .. ext or nil,
+            },
+          })
+        end,
+        mode = { "n", "v" },
+        desc = "Search and Replace",
+      },
+    },
+  },
+  {
     'saghen/blink.cmp',
     -- optional: provides snippets for the snippet source
     dependencies = { 'rafamadriz/friendly-snippets' },
@@ -343,7 +514,6 @@ require("lazy").setup({
     },
     opts_extend = { "sources.default" }
   },
-  -- { "folke/neodev.nvim", enabled = false }, -- make sure to uninstall or disable neodev.nvim
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
@@ -405,6 +575,9 @@ require("lazy").setup({
       })
     end,
   },
+
+  -- UI components
+  { "MunifTanjim/nui.nvim", lazy = true },
   'mfussenegger/nvim-dap',
   'leoluz/nvim-dap-go',
   {
@@ -431,11 +604,146 @@ require("lazy").setup({
     dependencies = {
       "nvim-lua/plenary.nvim",         -- required
       "sindrets/diffview.nvim",        -- optional - Diff integration
-
-      -- Only one of these is needed.
-      "nvim-telescope/telescope.nvim", -- optional
+      "folke/snacks.nvim",
     },
-  }
+  },
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+    -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+    "MunifTanjim/nui.nvim",
+    },
+    opts = {
+      lsp = {
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+          ["cmp.entry.get_documentation"] = true,
+        },
+      },
+      -- routes = {
+      --   {
+      --     filter = {
+      --       event = "msg_show",
+      --       any = {
+      --         { find = "%d+L, %d+B" },
+      --         { find = "; after #%d+" },
+      --         { find = "; before #%d+" },
+      --       },
+      --     },
+      --     view = "mini",
+      --   },
+      -- },
+      presets = {
+        bottom_search = true,
+        command_palette = true,
+        long_message_to_split = true,
+      },
+    }
+  },
+  -- { 'nvim-mini/mini.nvim', version = '*' },
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      bigfile = { enabled = true },
+      dashboard = { enabled = true },
+      explorer = { enabled = true },
+      indent = { enabled = true },
+      input = { enabled = true },
+      notifier = {
+        enabled = true,
+        timeout = 3000,
+      },
+      picker = { enabled = true },
+      quickfile = { enabled = true },
+      scope = { enabled = true },
+      scroll = { enabled = true },
+      statuscolumn = { enabled = true },
+      words = { enabled = true },
+      styles = {
+        notification = {
+          -- wo = { wrap = true } -- Wrap notifications
+        }
+      }
+    },
+    keys = {
+      -- Top Pickers & Explorer
+      { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+      { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
+      { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
+      { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
+      { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
+      { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
+      -- find
+      { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+      { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
+      { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
+      { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
+      { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
+      { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent" },
+      -- git
+      { "<leader>gb", function() Snacks.picker.git_branches() end, desc = "Git Branches" },
+      { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git Log" },
+      { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "Git Log Line" },
+      { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
+      { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
+      { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
+      { "<leader>gf", function() Snacks.picker.git_log_file() end, desc = "Git Log File" },
+      -- Grep
+      { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
+      { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
+      { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
+      { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
+      -- search
+      { '<leader>s"', function() Snacks.picker.registers() end, desc = "Registers" },
+      { '<leader>s/', function() Snacks.picker.search_history() end, desc = "Search History" },
+      { "<leader>sa", function() Snacks.picker.autocmds() end, desc = "Autocmds" },
+      { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
+      { "<leader>sc", function() Snacks.picker.command_history() end, desc = "Command History" },
+      { "<leader>sC", function() Snacks.picker.commands() end, desc = "Commands" },
+      { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
+      { "<leader>sD", function() Snacks.picker.diagnostics_buffer() end, desc = "Buffer Diagnostics" },
+      { "<leader>sh", function() Snacks.picker.help() end, desc = "Help Pages" },
+      { "<leader>sH", function() Snacks.picker.highlights() end, desc = "Highlights" },
+      { "<leader>si", function() Snacks.picker.icons() end, desc = "Icons" },
+      { "<leader>sj", function() Snacks.picker.jumps() end, desc = "Jumps" },
+      { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
+      { "<leader>sl", function() Snacks.picker.loclist() end, desc = "Location List" },
+      { "<leader>sm", function() Snacks.picker.marks() end, desc = "Marks" },
+      { "<leader>sM", function() Snacks.picker.man() end, desc = "Man Pages" },
+      { "<leader>sp", function() Snacks.picker.lazy() end, desc = "Search for Plugin Spec" },
+      { "<leader>sq", function() Snacks.picker.qflist() end, desc = "Quickfix List" },
+      { "<leader>sR", function() Snacks.picker.resume() end, desc = "Resume" },
+      { "<leader>su", function() Snacks.picker.undo() end, desc = "Undo History" },
+      { "<leader>uC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
+      -- LSP
+      { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
+      { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
+      { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+      { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+      { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+      { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
+      { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
+      -- Other
+      { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
+      { "<leader>Z",  function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
+      { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
+      { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
+      { "<leader>n",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
+      { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
+      { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
+      { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
+      { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
+      { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
+      { "<c-/>",      function() Snacks.terminal() end, desc = "Toggle Terminal" },
+      { "<c-_>",      function() Snacks.terminal() end, desc = "which_key_ignore" },
+      { "]]",         function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
+      { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
+    }
+  },
 })
 
 require("luasnip/loaders/from_vscode").lazy_load()

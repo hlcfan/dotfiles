@@ -50,20 +50,6 @@ win.default_opts = function(options)
   return opts
 end
 
--- function to attach completion when setting up lsp
-local base_on_attach = function(client, bufnr)
-  utils.bufmap("n", "ga", "lua vim.lsp.buf.code_action()")
-  utils.bufmap("n", "gD", "lua vim.lsp.buf.declaration()")
-  utils.bufmap("n", "gd", "lua vim.lsp.buf.definition()")
-  utils.bufmap("n", "ge", "lua vim.lsp.diagnostic.goto_next()")
-  utils.bufmap("n", "gE", "lua vim.lsp.diagnostic.goto_prev()")
-  utils.bufmap("n", "gI", "lua vim.lsp.buf.implementation()")
-  utils.bufmap("n", "gr", "lua vim.lsp.buf.references()")
-  utils.bufmap("n", "gR", "lua vim.lsp.buf.rename()")
-  utils.bufmap("n", "K", "lua vim.lsp.buf.hover()")
-  utils.bufmap("n", "gl", "lua vim.diagnostic.open_float()")
-end
-
 local lspconfig = require('lspconfig')
 -- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()) --nvim-cmp
 -- capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -80,17 +66,13 @@ local capabilities = {
 capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
 vim.lsp.config("*", {
-    on_attach = base_on_attach,
     capabilities = capabilities,
     flags = { debounce_text_changes = 150 },
 })
 
 -- Go
--- local base_on_attach = vim.lsp.config.gopls.on_attach
 vim.lsp.config('gopls', {
   on_attach = function(client, bufnr)
-    base_on_attach(client, bufnr)
-
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -121,8 +103,6 @@ vim.lsp.config('gopls', {
 
 vim.lsp.config("eslint", {
   on_attach = function(client, bufnr)
-    base_on_attach(client, bufnr)
-
     -- vim.api.nvim_create_autocmd("BufWritePre", {
     --   buffer = bufnr,
     --   command = "EslintFixAll",
@@ -131,16 +111,13 @@ vim.lsp.config("eslint", {
 })
 
 vim.lsp.config("elixirls", {
-  cmd = { "/Users/hlcfan/elixir-ls/language_server.sh" },
-  on_attach = base_on_attach,
+  cmd = { "/Users/hlcfan/bin/expert_darwin_arm64" },
   capabilities = capabilities,
   flags = { debounce_text_changes = 150 },
 })
 
 vim.lsp.config("rust_analyzer", {
   on_attach = function(client, bufnr)
-    base_on_attach(client, bufnr)
-
     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
   end,
   settings = {

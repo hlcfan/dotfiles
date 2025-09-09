@@ -82,13 +82,18 @@ utils.map("n", "<CR>", ":nohlsearch<CR>")
 utils.map("n", "<F4>", ":NvimTreeToggle<CR>")
 utils.map("n", "<F3>", ":NvimTreeFindFile<CR>")
 utils.map("n", "<F2>", ":%! fm<CR>")
-utils.map("n", "<C-f>", ":Telescope live_grep<CR>")
 utils.map("t", "<Esc>", "<C-\\><C-n>")
 utils.map("n", "<leader>r", [[:lua SplitLineByDelimiter(vim.fn.input('Delimiter: '))<CR>]])
 vim.keymap.set('n', '<F5>', function() require('dap').continue() end)
 vim.keymap.set('n', '<F10>', function() require('dap').step_over() end)
 vim.keymap.set('n', '<F11>', function() require('dap').step_into() end)
 vim.keymap.set('n', '<F12>', function() require('dap').step_out() end)
+
+local get_selection = function()
+  return vim.fn.getregion(
+    vim.fn.getpos ".", vim.fn.getpos "v", { mode = vim.fn.mode() }
+  )
+end
 
 local wk = require("which-key")
 wk.add({
@@ -104,13 +109,8 @@ wk.add({
   { "<leader>b", group = "Buffers", nowait = true, remap = false },
   { "<leader>bb", ":b#<cr>", desc = "Previous", nowait = true, remap = false },
   { "<leader>bc", ":cclose<cr>", desc = "Close quickfix", nowait = true, remap = false },
-  { "<leader>bd", ":bd<cr>", desc = "Delete", nowait = true, remap = false },
-  { "<leader>bf", ":Telescope buffers <cr>", desc = "Find", nowait = true, remap = false },
-  { "<leader>bl", ":Telescope buffers<CR>", desc = "List Buffers", nowait = true, remap = false },
   { "<leader>bn", ":bn<cr>", desc = "Next", nowait = true, remap = false },
   { "<leader>bp", ":bp<cr>", desc = "Previous", nowait = true, remap = false },
-  -- { "<leader>c", ":BufferClose!<CR>", desc = "Close Buffer", nowait = true, remap = false },
-  { "<leader>f", ":Telescope find_files <CR>", desc = "Find File", nowait = true, remap = false },
   { "<leader>g", group = "Git", nowait = true, remap = false },
   { "<leader>gb", ":Gitsigns blame_line<CR>", desc = "Blame", nowait = true, remap = false },
   { "<leader>gd", ":tabe % <CR> :Gitsigns diffthis<CR>", desc = "Diff", nowait = true, remap = false },
@@ -118,26 +118,10 @@ wk.add({
   { "<leader>h", ":nohlsearch<CR>", desc = "No Highlight", nowait = true, remap = false },
   { "<leader>l", group = "LSP", nowait = true, remap = false },
   { "<leader>lI", ":LspInstallInfo<cr>", desc = "Installer Info", nowait = true, remap = false },
-  { "<leader>la", ":Telescope lsp_code_actions<cr>", desc = "Code Action", nowait = true, remap = false },
-  { "<leader>ld", ":Telescope diagnostics bufnr=0<cr>", desc = "Document Diagnostics", nowait = true, remap = false },
   { "<leader>lf", ":lua vim.lsp.buf.format({ async = true })<cr>", desc = "Format", nowait = true, remap = false },
   { "<leader>li", ":LspInfo<cr>", desc = "Info", nowait = true, remap = false },
   { "<leader>lr", ":lua vim.lsp.buf.rename()<cr>", desc = "Rename", nowait = true, remap = false },
-  { "<leader>lw", ":Telescope diagnostics<cr>", desc = "Workspace Diagnostics", nowait = true, remap = false },
   { "<leader>s", group = "Search", nowait = true, remap = false },
-  { "<leader>sC", ":Telescope commands <cr>", desc = "Commands", nowait = true, remap = false },
-  { "<leader>sM", ":Telescope man_pages <cr>", desc = "Man Pages", nowait = true, remap = false },
-  { "<leader>sR", ":Telescope registers <cr>", desc = "Registers", nowait = true, remap = false },
-  { "<leader>sb", ":Telescope git_branches <cr>", desc = "Checkout branch", nowait = true, remap = false },
-  { "<leader>sc", ":Telescope colorscheme <cr>", desc = "Colorscheme", nowait = true, remap = false },
-  { "<leader>sf", ":Telescope find_files <cr>", desc = "Find File", nowait = true, remap = false },
-  { "<leader>sh", ":Telescope help_tags <cr>", desc = "Find Help", nowait = true, remap = false },
-  { "<leader>sj", ":Telescope jumplist <cr>", desc = "Jumplist", nowait = true, remap = false },
-  { "<leader>sk", ":Telescope keymaps <cr>", desc = "Keymaps", nowait = true, remap = false },
-  { "<leader>sn", ":Telescope live_grep search_dirs={os.getenv('NOTES')} <cr>", desc = "Notes", nowait = true, remap = false },
-  { "<leader>sp", ":lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>", desc = "Colorscheme with Preview", nowait = true, remap = false },
-  { "<leader>sr", ":Telescope oldfiles <cr>", desc = "Open Recent File", nowait = true, remap = false },
-  { "<leader>st", ":Telescope live_grep <cr>", desc = "Text", nowait = true, remap = false },
   { "<leader>t", group = "Diagnostics", nowait = true, remap = false },
   { "<leader>td", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "document", nowait = true, remap = false },
   { "<leader>tl", "<cmd>TroubleToggle loclist<cr>", desc = "loclist", nowait = true, remap = false },
