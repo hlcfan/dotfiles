@@ -12,9 +12,6 @@ require("snip")
 require("snip/go")
 
 -- vim.cmd("set notermguicolors")
-vim.cmd('colorscheme tokyonight-night')
--- vim.cmd([[colorscheme whimsical-vim]])
--- vim.cmd([[color whimsical-vim]])
 
 vim.cmd([[hi DiffAdd      ctermfg=NONE          ctermbg=LightGray]])
 vim.cmd([[hi DiffChange   ctermfg=NONE          ctermbg=LightGray]])

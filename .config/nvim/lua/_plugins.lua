@@ -244,7 +244,20 @@ require("lazy").setup({
   "editorconfig/editorconfig-vim",
   "lukas-reineke/indent-blankline.nvim",
   "RRethy/nvim-base16",
-  "folke/tokyonight.nvim",
+  {
+    "folke/tokyonight.nvim",
+    name = "tokyonight",
+    config = function()
+      vim.cmd("colorscheme tokyonight-night")
+    end
+  },
+  -- {
+  --   "rose-pine/neovim",
+  --   name = "rose-pine",
+  --   config = function()
+  --     vim.cmd("colorscheme rose-pine-moon")
+  --   end
+  -- },
   {
     "nvim-tree/nvim-tree.lua",
     version = "*",
