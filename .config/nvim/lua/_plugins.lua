@@ -19,7 +19,7 @@ require("lazy").setup({
     lazy = true,
     build = "make install_jsregexp"
   },
-    -- better diagnostics list and others
+  -- better diagnostics list and others
   {
     "folke/trouble.nvim",
     cmd = { "Trouble" },
@@ -64,6 +64,16 @@ require("lazy").setup({
           end
         end,
         desc = "Next Trouble/Quickfix Item",
+      },
+    },
+  },
+  {
+    "OXY2DEV/markview.nvim",
+    lazy = false,
+    opts = {
+      preview = {
+        filetypes = { "markdown", "Avante" },
+        ignore_buftypes = {},
       },
     },
   },
@@ -244,6 +254,7 @@ require("lazy").setup({
   "editorconfig/editorconfig-vim",
   "lukas-reineke/indent-blankline.nvim",
   "RRethy/nvim-base16",
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   -- {
   --   "folke/tokyonight.nvim",
   --   name = "tokyonight",
@@ -387,16 +398,6 @@ require("lazy").setup({
       --   end,
       --   desc = "Remote Flash",
       -- },
-    },
-  },
-  {
-    "OXY2DEV/markview.nvim",
-    lazy = false,
-    opts = {
-      preview = {
-        filetypes = { "markdown", "Avante" },
-        ignore_buftypes = {},
-      },
     },
   },
   { -- optional cmp completion source for require statements and module annotations
@@ -647,6 +648,10 @@ require("lazy").setup({
       --     },
       --     view = "mini",
       --   },
+      --   -- {
+      --   --   filter = { event = "msg_show", kind = "search_count" },
+      --   --   opts = { skip = true },
+      --   -- },
       -- },
       presets = {
         bottom_search = true,
@@ -773,4 +778,8 @@ require('dap-go').setup({
 			program = "${workspaceFolder}/main.go"
 		},
 	},
+})
+
+require("catppuccin").setup({
+  auto_integrations = true,
 })

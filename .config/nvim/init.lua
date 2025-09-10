@@ -12,13 +12,13 @@ require("snip")
 require("snip/go")
 
 -- vim.cmd("set notermguicolors")
-vim.cmd('colorscheme base16-catppuccin-mocha')
+vim.cmd('colorscheme catppuccin-mocha')
 
 -- vim.cmd([[hi DiffAdd      ctermfg=NONE          ctermbg=LightGray]])
 -- vim.cmd([[hi DiffChange   ctermfg=NONE          ctermbg=LightGray]])
 -- vim.cmd([[hi DiffText     ctermfg=NONE          ctermbg=LightGray]])
 vim.cmd([[hi LineNr       ctermbg=none          guibg=none]])
-vim.cmd([[hi Normal       ctermbg=none          guibg=none]])
+-- vim.cmd([[hi Normal       ctermbg=none          guibg=none]])
 
 -- important to import after colorscheme
 require("_statusline")
