@@ -636,6 +636,9 @@ require("lazy").setup({
           ["cmp.entry.get_documentation"] = true,
         },
       },
+      messages = {
+        view_search = false,
+      },
       -- routes = {
       --   {
       --     filter = {
@@ -648,10 +651,6 @@ require("lazy").setup({
       --     },
       --     view = "mini",
       --   },
-      --   -- {
-      --   --   filter = { event = "msg_show", kind = "search_count" },
-      --   --   opts = { skip = true },
-      --   -- },
       -- },
       presets = {
         bottom_search = true,
@@ -660,7 +659,7 @@ require("lazy").setup({
       },
     }
   },
-  -- { 'nvim-mini/mini.nvim', version = '*' },
+  {'kevinhwang91/nvim-hlslens'},
   {
     "folke/snacks.nvim",
     priority = 1000,
@@ -783,3 +782,20 @@ require('dap-go').setup({
 require("catppuccin").setup({
   auto_integrations = true,
 })
+
+require('hlslens').setup()
+
+local kopts = {noremap = true, silent = true}
+
+vim.api.nvim_set_keymap('n', 'n',
+    [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+    kopts)
+vim.api.nvim_set_keymap('n', 'N',
+    [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+    kopts)
+vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+
+vim.api.nvim_set_keymap('n', '<Leader>l', '<Cmd>noh<CR>', kopts)
