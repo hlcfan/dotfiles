@@ -2,7 +2,7 @@ local g = vim.g
 local opt = vim.opt
 local fn = vim.fn
 
-g.mapleader = ","
+g.mapleader = " "
 
 g.border_style = "rounded"
 g.markdown_fenced_languages = {

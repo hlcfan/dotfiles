@@ -20,6 +20,11 @@ vim.cmd('colorscheme catppuccin-mocha')
 vim.cmd([[hi LineNr       ctermbg=none          guibg=none]])
 -- vim.cmd([[hi Normal       ctermbg=none          guibg=none]])
 
+vim.filetype.add({
+  extension = {
+    ['http'] = 'http',
+  },
+})
 -- important to import after colorscheme
 require("_statusline")
 require("_gitsigns")
