@@ -382,6 +382,7 @@ require("lazy").setup({
         end,
         desc = "Flash",
       },
+      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
       -- {
       --   "S",
       --   mode = { "n", "o", "x" },
@@ -684,7 +685,12 @@ require("lazy").setup({
         notification = {
           -- wo = { wrap = true } -- Wrap notifications
         }
-      }
+      },
+      terminal = {
+        win = {
+          position = "float",
+        },
+      },
     },
     keys = {
       -- Top Pickers & Explorer
@@ -775,6 +781,7 @@ require("lazy").setup({
       kulala_keymaps_prefix = "",
     },
   },
+  {'nvim-java/nvim-java'},
 })
 
 require("luasnip/loaders/from_vscode").lazy_load()
@@ -798,6 +805,8 @@ require("catppuccin").setup({
 })
 
 require('hlslens').setup()
+
+require('java').setup()
 
 local kopts = {noremap = true, silent = true}
 

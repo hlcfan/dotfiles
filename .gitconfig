@@ -12,7 +12,7 @@
   pullr = pull --rebase --stat
 [core]
   excludesfile = /Users/alexshi/.gitignore_global
-  editor = vim
+  editor = nvim
   pager = delta
 [difftool "sourcetree"]
   cmd = opendiff \"$LOCAL\" \"$REMOTE\"

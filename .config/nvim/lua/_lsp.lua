@@ -122,6 +122,12 @@ vim.lsp.config("rust_analyzer", {
   end,
   settings = {
     ["rust-analyzer"] = {
+      diagnostics = {
+        disabled = { "unlinked-file" },
+        experimental = {
+          enable = true, -- Often required for certain diagnostics settings
+        },
+      },
       imports = {
         granularity = {
           group = "module",
@@ -139,6 +145,8 @@ vim.lsp.config("rust_analyzer", {
     }
   }
 })
+
+require('lspconfig').jdtls.setup({})
 
 -- require("copilot").setup({
 --   suggestion = { enabled = false },
