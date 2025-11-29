@@ -1,0 +1,25 @@
+set hlsearch                   " Highlight search results
+
+" --- Leader key ---
+let mapleader = " "
+
+Plug 'preservim/nerdtree'
+Plug 'tpope/vim-surround'
+
+nnoremap H ^
+nnoremap L $
+nnoremap <leader>e :NERDTreeToggle<CR>
+" nnoremap <leader>e :action ProjectView<CR>
+" map <leader>e <Action>(ActivateProjectToolWindow)
+
+" Trigger IntelliJ actions with Vim keys
+map <leader>f <Action>(FindInPath)
+map <leader>r <Action>(RenameElement)
+map <leader>d <Action>(Debug)
+map <leader>p <Action>(ParameterInfo)
+
+" Commentary-like behavior for commenting
+map gc <Action>(CommentByLineComment)
+
+nmap s <Action>(flash.search)
+xmap s <Action>(flash.search)
