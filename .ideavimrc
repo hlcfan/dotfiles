@@ -9,6 +9,9 @@ Plug 'tpope/vim-surround'
 nnoremap H ^
 nnoremap L $
 nnoremap <leader>e :NERDTreeToggle<CR>
+
+" Clear search highlight
+nnoremap <CR> :nohlsearch<CR>
 " nnoremap <leader>e :action ProjectView<CR>
 " map <leader>e <Action>(ActivateProjectToolWindow)
 
@@ -17,9 +20,17 @@ map <leader>f <Action>(FindInPath)
 map <leader>r <Action>(RenameElement)
 map <leader>d <Action>(Debug)
 map <leader>p <Action>(ParameterInfo)
+map <leader>x <Action>(ShowIntentionActions)
 
 " Commentary-like behavior for commenting
 map gc <Action>(CommentByLineComment)
+
+" Run current file or the selected Run Configuration
+map <leader>r <Action>(Run)
+map <leader>d <Action>(Debug)
+
+nmap [f <Action>(MethodUp)
+nmap ]f <Action>(MethodDown)
 
 nmap s <Action>(flash.search)
 xmap s <Action>(flash.search)
