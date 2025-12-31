@@ -46,3 +46,5 @@
   ; helper = cache --timeout 30000
 [commit]
   gpgsign = false
+[init]
+	defaultBranch = master
