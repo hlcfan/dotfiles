@@ -8,11 +8,6 @@ if not cmp_ok then
   return
 end
 
-local win_ok, win = pcall(require, "lspconfig.ui.windows")
-if not win_ok then
-  return
-end
-
 local nlspsettings_ok, nlspsettings = pcall(require, "nlspsettings")
 if not nlspsettings_ok then
   return
@@ -50,7 +45,7 @@ win.default_opts = function(options)
   return opts
 end
 
-local lspconfig = require('lspconfig')
+-- local lspconfig = require('lspconfig')
 -- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()) --nvim-cmp
 -- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
@@ -146,9 +141,39 @@ vim.lsp.config("rust_analyzer", {
   }
 })
 
-require('lspconfig').jdtls.setup({})
 
--- require("copilot").setup({
---   suggestion = { enabled = false },
---   panel = { enabled = false },
+-- vim.lsp.config("jdtls", {
+  -- cmd = {"/Users/hlcfan/jdt-language-server/bin/custom_script.sh"},
+  -- settings = {
+  --   java = {
+  --     configuration = {
+  --       runtimes = {
+  --         {
+  --           name = "JavaSE-21",
+  --           -- path = "/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home",
+  --           path = "/opt/homebrew/opt/openjdk@21",
+  --           default = true,
+  --         }
+  --       }
+  --     }
+  --   }
+  -- }
 -- })
+-- vim.lsp.enable("jdtls")
+
+-- require('lspconfig').jdtls.setup({
+--   -- settings = {
+--   --   java = {
+--   --     configuration = {
+--   --       runtimes = {
+--   --         {
+--   --           name = "OpenJDK-25",
+--   --           path = "/opt/homebrew/opt/openjdk@25/",
+--   --           default = true,
+--   --         }
+--   --       }
+--   --     }
+--   --   }
+--   -- }
+-- })
+

@@ -77,117 +77,21 @@ require("lazy").setup({
       },
     },
   },
-  -- {
-  --   "neovim/nvim-lspconfig",
-  --   opts = function()
-  --     ---@class PluginLspOpts
-  --     local ret = {
-  --       -- options for vim.diagnostic.config()
-  --       ---@type vim.diagnostic.Opts
-  --       diagnostics = {
-  --         underline = true,
-  --         update_in_insert = false,
-  --         virtual_text = {
-  --           spacing = 4,
-  --           source = "if_many",
-  --           prefix = "●",
-  --           -- this will set set the prefix to a function that returns the diagnostics icon based on the severity
-  --           -- this only works on a recent 0.10.0 build. Will be set to "●" when not supported
-  --           -- prefix = "icons",
-  --         },
-  --         severity_sort = true,
-  --         signs = {
-  --           text = {
-  --             [vim.diagnostic.severity.ERROR] = LazyVim.config.icons.diagnostics.Error,
-  --             [vim.diagnostic.severity.WARN] = LazyVim.config.icons.diagnostics.Warn,
-  --             [vim.diagnostic.severity.HINT] = LazyVim.config.icons.diagnostics.Hint,
-  --             [vim.diagnostic.severity.INFO] = LazyVim.config.icons.diagnostics.Info,
-  --           },
-  --         },
-  --       },
-  --       -- Enable this to enable the builtin LSP inlay hints on Neovim >= 0.10.0
-  --       -- Be aware that you also will need to properly configure your LSP server to
-  --       -- provide the inlay hints.
-  --       inlay_hints = {
-  --         enabled = true,
-  --         exclude = { "vue" }, -- filetypes for which you don't want to enable inlay hints
-  --       },
-  --       -- Enable this to enable the builtin LSP code lenses on Neovim >= 0.10.0
-  --       -- Be aware that you also will need to properly configure your LSP server to
-  --       -- provide the code lenses.
-  --       codelens = {
-  --         enabled = false,
-  --       },
-  --       -- add any global capabilities here
-  --       capabilities = {
-  --         workspace = {
-  --           fileOperations = {
-  --             didRename = true,
-  --             willRename = true,
-  --           },
-  --         },
-  --       },
-  --       -- options for vim.lsp.buf.format
-  --       -- `bufnr` and `filter` is handled by the LazyVim formatter,
-  --       -- but can be also overridden when specified
-  --       format = {
-  --         formatting_options = nil,
-  --         timeout_ms = nil,
-  --       },
-  --       -- LSP Server Settings
-  --       ---@type lspconfig.options
-  --       servers = {
-  --         lua_ls = {
-  --           -- mason = false, -- set to false if you don't want this server to be installed with mason
-  --           -- Use this to add any additional keymaps
-  --           -- for specific lsp servers
-  --           -- ---@type LazyKeysSpec[]
-  --           -- keys = {},
-  --           settings = {
-  --             Lua = {
-  --               workspace = {
-  --                 checkThirdParty = false,
-  --               },
-  --               codeLens = {
-  --                 enable = true,
-  --               },
-  --               completion = {
-  --                 callSnippet = "Replace",
-  --               },
-  --               doc = {
-  --                 privateName = { "^_" },
-  --               },
-  --               hint = {
-  --                 enable = true,
-  --                 setType = false,
-  --                 paramType = true,
-  --                 paramName = "Disable",
-  --                 semicolon = "Disable",
-  --                 arrayIndex = "Disable",
-  --               },
-  --             },
-  --           },
-  --         },
-  --       },
-  --       -- you can do any additional lsp server setup here
-  --       -- return true if you don't want this server to be setup with lspconfig
-  --       ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
-  --       setup = {
-  --         -- example to setup with typescript.nvim
-  --         -- tsserver = function(_, opts)
-  --           --   require("typescript").setup({ server = opts })
-  --           --   return true
-  --           -- end,
-  --           -- Specify * to use this function as a fallback for any server
-  --           -- ["*"] = function(server, opts) end,
-  --         },
-  --       }
-  --       return ret
-  --     end
-  -- },
   {
     "mason-org/mason.nvim",
-    opts = {}
+    -- opts = {
+      -- registries = {
+      --   'github:nvim-java/mason-registry',
+      --   'github:mason-org/mason-registry',
+      -- },
+      -- ui = {
+      --   icons = {
+      --     package_installed = '✓',
+      --     package_pending = '➜',
+      --     package_uninstalled = '✗',
+      --   },
+      -- },
+    -- },
   },
   {
     "mason-org/mason-lspconfig.nvim",
@@ -213,33 +117,7 @@ require("lazy").setup({
   -- "saadparwaiz1/cmp_luasnip",
   "nvimtools/none-ls.nvim",
   "nvim-treesitter/nvim-treesitter",
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    -- event = "VeryLazy",
-    -- enabled = true,
-    -- config = function()
-    --   -- When in diff mode, we want to use the default
-    --   -- vim text objects c & C instead of the treesitter ones.
-    --   local move = require("nvim-treesitter.textobjects.move") ---@type table<string,fun(...)>
-    --   local configs = require("nvim-treesitter.configs")
-    --   for name, fn in pairs(move) do
-    --     if name:find("goto") == 1 then
-    --       move[name] = function(q, ...)
-    --         if vim.wo.diff then
-    --           local config = configs.get_module("textobjects.move")[name] ---@type table<string,string>
-    --           for key, query in pairs(config or {}) do
-    --             if q == query and key:find("[%]%[][cC]") then
-    --               vim.cmd("normal! " .. key)
-    --               return
-    --             end
-    --           end
-    --         end
-    --         return fn(q, ...)
-    --       end
-    --     end
-    --   end
-    -- end,
-  },
+  {"nvim-treesitter/nvim-treesitter-textobjects"},
   "nvim-treesitter/nvim-treesitter-context",
   {
     "windwp/nvim-ts-autotag",
@@ -262,13 +140,6 @@ require("lazy").setup({
   --     vim.cmd("colorscheme tokyonight-night")
   --   end
   -- },
-  -- {
-  --   "rose-pine/neovim",
-  --   name = "rose-pine",
-  --   config = function()
-  --     vim.cmd("colorscheme rose-pine-moon")
-  --   end
-  -- },
   {
     "nvim-tree/nvim-tree.lua",
     version = "*",
@@ -284,14 +155,6 @@ require("lazy").setup({
       }
     end,
   },
-  -- {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-  -- {
-  --   "nvim-telescope/telescope.nvim",
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-  --   },
-  -- },
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons", opt = true },
@@ -781,7 +644,53 @@ require("lazy").setup({
       kulala_keymaps_prefix = "",
     },
   },
-  {'nvim-java/nvim-java'},
+  {
+    'mfussenegger/nvim-jdtls',
+    opts = {
+      cmd = (function()
+        -- Use vim.fn.expand to expand ~ in JAVA_HOME path
+        vim.env.JAVA_HOME = vim.fn.expand("/opt/homebrew/opt/openjdk@21/")
+
+        local jdtls_bin = vim.fn.stdpath("data") .. "/mason/bin/jdtls"
+        local jdtls_pkg = vim.fn.stdpath("data") .. "/mason/packages/jdtls"
+        local lombok_pkg = vim.fn.stdpath("data") .. "/mason/packages/lombok-nightly"
+        local workspace = vim.fn.stdpath("cache") .. "/nvim/jdtls/workspace"
+
+        -- Determine platform config folder
+        local uv = vim.uv or vim.loop
+        local os_name = uv.os_uname().sysname
+        local config_folder = "config_linux"
+
+        if os_name == "Darwin" then
+          config_folder = "config_mac"
+        elseif os_name == "Windows_NT" then
+          config_folder = "config_win"
+        end
+
+        local cmd = {
+          jdtls_bin,
+          -- "/Users/hlcfan/jdt-language-server/bin/jdtls",
+          "--jvm-arg=-javaagent:" .. lombok_pkg .. "/lombok.jar",
+          "-configuration",
+          jdtls_pkg .. "/" .. config_folder,
+          "-data",
+          workspace,
+        }
+
+        -- Notify the full command for debugging
+        vim.schedule(function()
+          vim.notify(
+            "Starting jdtls with command:\n" .. table.concat(cmd, " "),
+            vim.log.levels.INFO,
+            { title = "jdtls cmd" }
+          )
+        end)
+
+        return cmd
+      end)(),
+    },
+  },
+  -- {'nvim-java/nvim-java'},
 })
 
 require("luasnip/loaders/from_vscode").lazy_load()
@@ -806,19 +715,21 @@ require("catppuccin").setup({
 
 require('hlslens').setup()
 
-require('java').setup()
-
-local kopts = {noremap = true, silent = true}
-
-vim.api.nvim_set_keymap('n', 'n',
-    [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
-    kopts)
-vim.api.nvim_set_keymap('n', 'N',
-    [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
-    kopts)
-vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-
-vim.api.nvim_set_keymap('n', '<Leader>l', '<Cmd>noh<CR>', kopts)
+-- require('java').setup({
+--   root_markers = {
+--     'settings.gradle',
+--     'settings.gradle.kts',
+--     'pom.xml',
+--     'build.gradle',
+--     'mvnw',
+--     'gradlew',
+--     'build.gradle',
+--     'build.gradle.kts'
+--   },
+--   jdk = {
+--     auto_install = false,
+--   },
+--   -- java_debug_adapter = {
+--   --   enable = false,
+--   -- },
+-- })
