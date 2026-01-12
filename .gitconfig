@@ -41,8 +41,10 @@
   process = git-lfs filter-process
   required = true
 [credential]
-  helper = osxkeychain
-  ; helper = store --file ~/.git-credentials
+  ; helper = osxkeychain
+  helper = store --file ~/.git-credentials
   ; helper = cache --timeout 30000
 [commit]
   gpgsign = false
+[init]
+	defaultBranch = master
