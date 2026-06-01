@@ -81,7 +81,6 @@ require("lazy").setup({
     "mason-org/mason.nvim",
     -- opts = {
       -- registries = {
-      --   'github:nvim-java/mason-registry',
       --   'github:mason-org/mason-registry',
       -- },
       -- ui = {
@@ -116,8 +115,30 @@ require("lazy").setup({
   -- "hrsh7th/cmp-cmdline",
   -- "saadparwaiz1/cmp_luasnip",
   "nvimtools/none-ls.nvim",
-  "nvim-treesitter/nvim-treesitter",
-  {"nvim-treesitter/nvim-treesitter-textobjects"},
+  {
+    'neovim-treesitter/nvim-treesitter',
+    dependencies = { 'neovim-treesitter/treesitter-parser-registry' },
+    lazy = false,
+    build = ':TSUpdate',
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
+    init = function()
+      -- Disable entire built-in ftplugin mappings to avoid conflicts.
+      -- See https://github.com/neovim/neovim/tree/master/runtime/ftplugin for built-in ftplugins.
+      vim.g.no_plugin_maps = true
+
+      -- Or, disable per filetype (add as you like)
+      -- vim.g.no_python_maps = true
+      -- vim.g.no_ruby_maps = true
+      -- vim.g.no_rust_maps = true
+      -- vim.g.no_go_maps = true
+    end,
+    config = function()
+      -- put your config here
+    end,
+  },
   "nvim-treesitter/nvim-treesitter-context",
   {
     "windwp/nvim-ts-autotag",
@@ -644,53 +665,6 @@ require("lazy").setup({
       kulala_keymaps_prefix = "",
     },
   },
-  {
-    'mfussenegger/nvim-jdtls',
-    opts = {
-      cmd = (function()
-        -- Use vim.fn.expand to expand ~ in JAVA_HOME path
-        vim.env.JAVA_HOME = vim.fn.expand("/opt/homebrew/opt/openjdk@21/")
-
-        local jdtls_bin = vim.fn.stdpath("data") .. "/mason/bin/jdtls"
-        local jdtls_pkg = vim.fn.stdpath("data") .. "/mason/packages/jdtls"
-        local lombok_pkg = vim.fn.stdpath("data") .. "/mason/packages/lombok-nightly"
-        local workspace = vim.fn.stdpath("cache") .. "/nvim/jdtls/workspace"
-
-        -- Determine platform config folder
-        local uv = vim.uv or vim.loop
-        local os_name = uv.os_uname().sysname
-        local config_folder = "config_linux"
-
-        if os_name == "Darwin" then
-          config_folder = "config_mac"
-        elseif os_name == "Windows_NT" then
-          config_folder = "config_win"
-        end
-
-        local cmd = {
-          jdtls_bin,
-          -- "/Users/hlcfan/jdt-language-server/bin/jdtls",
-          "--jvm-arg=-javaagent:" .. lombok_pkg .. "/lombok.jar",
-          "-configuration",
-          jdtls_pkg .. "/" .. config_folder,
-          "-data",
-          workspace,
-        }
-
-        -- Notify the full command for debugging
-        vim.schedule(function()
-          vim.notify(
-            "Starting jdtls with command:\n" .. table.concat(cmd, " "),
-            vim.log.levels.INFO,
-            { title = "jdtls cmd" }
-          )
-        end)
-
-        return cmd
-      end)(),
-    },
-  },
-  -- {'nvim-java/nvim-java'},
 })
 
 require("luasnip/loaders/from_vscode").lazy_load()
@@ -714,22 +688,3 @@ require("catppuccin").setup({
 })
 
 require('hlslens').setup()
-
--- require('java').setup({
---   root_markers = {
---     'settings.gradle',
---     'settings.gradle.kts',
---     'pom.xml',
---     'build.gradle',
---     'mvnw',
---     'gradlew',
---     'build.gradle',
---     'build.gradle.kts'
---   },
---   jdk = {
---     auto_install = false,
---   },
---   -- java_debug_adapter = {
---   --   enable = false,
---   -- },
--- })

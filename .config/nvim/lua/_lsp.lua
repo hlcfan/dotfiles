@@ -141,39 +141,3 @@ vim.lsp.config("rust_analyzer", {
   }
 })
 
-
--- vim.lsp.config("jdtls", {
-  -- cmd = {"/Users/hlcfan/jdt-language-server/bin/custom_script.sh"},
-  -- settings = {
-  --   java = {
-  --     configuration = {
-  --       runtimes = {
-  --         {
-  --           name = "JavaSE-21",
-  --           -- path = "/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home",
-  --           path = "/opt/homebrew/opt/openjdk@21",
-  --           default = true,
-  --         }
-  --       }
-  --     }
-  --   }
-  -- }
--- })
--- vim.lsp.enable("jdtls")
-
--- require('lspconfig').jdtls.setup({
---   -- settings = {
---   --   java = {
---   --     configuration = {
---   --       runtimes = {
---   --         {
---   --           name = "OpenJDK-25",
---   --           path = "/opt/homebrew/opt/openjdk@25/",
---   --           default = true,
---   --         }
---   --       }
---   --     }
---   --   }
---   -- }
--- })
-
