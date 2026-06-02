@@ -1,10 +1,11 @@
-set hlsearch                   " Highlight search results
-
 " --- Leader key ---
 let mapleader = " "
 
 Plug 'preservim/nerdtree'
 Plug 'tpope/vim-surround'
+Plug 'vim-matchit'
+set anyobject
+set hlsearch                   " Highlight search results
 
 nnoremap H ^
 nnoremap L $
@@ -31,6 +32,9 @@ map <leader>d <Action>(Debug)
 
 nmap [f <Action>(MethodUp)
 nmap ]f <Action>(MethodDown)
+
+nmap <C-o> :action Back<CR>
+nmap <C-i> :action Forward<CR>
 
 nmap s <Action>(flash.search)
 xmap s <Action>(flash.search)
