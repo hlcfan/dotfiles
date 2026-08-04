@@ -7,8 +7,8 @@ Plug 'vim-matchit'
 set anyobject
 set hlsearch                   " Highlight search results
 
-nnoremap H ^
-nnoremap L $
+noremap H ^
+noremap L $
 nnoremap <leader>e :NERDTreeToggle<CR>
 
 " Clear search highlight
