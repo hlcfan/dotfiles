@@ -518,7 +518,6 @@ require("lazy").setup({
       -- log_level = 'debug',
     }
   },
-  -- 'subnut/nvim-ghost.nvim',
   {
     "NeogitOrg/neogit",
     dependencies = {
