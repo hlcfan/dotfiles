@@ -1,4 +1,4 @@
-local treesitter_ok, treesitter = pcall(require, "nvim-treesitter.configs")
+local treesitter_ok, treesitter = pcall(require, "nvim-treesitter")
 if not treesitter_ok then
   return
 end
@@ -8,25 +8,21 @@ if not ok then
   return
 end
 
-treesitter.setup({
-  ensure_installed = { "go", "lua", "rust", "zig", "query", "markdown", "markdown_inline", "elixir", "heex", "javascript", "html", "json", "tsx", "typescript", "yaml", "xml" },
-  sync_install = false,
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-  -- indent = {
-  --   enable = false
-  -- },
-  textobjects = {
-    move = {
-      enable = true,
-      goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer", ["]a"] = "@parameter.inner" },
-      goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
-      goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer", ["[a"] = "@parameter.inner" },
-      goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[A"] = "@parameter.inner" },
-    },
-  },
+treesitter.install({
+  "go", "lua", "rust", "zig", "query", "markdown", "markdown_inline",
+                                                                                   "elixir", "heex", "javascript", "html", "json", "tsx", "typescript",
+  "yaml", "xml",
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  callback = function(args)
+    -- vim.treesitter.start() errors if no parser is installed for this
+    -- filetype, so this only enables highlighting/indent where available.
+    local has_parser = pcall(vim.treesitter.start, args.buf)
+    if has_parser then
+      vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end
+  end,
 })
 
 treesitter_context.setup({
