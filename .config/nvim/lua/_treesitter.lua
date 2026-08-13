@@ -14,16 +14,16 @@ treesitter.install({
   "yaml", "xml",
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-  callback = function(args)
-    -- vim.treesitter.start() errors if no parser is installed for this
-    -- filetype, so this only enables highlighting/indent where available.
-    local has_parser = pcall(vim.treesitter.start, args.buf)
-    if has_parser then
-      vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-    end
-  end,
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+--   callback = function(args)
+--     -- vim.treesitter.start() errors if no parser is installed for this
+--     -- filetype, so this only enables highlighting/indent where available.
+--     local has_parser = pcall(vim.treesitter.start, args.buf)
+--     if has_parser then
+--       vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+--     end
+--   end,
+-- })
 
 treesitter_context.setup({
   enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)

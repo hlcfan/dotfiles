@@ -685,6 +685,7 @@ require("lazy").setup({
       kulala_keymaps_prefix = "",
     },
   },
+  "brenoprata10/nvim-highlight-colors"
 })
 
 require("luasnip/loaders/from_vscode").lazy_load()
@@ -706,8 +707,8 @@ require('dap-go').setup({
 require("catppuccin").setup({
   auto_integrations = true,
 })
-
 require('hlslens').setup()
+require('nvim-highlight-colors').setup({})
 
 local kopts = {noremap = true, silent = true}
 
