@@ -3,27 +3,12 @@ if not utils_ok then
   return
 end
 
-local cmp_ok, cmp = pcall(require, "cmp")
-if not cmp_ok then
-  return
-end
-
 local nlspsettings_ok, nlspsettings = pcall(require, "nlspsettings")
 if not nlspsettings_ok then
   return
 end
 
-local cmp_nvim_lsp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not cmp_nvim_lsp_ok then
-  return
-end
-
 local ok, lspkind = pcall(require, "lspkind")
-if not ok then
-  return
-end
-
-local ok, lua_snip = pcall(require, "luasnip")
 if not ok then
   return
 end
@@ -34,16 +19,7 @@ lspkind.init({
   },
 })
 
-local _default_opts = win.default_opts
-
 nlspsettings.setup()
-
--- round some of the window borders
-win.default_opts = function(options)
-  local opts = _default_opts(options)
-  opts.border = "rounded"
-  return opts
-end
 
 -- local lspconfig = require('lspconfig')
 -- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()) --nvim-cmp
@@ -140,4 +116,3 @@ vim.lsp.config("rust_analyzer", {
     }
   }
 })
-

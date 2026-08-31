@@ -306,16 +306,6 @@ require("lazy").setup({
       -- },
     },
   },
-  { -- optional cmp completion source for require statements and module annotations
-    "hrsh7th/nvim-cmp",
-    opts = function(_, opts)
-      opts.sources = opts.sources or {}
-      table.insert(opts.sources, {
-        name = "lazydev",
-        group_index = 0, -- set group index to 0 to skip loading LuaLS completions
-      })
-    end,
-  },
   {
     'MagicDuck/grug-far.nvim',
     -- opts = { headerMaxWidth = 80 },
@@ -423,6 +413,15 @@ require("lazy").setup({
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer' },
+        providers = {
+          snippets = {
+            opts = {
+              -- Keep language-specific snippets, but do not offer global snippets
+              -- such as `copyright` for every filetype.
+              global_snippets = {},
+            },
+          },
+        },
       },
 
       -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
