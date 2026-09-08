@@ -19,4 +19,9 @@ local sources = {
   -- null_ls.builtins.diagnostics.eslint,
 }
 
-null_ls.setup({ sources = sources })
+null_ls.setup({
+  sources = sources,
+  should_attach = function(buf)
+    return not require("_bigfile").is_large(buf)
+  end,
+})

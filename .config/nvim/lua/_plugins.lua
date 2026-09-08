@@ -569,7 +569,8 @@ require("lazy").setup({
     priority = 1000,
     lazy = false,
     opts = {
-      bigfile = { enabled = true },
+      -- Early detection and buffer settings are owned by _bigfile.lua.
+      bigfile = { enabled = false },
       dashboard = { enabled = true },
       explorer = { enabled = true },
       indent = { enabled = true },
@@ -707,7 +708,12 @@ require("catppuccin").setup({
   auto_integrations = true,
 })
 require('hlslens').setup()
-require('nvim-highlight-colors').setup({})
+require('nvim-highlight-colors').setup({
+  -- Skip big buffers entirely (full-buffer color scan freezes on 2MB JSON).
+  exclude_buffer = function(bufnr)
+    return vim.b[bufnr].bigfile == true
+  end,
+})
 
 local kopts = {noremap = true, silent = true}
 

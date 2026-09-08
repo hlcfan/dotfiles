@@ -70,10 +70,10 @@ local components = {
   treesitter = {
     function()
       local b = api.nvim_get_current_buf()
-      if next(vim.treesitter.highlighter.active[b]) then
+      if vim.treesitter.highlighter.active[b] then
         return ""
       end
-      return {}
+      return ""
     end,
   },
 }

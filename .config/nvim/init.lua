@@ -1,4 +1,5 @@
 require("_options")
+require("_bigfile")
 require("_plugins")
 require("_lsp")
 require("_treesitter")
