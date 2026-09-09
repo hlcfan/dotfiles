@@ -1,30 +1,10 @@
-require("_options")
-require("_bigfile")
-require("_plugins")
-require("_lsp")
-require("_treesitter")
-require("_whichkey")
-require("_dap")
-require("_null-ls")
-require("_terminal")
-require("_autopairs")
-require("diagnostic")
-require("snip")
+require("config.options")
+-- Register large-file detection before plugins and filetype handling.
+require("config.bigfile")
+require("config.keymaps")
+require("config.terminal")
+require("config.diagnostics")
 
--- vim.cmd("set notermguicolors")
-vim.cmd('colorscheme catppuccin-mocha')
+vim.filetype.add({ extension = { http = "http" } })
 
--- vim.cmd([[hi DiffAdd      ctermfg=NONE          ctermbg=LightGray]])
--- vim.cmd([[hi DiffChange   ctermfg=NONE          ctermbg=LightGray]])
--- vim.cmd([[hi DiffText     ctermfg=NONE          ctermbg=LightGray]])
-vim.cmd([[hi LineNr       ctermbg=none          guibg=none]])
--- vim.cmd([[hi Normal       ctermbg=none          guibg=none]])
-
-vim.filetype.add({
-  extension = {
-    ['http'] = 'http',
-  },
-})
--- important to import after colorscheme
-require("_statusline")
-require("_gitsigns")
+require("config.lazy")

@@ -1,0 +1,18 @@
+require("nvim-treesitter").install({
+  "go",
+  "lua",
+  "rust",
+  "zig",
+  "query",
+  "markdown",
+  "markdown_inline",
+  "elixir",
+  "heex",
+  "javascript",
+  "html",
+  "json",
+  "tsx",
+  "typescript",
+  "yaml",
+  "xml",
+})

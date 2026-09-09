@@ -86,7 +86,7 @@ end
 -- define how the statusline and tabline appear
 lualine.setup({
   options = {
-    theme = 'auto',
+    theme = "auto",
     icons_enabled = false,
     component_separators = { left = "", right = "" },
     section_separators = { left = "", right = "" },
@@ -95,16 +95,16 @@ lualine.setup({
   sections = {
     lualine_a = {
       {
-        'filename',
+        "filename",
         file_status = true,
         path = 1,
-      }
+      },
     },
     lualine_b = {
       components.location,
     },
     lualine_c = {
-      'branch'
+      "branch",
     },
     lualine_x = {
       components.diagnostics,
@@ -113,8 +113,7 @@ lualine.setup({
       "progress",
       components.treesitter,
     },
-    lualine_z = {
-    },
+    lualine_z = {},
   },
   inactive_sections = {
     lualine_a = {},

@@ -29,25 +29,29 @@ local capabilities = {
   textDocument = {
     foldingRange = {
       dynamicRegistration = false,
-      lineFoldingOnly = true
-    }
-  }
+      lineFoldingOnly = true,
+    },
+  },
 }
 
-capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
+capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 
 vim.lsp.config("*", {
-    capabilities = capabilities,
-    flags = { debounce_text_changes = 150 },
+  capabilities = capabilities,
+  flags = { debounce_text_changes = 150 },
 })
 
 -- Go
-vim.lsp.config('gopls', {
+vim.lsp.config("gopls", {
   on_attach = function(client, bufnr)
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+    local function buf_set_keymap(...)
+      vim.api.nvim_buf_set_keymap(bufnr, ...)
+    end
+    local function buf_set_option(...)
+      vim.api.nvim_buf_set_option(bufnr, ...)
+    end
 
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+    buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
     -- if client.server_capabilities.inlayHintProvider then vim.lsp.inlay_hint.enable(true) end
   end,
@@ -69,7 +73,7 @@ vim.lsp.config('gopls', {
   },
   init_options = {
     usePlaceholders = true,
-  }
+  },
 })
 
 vim.lsp.config("eslint", {
@@ -111,8 +115,8 @@ vim.lsp.config("rust_analyzer", {
         },
       },
       procMacro = {
-        enable = true
+        enable = true,
       },
-    }
-  }
+    },
+  },
 })

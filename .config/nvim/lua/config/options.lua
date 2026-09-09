@@ -3,7 +3,7 @@ local opt = vim.opt
 local fn = vim.fn
 
 g.mapleader = " "
-g.maplocalleader = '\\'
+g.maplocalleader = "\\"
 
 g.border_style = "rounded"
 g.markdown_fenced_languages = {

@@ -1,22 +1,26 @@
+local bufnr = vim.api.nvim_get_current_buf()
+local group = vim.api.nvim_create_augroup("GoFormat", { clear = false })
+vim.api.nvim_clear_autocmds({ group = group, buffer = bufnr })
+
 vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.go",
+  group = group,
+  buffer = bufnr,
   callback = function()
-    local params = vim.lsp.util.make_range_params()
-    params.context = {only = {"source.organizeImports"}}
-    -- buf_request_sync defaults to a 1000ms timeout. Depending on your
-    -- machine and codebase, you may want longer. Add an additional
-    -- argument after params if you find that you have to write the file
-    -- twice for changes to be saved.
-    -- E.g., vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
-    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
-    for cid, res in pairs(result or {}) do
-      for _, r in pairs(res.result or {}) do
+    -- Build positions using each client's encoding before applying its edits.
+    for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr, method = "textDocument/codeAction" })) do
+      local params = vim.lsp.util.make_range_params(0, client.offset_encoding)
+      params.context = { only = { "source.organizeImports" } }
+      -- Keep the save hook synchronous so edits are included in this write.
+      local result = client:request_sync("textDocument/codeAction", params, 1000, bufnr)
+      for _, r in ipairs(result and result.result or {}) do
         if r.edit then
-          local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
-          vim.lsp.util.apply_workspace_edit(r.edit, enc)
+          vim.lsp.util.apply_workspace_edit(r.edit, client.offset_encoding)
         end
       end
     end
-    vim.lsp.buf.format({async = false})
-  end
+    vim.lsp.buf.format({ bufnr = bufnr, async = false })
+  end,
 })
+
+local undo = "lua vim.api.nvim_clear_autocmds({ group = 'GoFormat', buffer = 0 })"
+vim.b.undo_ftplugin = vim.b.undo_ftplugin and (vim.b.undo_ftplugin .. " | " .. undo) or undo
