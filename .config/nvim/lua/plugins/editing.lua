@@ -73,7 +73,10 @@ return {
       { "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], silent = true },
       { "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], silent = true },
     },
-    opts = {},
+    opts = {
+      -- The floating fallback overlaps Noice's bottom search input on long lines.
+      nearest_float_when = "never",
+    },
   },
   {
     "mistweaverco/kulala.nvim",
