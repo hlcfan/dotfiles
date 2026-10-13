@@ -403,7 +403,7 @@ return {
         desc = "Toggle Zoom",
       },
       {
-        "<leader>.",
+        "<leader>bs",
         function()
           Snacks.scratch()
         end,
