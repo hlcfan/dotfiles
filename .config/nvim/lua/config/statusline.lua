@@ -1,53 +1,5 @@
 local api = vim.api
 
-local utils_ok, utils = pcall(require, "utils")
-if not utils_ok then
-  return
-end
-
-local colors = {
-  background = utils.extract_highlight_colors("StatusLine", "bg", 18),
-  foreground = utils.extract_highlight_colors("StatusLine", "fg", 7),
-  red = utils.extract_highlight_colors("LspDiagnosticsDefaultError", "fg", 1),
-  yellow = utils.extract_highlight_colors("LspDiagnosticsDefaultHint", "fg", 3),
-  blue = utils.extract_highlight_colors("LspDiagnosticsDefaultInformation", "fg", 4),
-  orange = utils.extract_highlight_colors("LspDiagnosticsDefaultWarning", "fg", 6),
-  gray = utils.extract_highlight_colors("StatusLineNC", "fg", 8),
-}
-
-local custom_theme = {
-  normal = {
-    a = { bg = colors.foreground, fg = colors.background },
-    b = { bg = colors.background, fg = colors.foreground },
-    c = { bg = colors.background, fg = colors.foreground },
-  },
-  insert = {
-    a = { bg = colors.blue, fg = colors.background },
-    b = { bg = colors.background, fg = colors.blue },
-    c = { bg = colors.background, fg = colors.foreground },
-  },
-  visual = {
-    a = { bg = colors.yellow, fg = colors.background },
-    b = { bg = colors.background, fg = colors.yellow },
-    c = { bg = colors.background, fg = colors.foreground },
-  },
-  replace = {
-    a = { bg = colors.red, fg = colors.background },
-    b = { bg = colors.background, fg = colors.red },
-    c = { bg = colors.background, fg = colors.foreground },
-  },
-  command = {
-    a = { bg = colors.orange, fg = colors.background },
-    b = { bg = colors.background, fg = colors.orange },
-    c = { bg = colors.background, fg = colors.foreground },
-  },
-  inactive = {
-    a = { bg = colors.background, fg = colors.gray },
-    b = { bg = colors.background, fg = colors.gray },
-    c = { bg = colors.background, fg = colors.gray },
-  },
-}
-
 local components = {
   buffers = { "buffers" },
   encoding = { "o:encoding", fmt = string.upper },

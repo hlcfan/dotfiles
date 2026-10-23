@@ -1,30 +1,5 @@
 return {
   {
-    "L3MON4D3/LuaSnip",
-    event = "InsertEnter",
-    dependencies = { "rafamadriz/friendly-snippets" },
-    keys = {
-      {
-        "<c-k>",
-        function()
-          local ls = require("luasnip")
-          if ls.expand_or_jumpable() then
-            ls.expand_or_jump()
-          end
-        end,
-        mode = { "i", "s" },
-        silent = true,
-        desc = "Expand or jump snippet",
-      },
-    },
-    config = function()
-      require("luasnip.loaders.from_vscode").lazy_load()
-    end,
-    version = "v2.*",
-    lazy = true,
-    build = "make install_jsregexp",
-  },
-  {
     "rafamadriz/friendly-snippets",
     lazy = true,
   },

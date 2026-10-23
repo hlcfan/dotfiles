@@ -3,11 +3,6 @@ if not utils_ok then
   return
 end
 
-local nlspsettings_ok, nlspsettings = pcall(require, "nlspsettings")
-if not nlspsettings_ok then
-  return
-end
-
 local ok, lspkind = pcall(require, "lspkind")
 if not ok then
   return
@@ -18,12 +13,6 @@ lspkind.init({
     Copilot = "",
   },
 })
-
-nlspsettings.setup()
-
--- local lspconfig = require('lspconfig')
--- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities()) --nvim-cmp
--- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local capabilities = {
   textDocument = {
@@ -38,23 +27,10 @@ capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 
 vim.lsp.config("*", {
   capabilities = capabilities,
-  flags = { debounce_text_changes = 150 },
 })
 
 -- Go
 vim.lsp.config("gopls", {
-  on_attach = function(client, bufnr)
-    local function buf_set_keymap(...)
-      vim.api.nvim_buf_set_keymap(bufnr, ...)
-    end
-    local function buf_set_option(...)
-      vim.api.nvim_buf_set_option(bufnr, ...)
-    end
-
-    buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-
-    -- if client.server_capabilities.inlayHintProvider then vim.lsp.inlay_hint.enable(true) end
-  end,
   settings = {
     gopls = {
       experimentalPostfixCompletions = true,
@@ -64,11 +40,6 @@ vim.lsp.config("gopls", {
       },
       staticcheck = true,
       gofumpt = true,
-      -- ["ui.inlayhint.hints"] = {
-      --   compositeLiteralFields = true,
-      --   constantValues = true,
-      --   parameterNames = true,
-      -- },
     },
   },
   init_options = {
@@ -76,19 +47,8 @@ vim.lsp.config("gopls", {
   },
 })
 
-vim.lsp.config("eslint", {
-  on_attach = function(client, bufnr)
-    -- vim.api.nvim_create_autocmd("BufWritePre", {
-    --   buffer = bufnr,
-    --   command = "EslintFixAll",
-    -- })
-  end,
-})
-
 vim.lsp.config("elixirls", {
-  cmd = { "/Users/hlcfan/bin/expert_darwin_arm64" },
-  capabilities = capabilities,
-  flags = { debounce_text_changes = 150 },
+  cmd = { vim.fn.expand("~/bin/expert_darwin_arm64") },
 })
 
 vim.lsp.config("rust_analyzer", {
@@ -97,6 +57,7 @@ vim.lsp.config("rust_analyzer", {
   end,
   settings = {
     ["rust-analyzer"] = {
+      check = { command = "clippy" },
       diagnostics = {
         disabled = { "unlinked-file" },
         experimental = {

@@ -8,19 +8,21 @@ return {
       require("config.lsp")
       require("mason-lspconfig").setup(opts)
     end,
-    opts = {
-      ui = {
-        icons = {
-          package_installed = "✓",
-          package_pending = "➜",
-          package_uninstalled = "✗",
+    opts = {},
+    dependencies = {
+      {
+        "mason-org/mason.nvim",
+        opts = {
+          ui = {
+            icons = {
+              package_installed = "✓",
+              package_pending = "➜",
+              package_uninstalled = "✗",
+            },
+          },
         },
       },
-    },
-    dependencies = {
-      { "mason-org/mason.nvim", opts = {} },
       "neovim/nvim-lspconfig",
-      "tamago324/nlsp-settings.nvim",
       "onsails/lspkind.nvim",
       "saghen/blink.cmp",
     },
@@ -47,9 +49,6 @@ return {
         end,
       })
     end,
-  },
-  {
-    "tamago324/nlsp-settings.nvim",
   },
   {
     "onsails/lspkind.nvim",

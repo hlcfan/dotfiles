@@ -1,1 +1,4 @@
 plugin
+
+nvim.log
+parser/*.so

@@ -1,23 +1,16 @@
 return {
   {
     "tpope/vim-surround",
+    keys = { "ys", "ds", "cs", { "S", mode = "x" } },
   },
   {
     "tpope/vim-rails",
+    ft = { "ruby", "eruby" },
   },
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     opts = {},
-  },
-  {
-    "b3nj5m1n/kommentary",
-    config = function()
-      require("kommentary.config").configure_language("default", { prefer_single_line_comments = true })
-    end,
-  },
-  {
-    "editorconfig/editorconfig-vim",
   },
   {
     "folke/flash.nvim",

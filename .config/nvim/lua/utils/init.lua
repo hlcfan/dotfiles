@@ -2,11 +2,6 @@ local utils = {}
 local api = vim.api
 local fn = vim.fn
 
-function utils.bufmap(mode, key, result)
-  local opts = { noremap = true, silent = true }
-  vim.api.nvim_buf_set_keymap(0, mode, key, "<cmd> " .. result .. "<cr>", opts)
-end
-
 function utils.map(mode, lhs, rhs, opts)
   local options = { noremap = true, silent = true }
   if opts then
@@ -19,17 +14,15 @@ function utils.extract_highlight_colors(color_group, scope, cterm_color)
   if fn.hlexists(color_group) == 0 then
     return cterm_color
   end
-  local color = api.nvim_get_hl_by_name(color_group, true)
-  if color.background ~= nil then
-    color.bg = string.format("#%06x", color.background)
-    color.background = nil
+  local color = api.nvim_get_hl(0, { name = color_group, link = false })
+  if color.bg ~= nil then
+    color.bg = string.format("#%06x", color.bg)
   else
     return cterm_color
   end
 
-  if color.foreground ~= nil then
-    color.fg = string.format("#%06x", color.foreground)
-    color.foreground = nil
+  if color.fg ~= nil then
+    color.fg = string.format("#%06x", color.fg)
   else
     return cterm_color
   end

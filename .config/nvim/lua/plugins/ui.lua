@@ -53,12 +53,6 @@ return {
     opts = {},
   },
   {
-    "lukas-reineke/indent-blankline.nvim",
-  },
-  {
-    "RRethy/nvim-base16",
-  },
-  {
     "catppuccin/nvim",
     lazy = false,
     config = function()
@@ -105,7 +99,6 @@ return {
     event = "VeryLazy",
     init = function()
       vim.o.timeout = true
-      vim.o.timeoutlen = 300
     end,
     lazy = true,
     opts = {
@@ -146,24 +139,6 @@ return {
     },
   },
   {
-    "ethanholz/nvim-lastplace",
-    event = "BufRead",
-    config = function()
-      require("nvim-lastplace").setup({
-        lastplace_ignore_filetype = { "gitcommit", "gitrebase", "svn", "hgcommit" },
-        lastplace_open_folds = true,
-      })
-    end,
-  },
-  {
-    "goolord/alpha-nvim",
-    config = function()
-      require("alpha").setup(require("alpha.themes.startify").config)
-    end,
-    event = "VimEnter",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-  },
-  {
     "MunifTanjim/nui.nvim",
     lazy = true,
   },
@@ -186,7 +161,6 @@ return {
         override = {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
           ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true,
         },
       },
       messages = {

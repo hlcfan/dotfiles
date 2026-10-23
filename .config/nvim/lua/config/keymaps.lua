@@ -1,18 +1,5 @@
 local utils = require("utils")
 
-function SplitLineByDelimiter(delimiter)
-  local line = vim.api.nvim_get_current_line() -- Get current line
-
-  local parts = {}
-  for part in string.gmatch(line, "([^" .. delimiter .. "]+)" .. delimiter .. "?") do
-    table.insert(parts, part .. delimiter)
-  end
-
-  parts[#parts] = string.gsub(parts[#parts], delimiter .. "$", "")
-
-  vim.api.nvim_buf_set_lines(0, vim.fn.line(".") - 1, vim.fn.line("."), false, parts)
-end
-
 utils.map("", "H", "^")
 utils.map("", "L", "$")
 utils.map("n", "<C-n>", ":tabnew<CR><Esc>")
@@ -22,12 +9,24 @@ utils.map("n", "<CR>", ":nohlsearch<CR>")
 utils.map("n", "<F2>", ":%! fm<CR>")
 utils.map("t", "<Esc>", "<C-\\><C-n>")
 
-vim.keymap.set("n", "<leader>l", "<cmd>noh<cr>", { silent = true })
-
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("QuickfixMappings", { clear = true }),
   pattern = "qf",
   callback = function()
     vim.keymap.set("n", "<CR>", "<CR>", { buffer = true })
+  end,
+})
+
+-- Restore last cursor position (replaces nvim-lastplace).
+vim.api.nvim_create_autocmd("BufReadPost", {
+  group = vim.api.nvim_create_augroup("LastPlace", { clear = true }),
+  callback = function(ev)
+    if vim.bo[ev.buf].filetype:match("^git") or vim.bo[ev.buf].buftype ~= "" then
+      return
+    end
+    local mark = vim.api.nvim_buf_get_mark(ev.buf, '"')
+    if mark[1] > 0 and mark[1] <= vim.api.nvim_buf_line_count(ev.buf) then
+      pcall(vim.api.nvim_win_set_cursor, 0, mark)
+    end
   end,
 })
