@@ -1,5 +1,16 @@
 local utils = require("utils")
 
+-- Split the current line on a delimiter (default ","), keeping it at the end of each piece.
+vim.api.nvim_create_user_command("SplitLine", function(opts)
+  local delim = opts.args ~= "" and opts.args or ","
+  local row = vim.api.nvim_win_get_cursor(0)[1]
+  local parts = vim.split(vim.api.nvim_get_current_line(), delim, { plain = true })
+  for i = 1, #parts - 1 do
+    parts[i] = parts[i] .. delim
+  end
+  vim.api.nvim_buf_set_lines(0, row - 1, row, false, parts)
+end, { nargs = "?" })
+
 utils.map("", "H", "^")
 utils.map("", "L", "$")
 utils.map("n", "<C-n>", ":tabnew<CR><Esc>")
