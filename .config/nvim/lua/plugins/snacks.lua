@@ -24,7 +24,8 @@ return {
       },
       terminal = {
         win = {
-          position = "float",
+          position = "right",
+          width = 0.4,
         },
       },
     },
