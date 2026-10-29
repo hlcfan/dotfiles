@@ -21,7 +21,7 @@ highlighting load on BufReadPost or BufNewFile. Which-key and the statusline loa
 on VeryLazy; Alpha loads on VimEnter. LuaSnip loads on InsertEnter or Ctrl-K.
 
 DAP, its UI, and the Go adapter load together on a debugging key or command.
-NvimTree and Diffview load through their commands or mappings. Trouble, Grug Far,
+Diffview loads through its commands or mappings. Trouble, Grug Far,
 and Kulala retain their command, key, or filetype triggers. Some other plugins
 remain eager intentionally; there is no blanket lazy-loading default.
 

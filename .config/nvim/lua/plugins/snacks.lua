@@ -13,7 +13,29 @@ return {
         enabled = true,
         timeout = 3000,
       },
-      picker = { enabled = true },
+      picker = {
+        enabled = true,
+        sources = {
+          explorer = {
+            win = {
+              input = {
+                keys = {
+                  ["<c-t>"] = { "tab", mode = { "n", "i" } },
+                  ["<a-h>"] = { "toggle_hidden", mode = { "n", "i" } },
+                },
+              },
+              list = {
+                keys = {
+                  -- I can use H -> "^" mapping
+                  ["H"] = false,
+                  ["<c-t>"] = "tab",
+                  ["<a-h>"] = "toggle_hidden",
+                },
+              },
+            },
+          },
+        },
+      },
       quickfile = { enabled = true },
       scope = { enabled = true },
       scroll = { enabled = true },

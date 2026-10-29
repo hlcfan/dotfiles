@@ -42,7 +42,7 @@ lualine.setup({
     icons_enabled = false,
     component_separators = { left = "", right = "" },
     section_separators = { left = "", right = "" },
-    disabled_filetypes = { "dashboard", "NvimTree", "Outline" },
+    disabled_filetypes = { "dashboard", "Outline" },
   },
   sections = {
     lualine_a = {
@@ -85,5 +85,4 @@ lualine.setup({
   --   lualine_y = { components.tabs },
   --   lualine_z = {},
   -- },
-  extensions = { "nvim-tree" },
 })

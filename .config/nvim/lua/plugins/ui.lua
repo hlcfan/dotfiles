@@ -64,25 +64,6 @@ return {
     priority = 1000,
   },
   {
-    "nvim-tree/nvim-tree.lua",
-    keys = {
-      { "<F4>", "<cmd>NvimTreeToggle<cr>", desc = "Toggle NvimTree" },
-      { "<F3>", "<cmd>NvimTreeFindFile<cr>", desc = "Find file in NvimTree" },
-    },
-    version = "*",
-    cmd = { "NvimTreeToggle", "NvimTreeFindFile", "NvimTreeOpen" },
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
-    config = function()
-      require("nvim-tree").setup({
-        filters = {
-          dotfiles = true,
-        },
-      })
-    end,
-  },
-  {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     config = function()
