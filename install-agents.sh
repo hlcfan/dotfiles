@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
-# Copy agent config from this repo to where Claude Code and other agents read it.
+# Copy shared instructions and skills to Codex and Claude Code's user locations.
 set -euo pipefail
 
 main() {
-  local repo
-  repo="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/.agents"
+  local repo codex_home
+  repo="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  codex_home="${CODEX_HOME:-$HOME/.codex}"
 
-  mkdir -p "$HOME/.agents/skills" "$HOME/.claude/skills"
+  mkdir -p "$codex_home" "$HOME/.agents/skills" "$HOME/.claude/skills"
 
-  sync_skills "$repo/skills" "$HOME/.agents/skills"
-  sync_skills "$repo/skills" "$HOME/.claude/skills"
+  sync_skills "$repo/.agents/skills" "$HOME/.agents/skills"
+  sync_skills "$repo/.agents/skills" "$HOME/.claude/skills"
 
-  cp "$repo/AGENTS.md" "$HOME/.agents/AGENTS.md"
+  cp "$repo/AGENTS.md" "$codex_home/AGENTS.md"
   cp "$repo/AGENTS.md" "$HOME/.claude/CLAUDE.md"
-  cp "$repo/.skill-lock.json" "$HOME/.agents/.skill-lock.json"
 }
 
 # Update each skill from the repo; other entries (e.g. Claude's synced/) are left alone.

@@ -1,3 +1,8 @@
+## Writing
+Apply the unslop skill to every response.
+Use the technical-writing skill when writing or reviewing documentation, RFCs,
+readmes, PR descriptions, or commit messages.
+
 ## Session log
 At the start of every session, read the newest file in ~/.agents/session-logs/.
 Write to today's log at ~/.agents/session-logs/YYYY-MM-DD.md (create file and folder if missing).
