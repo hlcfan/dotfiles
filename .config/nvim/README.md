@@ -37,6 +37,7 @@ Use `:Mason` to manage language servers and tools, and `:LspInfo` to inspect LSP
 - Ag
 - Rg
 - Fzf
+- Fd
 
 ## Fonts
 
