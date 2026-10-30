@@ -1,0 +1,50 @@
+{
+  "version": 3,
+  "skills": {
+    "gpui-kit": {
+      "source": "longbridge/gpui-kit",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/longbridge/gpui-kit.git",
+      "skillPath": "skills/gpui-kit/SKILL.md",
+      "skillFolderHash": "5fcd08f536fd6c2e723203bfb8c890d648adb94c",
+      "installedAt": "2026-09-04T14:05:54.346Z",
+      "updatedAt": "2026-09-04T14:05:54.346Z"
+    },
+    "gpui-kit-design-guides": {
+      "source": "longbridge/gpui-kit",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/longbridge/gpui-kit.git",
+      "skillPath": "skills/gpui-kit-design-guides/SKILL.md",
+      "skillFolderHash": "838adcee88e22880e4512850165f92165216e5e8",
+      "installedAt": "2026-09-04T14:05:54.348Z",
+      "updatedAt": "2026-09-04T14:05:54.348Z"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "76a98a285cb0434f3d39e1a873823556330e398b",
+      "installedAt": "2026-09-04T14:05:58.248Z",
+      "updatedAt": "2026-09-04T14:05:58.248Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "cline",
+    "codex",
+    "cursor",
+    "droid",
+    "gemini-cli",
+    "github-copilot",
+    "kilo",
+    "kimi-code-cli",
+    "opencode",
+    "warp",
+    "zed",
+    "claude-code"
+  ]
+}
