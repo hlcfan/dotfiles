@@ -12,8 +12,8 @@ main() {
   sync_skills "$repo/.agents/skills" "$HOME/.agents/skills"
   sync_skills "$repo/.agents/skills" "$HOME/.claude/skills"
 
-  cp "$repo/AGENTS.md" "$codex_home/AGENTS.md"
-  cp "$repo/AGENTS.md" "$HOME/.claude/CLAUDE.md"
+  # cp "$repo/AGENTS.md" "$codex_home/AGENTS.md"
+  # cp "$repo/AGENTS.md" "$HOME/.claude/CLAUDE.md"
 }
 
 # Update each skill from the repo; other entries (e.g. Claude's synced/) are left alone.
