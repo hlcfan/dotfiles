@@ -456,7 +456,9 @@ return {
       {
         "<leader>gg",
         function()
-          Snacks.lazygit()
+          Snacks.lazygit({
+            win = { position = "float", width = 0.9, height = 0.9, border = "rounded" },
+          })
         end,
         desc = "Lazygit",
       },
